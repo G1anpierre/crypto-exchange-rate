@@ -8,16 +8,13 @@ import {
   CardFooter,
   Divider,
   Link,
-  Image,
   Select,
   SelectItem,
 } from '@nextui-org/react'
 import {GenerateCalculation} from './GenerateCalculation'
 import {CalculateExchangeRate} from '@/actions/calculateExchange'
 import {useFormState} from 'react-dom'
-import { cryptocurrencies, fiatCurrencies } from '@/static'
-
-
+import {cryptocurrencies, fiatCurrencies} from '@/static'
 
 export default function CryptoExchange() {
   const initialState = {
