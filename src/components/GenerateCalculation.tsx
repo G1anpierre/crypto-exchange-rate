@@ -8,10 +8,12 @@ export const GenerateCalculation = () => {
   return (
     <Button color="primary" type="submit" className="col-span-2">
       <div className="flex align-center gap-3">
-        <span className="w-8 h-4">
-          {pending && <Spinner size="sm" color="secondary" />}
+        <span className="relative inline-block ">
+          Calculate !
+          <span className="w-8 h-4 absolute -left-8 top-0">
+            {pending && <Spinner size="sm" color="secondary" />}
+          </span>
         </span>
-        <span>Calculate !</span>
       </div>
     </Button>
   )
