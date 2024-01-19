@@ -39,22 +39,9 @@ export const Hero = () => {
             Crypto Exchange Rate
           </h1>
           <p className="mt-6 text-lg leading-8 text-gray-600">
-            Get the latest exchange rate of cryptocurrencies in your favorite currency
+            Get the latest exchange rate of cryptocurrencies in your favorite
+            currency
           </p>
-          <div className="mt-10 flex items-center gap-x-6">
-            <a
-              href="#"
-              className="rounded-md bg-indigo-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-            >
-              Get started
-            </a>
-            <a
-              href="#"
-              className="text-sm font-semibold leading-6 text-gray-900"
-            >
-              Learn more <span aria-hidden="true">→</span>
-            </a>
-          </div>
         </div>
         <div className=" w-full h-full m-auto">
           <div className="w-full h-full">

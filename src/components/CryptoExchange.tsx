@@ -15,26 +15,9 @@ import {
 import {GenerateCalculation} from './GenerateCalculation'
 import {CalculateExchangeRate} from '@/actions/calculateExchange'
 import {useFormState} from 'react-dom'
+import { cryptocurrencies, fiatCurrencies } from '@/static'
 
-const cryptocurrencies = [
-  {value: 'BTC', label: 'Bitcoin'},
-  {value: 'ETH', label: 'Ethereum'},
-  {value: 'BCH', label: 'Bitcoin Cash'},
-  {value: 'XRP', label: 'Ripple'},
-  {value: 'SOL', label: 'Solana'},
-  {value: 'ADA', label: 'Cardano'},
-  {value: 'BNB', label: 'Binance Coin'},
-]
 
-const fiatCurrencies = [
-  {value: 'USD', label: 'US Dollar'},
-  {value: 'GBP', label: 'British Pound'},
-  {value: 'EUR', label: 'Euro'},
-  {value: 'NGN', label: 'Naira'},
-  {value: 'CNY', label: 'Chinese Yuan'},
-  {value: 'RUB', label: 'Russian Ruble'},
-  {value: 'SGD', label: 'Singaporean Dollar'},
-]
 
 export default function CryptoExchange() {
   const initialState = {
@@ -92,7 +75,7 @@ export default function CryptoExchange() {
       <Divider />
       <CardBody className="min-h-20">
         <div>
-          <p className="text-center">Exchange Rate</p>
+          <p className="text-center">Live Exchange Rate</p>
           <div className="text-center">{exchangeRate}</div>
         </div>
         {state?.message && (
@@ -101,13 +84,15 @@ export default function CryptoExchange() {
       </CardBody>
       <Divider />
       <CardFooter>
-        <Link
-          isExternal
-          showAnchorIcon
-          href="https://github.com/nextui-org/nextui"
-        >
-          Visit source code on GitHub.
-        </Link>
+        <div className="flex justify-center w-full">
+          <Link
+            isExternal
+            showAnchorIcon
+            href="https://github.com/G1anpierre/crypto-exchange-rate"
+          >
+            Visit source code on GitHub.
+          </Link>
+        </div>
       </CardFooter>
     </Card>
   )
