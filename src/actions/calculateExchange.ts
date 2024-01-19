@@ -1,7 +1,11 @@
 'use server'
 
+type InitialStateType = {
+  message: string
+}
+
 export const CalculateExchangeRate = async (
-  prevState: any,
+  prevState: InitialStateType,
   formData: FormData,
 ) => {
   const fromCryptoCurrency = formData.get('fromCryptoCurrency')
@@ -23,5 +27,6 @@ export const CalculateExchangeRate = async (
     return response
   } catch (e) {
     console.error(e)
+    return {message: 'Something went wrong', error: true}
   }
 }

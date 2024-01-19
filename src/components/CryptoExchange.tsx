@@ -74,12 +74,18 @@ export default function CryptoExchange() {
         <div className="mx-auto">
           <div className="relative inline-block">
             Live Exchange Rate
-            <span className="absolute -left-3 top-0 block h-2.5 w-2.5 -translate-y-1/2 transform rounded-full bg-green-400 ring-2 ring-white" />
+            <span
+              className={`absolute -left-3 top-0 block h-2.5 w-2.5 -translate-y-1/2 transform rounded-full ${
+                state.error ? 'bg-red-400' : 'bg-green-400'
+              } ring-2 ring-white`}
+            />
           </div>
           <div className="text-center text-2xl">{exchangeRate}</div>
         </div>
         {state?.message && (
-          <p className="text-red-700 text-sm min-h-8">{state.message}</p>
+          <p className="text-red-700 text-sm min-h-8 text-center">
+            {state.message}
+          </p>
         )}
       </CardBody>
       <Divider />
