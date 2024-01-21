@@ -14,6 +14,7 @@ import {
 } from '@nextui-org/react'
 import {SunIcon} from './SunIcon'
 import {MoonIcon} from './MoonIcon'
+import {ThemeSwitcher} from './ThemeSwitcher'
 // import {AcmeLogo} from './AcmeLogo.jsx'
 
 export const Nav = () => {
@@ -65,13 +66,7 @@ export const Nav = () => {
       </NavbarContent> */}
       <NavbarContent justify="end">
         <NavbarItem>
-          <Switch
-            defaultSelected
-            size="md"
-            color="primary"
-            startContent={<SunIcon />}
-            endContent={<MoonIcon />}
-          ></Switch>
+          <ThemeSwitcher />
         </NavbarItem>
         <NavbarItem className="hidden lg:flex">
           <Link href="#">Login</Link>
