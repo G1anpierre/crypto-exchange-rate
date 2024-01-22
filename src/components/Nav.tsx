@@ -12,9 +12,8 @@ import {
   NavbarMenuItem,
   Switch,
 } from '@nextui-org/react'
-import {SunIcon} from './SunIcon'
-import {MoonIcon} from './MoonIcon'
 import {ThemeSwitcher} from './ThemeSwitcher'
+import {SwitchLocale} from './SwitchLocale'
 // import {AcmeLogo} from './AcmeLogo.jsx'
 
 export const Nav = () => {
@@ -78,6 +77,12 @@ export const Nav = () => {
         </NavbarItem>
       </NavbarContent>
       <NavbarMenu>
+        <NavbarMenuItem>
+          <ThemeSwitcher />
+        </NavbarMenuItem>
+        <NavbarMenuItem>
+          <SwitchLocale />
+        </NavbarMenuItem>
         {menuItems.map((item, index) => (
           <NavbarMenuItem key={`${item}-${index}`}>
             <Link

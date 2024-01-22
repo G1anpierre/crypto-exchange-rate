@@ -1,7 +1,9 @@
 import React from 'react'
 import CryptoExchange from './CryptoExchange'
+import {useTranslations} from 'next-intl'
 
 export const Hero = () => {
+  const t = useTranslations('Index')
   return (
     <div className="relative isolate overflow-hidden bg-white">
       <svg
@@ -36,11 +38,10 @@ export const Hero = () => {
           />
 
           <h1 className="mt-10 text-4xl font-bold tracking-tight text-gray-900 sm:text-6xl">
-            Crypto Exchange Rate
+            {t('title')}
           </h1>
           <p className="mt-6 text-lg leading-8 text-gray-600">
-            Get the latest exchange rate of cryptocurrencies in your favorite
-            currency
+            {t('description')}
           </p>
         </div>
         <div className=" w-full h-full m-auto">
