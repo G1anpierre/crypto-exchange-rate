@@ -63,10 +63,13 @@ export const Nav = () => {
         </NavbarItem>
       </NavbarContent> */}
       <NavbarContent justify="end">
-        <NavbarItem className="hidden lg:flex">
+        <NavbarMenuItem className="hidden md:flex">
+          <SwitchLocale />
+        </NavbarMenuItem>
+        <NavbarItem className="hidden md:flex">
           <ThemeSwitcher />
         </NavbarItem>
-        <NavbarItem className="hidden lg:flex">
+        <NavbarItem className="hidden md:flex">
           <AuthUser />
         </NavbarItem>
       </NavbarContent>
@@ -89,7 +92,7 @@ export const Nav = () => {
         ))}
         <NavbarMenuItem>
           <form action={signOut}>
-            <Button color="danger" variant="ghost" type="submit" size="sm">
+            <Button color="danger" variant="ghost" type="submit" size="md">
               Logout
             </Button>
           </form>
