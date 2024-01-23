@@ -6,15 +6,16 @@ import {
   NavbarContent,
   NavbarItem,
   Link,
-  Button,
   NavbarMenuToggle,
   NavbarMenu,
   NavbarMenuItem,
   Switch,
+  Button,
 } from '@nextui-org/react'
 import {ThemeSwitcher} from './ThemeSwitcher'
 import {SwitchLocale} from './SwitchLocale'
-// import {AcmeLogo} from './AcmeLogo.jsx'
+import {AuthUser} from './AuthUser'
+import {signOut} from '@/actions/signOut'
 
 export const Nav = () => {
   const [isMenuOpen, setIsMenuOpen] = React.useState(false)
@@ -29,9 +30,7 @@ export const Nav = () => {
     'My Settings',
     'Team Settings',
     'Help & Feedback',
-    'Log Out',
   ]
-
   return (
     <Navbar onMenuOpenChange={setIsMenuOpen}>
       <NavbarContent>
@@ -64,19 +63,20 @@ export const Nav = () => {
         </NavbarItem>
       </NavbarContent> */}
       <NavbarContent justify="end">
-        <NavbarItem>
+        <NavbarMenuItem className="hidden md:flex">
+          <SwitchLocale />
+        </NavbarMenuItem>
+        <NavbarItem className="hidden md:flex">
           <ThemeSwitcher />
         </NavbarItem>
-        <NavbarItem className="hidden lg:flex">
-          <Link href="#">Login</Link>
-        </NavbarItem>
-        <NavbarItem>
-          <Button as={Link} color="primary" href="#" variant="flat">
-            Sign Up
-          </Button>
+        <NavbarItem className="hidden md:flex">
+          <AuthUser />
         </NavbarItem>
       </NavbarContent>
       <NavbarMenu>
+        <NavbarMenuItem>
+          <AuthUser isDropDownDisabled />
+        </NavbarMenuItem>
         <NavbarMenuItem>
           <ThemeSwitcher />
         </NavbarMenuItem>
@@ -85,22 +85,18 @@ export const Nav = () => {
         </NavbarMenuItem>
         {menuItems.map((item, index) => (
           <NavbarMenuItem key={`${item}-${index}`}>
-            <Link
-              color={
-                index === 2
-                  ? 'primary'
-                  : index === menuItems.length - 1
-                  ? 'danger'
-                  : 'foreground'
-              }
-              className="w-full"
-              href="#"
-              size="lg"
-            >
+            <Link className="w-full" href="#" size="lg">
               {item}
             </Link>
           </NavbarMenuItem>
         ))}
+        <NavbarMenuItem>
+          <form action={signOut}>
+            <Button color="danger" variant="ghost" type="submit" size="md">
+              Logout
+            </Button>
+          </form>
+        </NavbarMenuItem>
       </NavbarMenu>
     </Navbar>
   )
