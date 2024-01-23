@@ -1,5 +1,7 @@
 import NextAuth from 'next-auth'
-import GitHub from 'next-auth/providers/github'
+import authConfig from './auth.config'
+import {PrismaAdapter} from '@auth/prisma-adapter'
+import {prismaDB} from './database-prisma'
 
 export const {
   handlers: {GET, POST},
@@ -7,5 +9,7 @@ export const {
   signIn,
   signOut,
 } = NextAuth({
-  providers: [GitHub],
+  adapter: PrismaAdapter(prismaDB),
+  session: {strategy: 'jwt'},
+  ...authConfig,
 })

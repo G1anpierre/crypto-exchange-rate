@@ -23,7 +23,9 @@ export const SwitchLocale = () => {
   return (
     <Dropdown showArrow placement="bottom-end">
       <DropdownTrigger>
-        <Button variant="bordered">{isString(locale)}</Button>
+        <Button variant="bordered" size="sm">
+          {isString(locale)}
+        </Button>
       </DropdownTrigger>
       <DropdownMenu
         aria-label="Language Selection"
