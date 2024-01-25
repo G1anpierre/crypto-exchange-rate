@@ -30,11 +30,15 @@ export default function CryptoExchange() {
   const exchangeRate =
     data?.['Realtime Currency Exchange Rate']?.['5. Exchange Rate']
 
-  const handleCryptocurrencyChange = (event: any) => {
+  const handleCryptocurrencyChange = (
+    event: React.ChangeEvent<HTMLSelectElement>,
+  ) => {
     setFromCryptoCurrency(event.target.value)
   }
 
-  const handleFiatCurrencyChange = (event: any) => {
+  const handleFiatCurrencyChange = (
+    event: React.ChangeEvent<HTMLSelectElement>,
+  ) => {
     setToFiatCurrency(event.target.value)
   }
 
