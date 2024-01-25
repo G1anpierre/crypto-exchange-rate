@@ -17,3 +17,17 @@ export const fiatCurrencies = [
   {value: 'RUB', label: 'Russian Ruble'},
   {value: 'SGD', label: 'Singaporean Dollar'},
 ]
+
+type FiatFormatType = {
+  [key: string]: string
+}
+
+export const fiatFormat: FiatFormatType = {
+  USD: 'en-US',
+  GBP: 'en-GB',
+  EUR: 'en-DE',
+  NGN: 'en-NG',
+  CNY: 'zh-Hans',
+  RUB: 'ru-RU',
+  SGD: 'en-SG',
+}

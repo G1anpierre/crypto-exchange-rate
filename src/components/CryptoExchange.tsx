@@ -17,15 +17,16 @@ import {cryptocurrencies, fiatCurrencies} from '@/static'
 import {useQuery} from '@tanstack/react-query'
 import {getExchangeRate} from '@/services/exchangeRate'
 import classNames from 'classnames'
+import {transform} from '@/utils'
 
 export default function CryptoExchange() {
   const [fromCryptoCurrency, setFromCryptoCurrency] = React.useState('BTC')
   const [toFiatCurrency, setToFiatCurrency] = React.useState('USD')
 
-  const {data, error, isLoading} = useQuery({
+  const {data, error, isLoading, isError} = useQuery({
     queryKey: ['exchangeRate', {fromCryptoCurrency, toFiatCurrency}],
     queryFn: () => getExchangeRate(fromCryptoCurrency, toFiatCurrency),
-    refetchInterval: 15000,
+    // refetchInterval: 30000,
   })
 
   const exchangeRate =
@@ -46,11 +47,13 @@ export default function CryptoExchange() {
   const liveExchangeRateClass = classNames(
     'absolute -left-3 top-0 block h-2.5 w-2.5 -translate-y-1/2 transform rounded-full',
     {
-      'bg-green-400': !isLoading && !error,
-      'bg-red-400': error,
-      'bg-orange-400': isLoading && !error,
+      'bg-green-400': !isLoading && !isError,
+      'bg-red-400': isError,
+      'bg-orange-400': isLoading && !isError,
     },
   )
+
+  const transformedRate = transform(exchangeRate, toFiatCurrency)
 
   return (
     <Card>
@@ -111,13 +114,11 @@ export default function CryptoExchange() {
             {isLoading ? (
               <Spinner color="warning" labelColor="warning" size="sm" />
             ) : (
-              <span className="text-success">
-                {exchangeRate && Number(exchangeRate).toFixed(2)}
-              </span>
+              <span className="text-success">{transformedRate}</span>
             )}
           </div>
         </div>
-        {error && (
+        {isError && (
           <p className="text-red-700 text-sm min-h-8 text-center">
             {error.message}
           </p>

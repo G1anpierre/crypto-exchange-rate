@@ -1,4 +1,4 @@
-import axios from 'axios'
+import axios, {AxiosError} from 'axios'
 
 export const getExchangeRate = async (
   fromCryptoCurrency = 'BTC',
@@ -18,12 +18,15 @@ export const getExchangeRate = async (
     },
   }
 
-  return axios
-    .request(options)
-    .then(res => {
-      return res.data
-    })
-    .catch(err => {
-      return err
-    })
+  try {
+    const response = await axios(options)
+    return response.data
+  } catch (err) {
+    const errors = err as Error | AxiosError
+    if (axios.isAxiosError(errors)) {
+      throw new Error(errors.response?.data.message)
+    } else {
+      throw new Error(errors.message)
+    }
+  }
 }
