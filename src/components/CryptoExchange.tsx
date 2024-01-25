@@ -25,6 +25,7 @@ export default function CryptoExchange() {
   const {data, error, isLoading} = useQuery({
     queryKey: ['exchangeRate', {fromCryptoCurrency, toFiatCurrency}],
     queryFn: () => getExchangeRate(fromCryptoCurrency, toFiatCurrency),
+    refetchInterval: 15000,
   })
 
   const exchangeRate =
