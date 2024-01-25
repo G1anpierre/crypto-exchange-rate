@@ -10,27 +10,46 @@ import {
   Link,
   Select,
   SelectItem,
+  Spinner,
 } from '@nextui-org/react'
 import {GenerateCalculation} from './GenerateCalculation'
-import {CalculateExchangeRate} from '@/actions/calculateExchange'
-import {useFormState} from 'react-dom'
 import {cryptocurrencies, fiatCurrencies} from '@/static'
+import {useQuery} from '@tanstack/react-query'
+import {getExchangeRate} from '@/services/exchangeRate'
+import classNames from 'classnames'
 
 export default function CryptoExchange() {
-  const initialState = {
-    message: '',
-  }
-  const [state, formAction] = useFormState(CalculateExchangeRate, initialState)
+  const [fromCryptoCurrency, setFromCryptoCurrency] = React.useState('BTC')
+  const [toFiatCurrency, setToFiatCurrency] = React.useState('USD')
 
-  let exchangeRate: null | string = null
-  const RealTimeExchangeRate = state['Realtime Currency Exchange Rate']
-  if (RealTimeExchangeRate) {
-    exchangeRate = Number(RealTimeExchangeRate['5. Exchange Rate']).toFixed(2)
+  const {data, error, isLoading} = useQuery({
+    queryKey: ['exchangeRate', {fromCryptoCurrency, toFiatCurrency}],
+    queryFn: () => getExchangeRate(fromCryptoCurrency, toFiatCurrency),
+  })
+
+  const exchangeRate =
+    data?.['Realtime Currency Exchange Rate']?.['5. Exchange Rate']
+
+  const handleCryptocurrencyChange = (event: any) => {
+    setFromCryptoCurrency(event.target.value)
   }
+
+  const handleFiatCurrencyChange = (event: any) => {
+    setToFiatCurrency(event.target.value)
+  }
+
+  const liveExchangeRateClass = classNames(
+    'absolute -left-3 top-0 block h-2.5 w-2.5 -translate-y-1/2 transform rounded-full',
+    {
+      'bg-green-400': !isLoading && !error,
+      'bg-red-400': error,
+      'bg-orange-400': isLoading && !error,
+    },
+  )
 
   return (
     <Card>
-      <form action={formAction}>
+      <form>
         <CardHeader className="grid grid-cols-2 grid-rows-2 gap-2">
           <Select
             label="Cryptocurrency"
@@ -40,6 +59,8 @@ export default function CryptoExchange() {
             className="max-w-xs"
             name="fromCryptoCurrency"
             color="primary"
+            selectedKeys={[fromCryptoCurrency]}
+            onChange={handleCryptocurrencyChange}
           >
             {cryptocurrencies.map(cryptocurrency => (
               <SelectItem
@@ -58,6 +79,8 @@ export default function CryptoExchange() {
             className="max-w-xs"
             name="toFiatCurrency"
             color="primary"
+            selectedKeys={[toFiatCurrency]}
+            onChange={handleFiatCurrencyChange}
           >
             {fiatCurrencies.map(fiatCurrency => (
               <SelectItem key={fiatCurrency.value} value={fiatCurrency.value}>
@@ -65,7 +88,10 @@ export default function CryptoExchange() {
               </SelectItem>
             ))}
           </Select>
-          <GenerateCalculation />
+          <GenerateCalculation
+            fromCryptoCurrency={fromCryptoCurrency}
+            toFiatCurrency={toFiatCurrency}
+          />
         </CardHeader>
       </form>
 
@@ -74,17 +100,21 @@ export default function CryptoExchange() {
         <div className="mx-auto">
           <div className="relative inline-block">
             Live Exchange Rate
-            <span
-              className={`absolute -left-3 top-0 block h-2.5 w-2.5 -translate-y-1/2 transform rounded-full ${
-                state.error ? 'bg-red-400' : 'bg-green-400'
-              } ring-2 ring-white`}
-            />
+            <span className={liveExchangeRateClass} />
           </div>
-          <div className="text-center text-2xl">{exchangeRate}</div>
+          <div className="text-center text-2xl">
+            {isLoading ? (
+              <Spinner color="warning" labelColor="warning" size="sm" />
+            ) : (
+              <span className="text-success">
+                {exchangeRate && Number(exchangeRate).toFixed(2)}
+              </span>
+            )}
+          </div>
         </div>
-        {state?.message && (
+        {error && (
           <p className="text-red-700 text-sm min-h-8 text-center">
-            {state.message}
+            {error.message}
           </p>
         )}
       </CardBody>
