@@ -5,7 +5,7 @@ import {useTranslations} from 'next-intl'
 export const Hero = () => {
   const t = useTranslations('Index')
   return (
-    <div className="relative isolate overflow-hidden bg-white">
+    <div className="relative isolate overflow-hidden bg-white dark:bg-black">
       <svg
         className="absolute inset-0 -z-10 h-full w-full stroke-gray-200 [mask-image:radial-gradient(100%_100%_at_top_right,white,transparent)]"
         aria-hidden="true"
@@ -37,10 +37,10 @@ export const Hero = () => {
             alt="Your Company"
           />
 
-          <h1 className="mt-10 text-4xl font-bold tracking-tight text-gray-900 sm:text-6xl">
+          <h1 className="mt-10 text-4xl font-bold tracking-tight text-gray-900 sm:text-6xl dark:text-white">
             {t('title')}
           </h1>
-          <p className="mt-6 text-lg leading-8 text-gray-600">
+          <p className="mt-6 text-lg leading-8 text-gray-600 dark:text-white-600">
             {t('description')}
           </p>
         </div>
