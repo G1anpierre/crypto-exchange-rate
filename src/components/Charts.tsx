@@ -12,7 +12,6 @@ import {
   AreaChart,
 } from 'recharts'
 import {SingleCharts} from './SingleCharts'
-import {DataKeyType} from './CryptoChart'
 
 export type PriceType = {
   date: string
@@ -20,6 +19,11 @@ export type PriceType = {
   hight: number
   low: number
   close: number
+}
+
+export type DataKeyType = {
+  type: string
+  color: string
 }
 
 export type ChartProps = {

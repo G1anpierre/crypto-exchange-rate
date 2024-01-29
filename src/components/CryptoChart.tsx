@@ -12,19 +12,7 @@ import {
   CardHeader,
   Skeleton,
 } from '@nextui-org/react'
-import {cryptocurrencies, fiatCurrencies, timePeriods} from '@/static'
-
-export type DataKeyType = {
-  type: string
-  color: string
-}
-
-const dataKeys = [
-  {type: 'close', color: '#8884d8'},
-  {type: 'open', color: '#82ca9d'},
-  {type: 'high', color: '#B03A2E'},
-  {type: 'low', color: '#2874A6'},
-]
+import {cryptocurrencies, dataKeys, fiatCurrencies, timePeriods} from '@/static'
 
 export const CryptoChart = ({
   title,

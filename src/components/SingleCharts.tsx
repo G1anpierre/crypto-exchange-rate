@@ -11,15 +11,9 @@ import {
   Area,
   AreaChart,
 } from 'recharts'
-import {PriceType} from './Charts'
-import {DataKeyType} from './CryptoChart'
+import type {ChartProps} from './Charts'
 
-type SingleChartsProps = {
-  prices: PriceType[]
-  dataKeys?: DataKeyType[]
-}
-
-export const SingleCharts = ({prices, dataKeys}: SingleChartsProps) => {
+export const SingleCharts = ({prices, dataKeys}: ChartProps) => {
   return (
     <>
       {dataKeys?.map(dataKey => (

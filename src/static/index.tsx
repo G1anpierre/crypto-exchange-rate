@@ -37,3 +37,10 @@ export const fiatFormat: FiatFormatType = {
   RUB: 'ru-RU',
   SGD: 'en-SG',
 }
+
+export const dataKeys = [
+  {type: 'close', color: '#8884d8'},
+  {type: 'open', color: '#82ca9d'},
+  {type: 'high', color: '#B03A2E'},
+  {type: 'low', color: '#2874A6'},
+]
