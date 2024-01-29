@@ -33,7 +33,7 @@ export const CryptoChart = ({
   title: string
   description: string
 }) => {
-  const [market, setMarket] = React.useState('CNY')
+  const [market, setMarket] = React.useState('EUR')
   const [symbol, setSymbol] = React.useState('BTC')
   const [func, setFunct] = React.useState('DIGITAL_CURRENCY_MONTHLY')
 
@@ -99,12 +99,11 @@ export const CryptoChart = ({
           </Select>
         </CardHeader>
         <CardBody className="min-h-20">
-          {isError && (
+          {isError ? (
             <p className="text-red-700 text-sm min-h-8 text-center">
               {error.message}
             </p>
-          )}
-          {isLoading ? (
+          ) : isLoading ? (
             <div className="flex flex-col gap-4">
               <Skeleton className="rounded-lg">
                 <div className="h-96 rounded-lg bg-default-300"></div>
