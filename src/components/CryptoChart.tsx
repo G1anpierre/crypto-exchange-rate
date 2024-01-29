@@ -42,7 +42,6 @@ export const CryptoChart = ({
         <CardHeader className="flex flex-col gap-2 sm:flex-row">
           <Select
             label="Market"
-            variant="bordered"
             placeholder="Select market"
             color="primary"
             selectedKeys={[market]}
@@ -56,7 +55,6 @@ export const CryptoChart = ({
           </Select>
           <Select
             label="Symbol"
-            variant="bordered"
             placeholder="Select symbol"
             color="primary"
             selectedKeys={[symbol]}
@@ -73,7 +71,6 @@ export const CryptoChart = ({
           </Select>
           <Select
             label="Time period"
-            variant="bordered"
             placeholder="Select Time Period"
             color="primary"
             selectedKeys={[func]}

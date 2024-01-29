@@ -64,7 +64,6 @@ export default function CryptoExchange() {
             placeholder="Select a cryptocurrency"
             // startContent={<Image src="/bitcoin.svg" width={20} height={20} />}
             defaultSelectedKeys={['BTC']}
-            className="max-w-xs"
             name="fromCryptoCurrency"
             color="primary"
             selectedKeys={[fromCryptoCurrency]}
@@ -84,7 +83,6 @@ export default function CryptoExchange() {
             placeholder="Select a fiatCurrency"
             // startContent={<Image src="/bitcoin.svg" width={20} height={20} />}
             defaultSelectedKeys={['USD']}
-            className="max-w-xs"
             name="toFiatCurrency"
             color="primary"
             selectedKeys={[toFiatCurrency]}

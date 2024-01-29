@@ -127,6 +127,7 @@ export const cryptoStadistics = async (
     return response.data
   } catch (err) {
     const errors = err as Error | AxiosError
+    console.error(errors)
     if (axios.isAxiosError(errors)) {
       throw new Error(errors.response?.data.message)
     } else {
