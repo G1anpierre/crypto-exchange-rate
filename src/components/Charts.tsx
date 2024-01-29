@@ -24,7 +24,7 @@ export type PriceType = {
 
 export type ChartProps = {
   prices: PriceType[]
-  dataKeys: DataKeyType[]
+  dataKeys?: DataKeyType[]
 }
 
 export const Charts = ({prices, dataKeys}: ChartProps) => {

@@ -41,9 +41,6 @@ export const CryptoChart = ({
     queryKey: ['cryptoStadistics', {symbol, market, func}],
     queryFn: () => cryptoStadistics(market, symbol, func),
   })
-  if (!isLoading) {
-    console.log('data :', data)
-  }
 
   return (
     <div className="mx-auto max-w-7xl px-6 pb-24 pt-10">

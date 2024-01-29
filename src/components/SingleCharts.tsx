@@ -11,17 +11,18 @@ import {
   Area,
   AreaChart,
 } from 'recharts'
-import {DataKeyType, PriceType} from './Charts'
+import {PriceType} from './Charts'
+import {DataKeyType} from './CryptoChart'
 
 type SingleChartsProps = {
   prices: PriceType[]
-  dataKeys: DataKeyType[]
+  dataKeys?: DataKeyType[]
 }
 
 export const SingleCharts = ({prices, dataKeys}: SingleChartsProps) => {
   return (
     <>
-      {dataKeys.map(dataKey => (
+      {dataKeys?.map(dataKey => (
         <ResponsiveContainer width="100%" height={200} key={dataKey.type}>
           <AreaChart
             data={prices}

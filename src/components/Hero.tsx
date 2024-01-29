@@ -1,6 +1,5 @@
 import React from 'react'
 import CryptoExchange from './CryptoExchange'
-// import {useTranslations} from 'next-intl'
 import {getTranslations} from 'next-intl/server'
 export const Hero = async () => {
   const t = await getTranslations('Index')
