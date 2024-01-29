@@ -2,5 +2,9 @@
   "Index": {
     "title": "Crypto Tasa de Cambio",
     "description": "Opten el ultimo precio de cambio de Crypto Divisas a tu divisa favorita"
+  },
+  "Stadistics": {
+    "title": "Estadisticas",
+    "description": "Estadisticas de las Crypto Divisas"
   }
 }

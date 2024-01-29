@@ -18,6 +18,12 @@ export const fiatCurrencies = [
   {value: 'SGD', label: 'Singaporean Dollar'},
 ]
 
+export const timePeriods = [
+  {value: 'DIGITAL_CURRENCY_DAILY', label: 'Daily'},
+  {value: 'DIGITAL_CURRENCY_WEEKLY', label: 'Weekly'},
+  {value: 'DIGITAL_CURRENCY_MONTHLY', label: 'Monthly'},
+]
+
 type FiatFormatType = {
   [key: string]: string
 }
@@ -31,3 +37,10 @@ export const fiatFormat: FiatFormatType = {
   RUB: 'ru-RU',
   SGD: 'en-SG',
 }
+
+export const dataKeys = [
+  {type: 'close', color: '#8884d8'},
+  {type: 'open', color: '#82ca9d'},
+  {type: 'high', color: '#B03A2E'},
+  {type: 'low', color: '#2874A6'},
+]

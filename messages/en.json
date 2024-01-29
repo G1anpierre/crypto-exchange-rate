@@ -2,5 +2,9 @@
   "Index": {
     "title": "Crypto Exchange Rate",
     "description": "Get the latest exchange rate of cryptocurrencies in your favorite currency"
+  },
+  "Stadistics": {
+    "title": "Stadistics",
+    "description": "Crypto Market Stadistics"
   }
 }
