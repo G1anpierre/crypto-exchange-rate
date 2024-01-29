@@ -101,7 +101,7 @@ export const CryptoChart = ({
         <CardBody className="min-h-20">
           {isError ? (
             <p className="text-red-700 text-sm min-h-8 text-center">
-              {error.message}
+              {error?.message}
             </p>
           ) : isLoading ? (
             <div className="flex flex-col gap-4">
