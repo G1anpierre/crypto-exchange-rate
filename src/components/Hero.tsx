@@ -1,9 +1,9 @@
 import React from 'react'
 import CryptoExchange from './CryptoExchange'
-import {useTranslations} from 'next-intl'
-
-export const Hero = () => {
-  const t = useTranslations('Index')
+// import {useTranslations} from 'next-intl'
+import {getTranslations} from 'next-intl/server'
+export const Hero = async () => {
+  const t = await getTranslations('Index')
   return (
     <div className="relative isolate overflow-hidden bg-white dark:bg-black">
       <svg
@@ -29,7 +29,7 @@ export const Hero = () => {
           fill="url(#0787a7c5-978c-4f66-83c7-11c213f99cb7)"
         />
       </svg>
-      <div className="mx-auto max-w-7xl px-6 pb-24 pt-10 sm:pb-32 flex flex-col gap-10 lg:flex-row lg:px-8 lg:py-40">
+      <div className="mx-auto max-w-7xl px-6 pb-24 pt-10 sm:pb-32 flex flex-col gap-10 lg:flex-row lg:px-8 lg:py-20">
         <div className="mx-auto max-w-2xl lg:mx-0 lg:max-w-xl lg:flex-shrink-0 lg:pt-8">
           <img
             className="h-11"

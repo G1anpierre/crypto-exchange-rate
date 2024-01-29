@@ -18,6 +18,12 @@ export const fiatCurrencies = [
   {value: 'SGD', label: 'Singaporean Dollar'},
 ]
 
+export const timePeriods = [
+  {value: 'DIGITAL_CURRENCY_DAILY', label: 'Daily'},
+  {value: 'DIGITAL_CURRENCY_WEEKLY', label: 'Weekly'},
+  {value: 'DIGITAL_CURRENCY_MONTHLY', label: 'Monthly'},
+]
+
 type FiatFormatType = {
   [key: string]: string
 }

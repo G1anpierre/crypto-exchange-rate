@@ -2,20 +2,7 @@
 import React from 'react'
 import {useQuery} from '@tanstack/react-query'
 import {getTimeSeriesDailyAdjusted} from '@/services/exchangeRate'
-import {
-  LineChart,
-  Line,
-  XAxis,
-  YAxis,
-  CartesianGrid,
-  Tooltip,
-  Legend,
-  ResponsiveContainer,
-  Label,
-  Area,
-  AreaChart,
-} from 'recharts'
-import {Chart} from './Chart'
+import {Chart} from './Charts'
 
 export const StadisticChart = () => {
   const [symbol, setSymbol] = React.useState('SPY')

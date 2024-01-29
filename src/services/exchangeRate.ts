@@ -13,19 +13,6 @@ export const getExchangeRate = async (
   fromCryptoCurrency = 'BTC',
   toFiatCurrency = 'USD',
 ) => {
-  // const options = {
-  //   method: 'GET',
-  //   url: 'https://alpha-vantage.p.rapidapi.com/query',
-  //   params: {
-  //     from_currency: fromCryptoCurrency,
-  //     function: 'CURRENCY_EXCHANGE_RATE',
-  //     to_currency: toFiatCurrency,
-  //   },
-  //   headers: {
-  //     'X-RapidAPI-Key': process.env.NEXT_PUBLIC_RAPID_API_KEY as string,
-  //     'X-RapidAPI-Host': 'alpha-vantage.p.rapidapi.com',
-  //   },
-  // }
   try {
     const response = await instance({
       method: 'GET',
@@ -76,6 +63,61 @@ export const getTimeSeriesDailyAdjusted = async (symbol: string) => {
           const dataReturn = {
             symbol,
             refreshed,
+            prices,
+          }
+          return dataReturn
+        },
+      ],
+    })
+    return response.data
+  } catch (err) {
+    const errors = err as Error | AxiosError
+    if (axios.isAxiosError(errors)) {
+      throw new Error(errors.response?.data.message)
+    } else {
+      throw new Error(errors.message)
+    }
+  }
+}
+
+type timePeriodType = {
+  [key: string]: string
+}
+
+const timePeriod: timePeriodType = {
+  DIGITAL_CURRENCY_WEEKLY: 'Time Series (Digital Currency Weekly)',
+  DIGITAL_CURRENCY_DAILY: 'Time Series (Digital Currency Daily)',
+  DIGITAL_CURRENCY_MONTHLY: 'Time Series (Digital Currency Monthly)',
+}
+
+export const cryptoStadistics = async (
+  market: string = 'CNY',
+  symbol: string = 'BTC',
+  func: string = 'DIGITAL_CURRENCY_WEEKLY',
+) => {
+  try {
+    const response = await instance({
+      method: 'GET',
+      url: '/query',
+      params: {
+        market,
+        symbol,
+        function: func,
+      },
+      transformResponse: [
+        function (data) {
+          if (!data) return
+          const json = JSON.parse(data)
+          const dates = Object.keys(json?.[timePeriod[func]]).reverse()
+          const prices = dates?.map(date => ({
+            date: date,
+            open: Number(json[timePeriod[func]][date]?.['1b. open (USD)']),
+            high: Number(json[timePeriod[func]][date]?.['2b. high (USD)']),
+            low: Number(json[timePeriod[func]][date]?.['3b. low (USD)']),
+            close: Number(json[timePeriod[func]][date]?.['4b. close (USD)']),
+          }))
+
+          const dataReturn = {
             prices,
           }
           return dataReturn
