@@ -4,6 +4,7 @@ import {useQuery} from '@tanstack/react-query'
 import {getTimeSeriesDailyAdjusted} from '@/services/exchangeRate'
 import {Charts} from './Charts'
 
+// ! This component is not used in the app
 export const StadisticChart = () => {
   const [symbol, setSymbol] = React.useState('SPY')
 
@@ -11,10 +12,6 @@ export const StadisticChart = () => {
     queryKey: ['TimeSeriesDaily', {symbol}],
     queryFn: () => getTimeSeriesDailyAdjusted(symbol),
   })
-  if (!isLoading) {
-    console.log('data :', data)
-  }
-  console.log('error :', error)
 
   return (
     <>
