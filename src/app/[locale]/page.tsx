@@ -1,16 +1,29 @@
 import {CryptoChart} from '@/components/CryptoChart'
 import {Hero} from '@/components/Hero'
 import {StadisticChart} from '@/components/StadisticChart'
-import {useTranslations} from 'next-intl'
+import {getTranslations} from 'next-intl/server'
 
-export default function Home() {
-  const t = useTranslations('Stadistics')
+import {dehydrate, HydrationBoundary, QueryClient} from '@tanstack/react-query'
+
+export default async function Home() {
+  const queryClient = new QueryClient()
+
+  await queryClient.prefetchQuery({
+    queryKey: [
+      'cryptoStadistics',
+      {func: 'DIGITAL_CURRENCY_MONTHLY', market: 'EUR', symbol: 'BTC'},
+    ],
+  })
+
+  const t = await getTranslations('Stadistics')
   return (
     <main className="flex min-h-screen flex-col">
       <div>
-        <Hero />
-        {/* <StadisticChart /> */}
-        <CryptoChart title={t('title')} description={t('description')} />
+        <HydrationBoundary state={dehydrate(queryClient)}>
+          <Hero />
+          {/* <StadisticChart /> */}
+          <CryptoChart title={t('title')} description={t('description')} />
+        </HydrationBoundary>
       </div>
     </main>
   )
