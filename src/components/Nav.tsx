@@ -48,8 +48,10 @@ export const Nav = () => {
         />
         <NavbarBrand>
           {/* <AcmeLogo /> */}
-          Logo
-          <p className="font-bold text-inherit">ACME</p>
+          <NextUILink href="/" color="foreground">
+            Logo
+            <p className="font-bold text-inherit">ACME</p>
+          </NextUILink>
         </NavbarBrand>
       </NavbarContent>
 
