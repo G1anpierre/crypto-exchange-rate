@@ -4,6 +4,7 @@ import {StadisticChart} from '@/components/StadisticChart'
 import {getTranslations} from 'next-intl/server'
 
 import {dehydrate, HydrationBoundary, QueryClient} from '@tanstack/react-query'
+import {cryptoStadistics} from '@/services/exchangeRate'
 
 export default async function Home() {
   const queryClient = new QueryClient()
@@ -13,6 +14,7 @@ export default async function Home() {
       'cryptoStadistics',
       {func: 'DIGITAL_CURRENCY_MONTHLY', market: 'EUR', symbol: 'BTC'},
     ],
+    queryFn: () => cryptoStadistics('EUR', 'BTC', 'DIGITAL_CURRENCY_MONTHLY'),
   })
 
   const t = await getTranslations('Stadistics')
