@@ -12,6 +12,7 @@ import {
   Button,
 } from '@nextui-org/react'
 import {usePathname} from 'next/navigation'
+import Image from 'next/image'
 
 import {ThemeSwitcher} from './ThemeSwitcher'
 import {SwitchLocale} from './SwitchLocale'
@@ -43,8 +44,12 @@ export const Nav = () => {
         <NavbarBrand>
           {/* <AcmeLogo /> */}
           <NextUILink href="/" color="foreground">
-            {/* Logo */}
-            <p className="font-bold text-inherit"> CryptoCurrent</p>
+            <Image
+              src="/cryptocurrent-high-resolution-logo-black-transparent.png"
+              alt="CryptoCurrent Logo"
+              width={200}
+              height={25}
+            />
           </NextUILink>
         </NavbarBrand>
       </NavbarContent>
