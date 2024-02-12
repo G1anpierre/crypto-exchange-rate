@@ -30,6 +30,8 @@ export const CryptoChart = ({
     queryFn: () => cryptoStadistics(market, symbol, func),
   })
 
+  console.error(error?.message)
+
   return (
     <div className="mx-auto max-w-7xl px-6 pb-24 pt-10">
       <div className="">
@@ -86,7 +88,8 @@ export const CryptoChart = ({
         <CardBody className="min-h-20">
           {isError ? (
             <p className="text-red-700 text-sm min-h-8 text-center">
-              {error?.message}
+              You have exceeded the rate limit per minute for your plan, BASIC,
+              by the API provider
             </p>
           ) : isLoading ? (
             <div className="flex flex-col gap-4">

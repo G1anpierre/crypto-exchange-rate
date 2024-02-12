@@ -6,5 +6,12 @@
   "Stadistics": {
     "title": "Estadisticas",
     "description": "Estadisticas de las Crypto Divisas"
+  },
+  "Compass": {
+    "title": "Adelántate a la curva: Noticias cripto seleccionadas por plataforma",
+    "description-1": "Recibe las últimas noticias sobre criptomonedas de tus fuentes favoritas, todo en ¡en un solo lugar!",
+    "description-2": "Con nuestra sección 'Su Crypto Compass'; usted puede fácilmente seleccionar las mejores plataformas, como CoinDesk, Bitcoinist, Cointelegraph como CoinDesk, Bitcoinist, Cointelegraph, Decrypt, BSC News, e incluso e incluso The Guardian para obtener información financiera más general.",
+    "description-3": "Se acabaron los saltos entre aplicaciones o sitios web: Elija la plataforma que desee y obtenga acceso instantáneo a los últimos titulares, análisis y actualizaciones.",
+    "description-4": "Manténgase informado y tome decisiones de inversión más inteligentes por delante de la curva con ,'Su Crypto Compass'."
   }
 }

@@ -5,13 +5,15 @@ import {
   NavbarBrand,
   NavbarContent,
   NavbarItem,
-  Link,
   NavbarMenuToggle,
   NavbarMenu,
   NavbarMenuItem,
-  Switch,
+  Link as NextUILink,
   Button,
 } from '@nextui-org/react'
+import {usePathname} from 'next/navigation'
+import Image from 'next/image'
+
 import {ThemeSwitcher} from './ThemeSwitcher'
 import {SwitchLocale} from './SwitchLocale'
 import {AuthUser} from './AuthUser'
@@ -19,7 +21,8 @@ import {signOut} from '@/actions/signOut'
 
 export const Nav = () => {
   const [isMenuOpen, setIsMenuOpen] = React.useState(false)
-
+  const pathname = usePathname()
+  const isActive = (path: string) => path === pathname.split('/')[2]
   const menuItems = [
     'Profile',
     'Dashboard',
@@ -40,28 +43,32 @@ export const Nav = () => {
         />
         <NavbarBrand>
           {/* <AcmeLogo /> */}
-          Logo
-          <p className="font-bold text-inherit">ACME</p>
+          <NextUILink href="/" color="foreground">
+            <Image
+              src="/cryptocurrent-high-resolution-logo-black-transparent.png"
+              alt="CryptoCurrent Logo"
+              width={200}
+              height={25}
+            />
+          </NextUILink>
         </NavbarBrand>
       </NavbarContent>
 
-      {/* <NavbarContent className="hidden sm:flex gap-4" justify="center">
-        <NavbarItem>
+      <NavbarContent className="hidden sm:flex gap-4" justify="center">
+        {/* <NavbarItem>
           <Link color="foreground" href="#">
             Features
           </Link>
-        </NavbarItem>
-        <NavbarItem isActive>
+        </NavbarItem> */}
+        {/* <NavbarItem isActive>
           <Link href="#" aria-current="page">
             Customers
           </Link>
+        </NavbarItem> */}
+        <NavbarItem isActive={isActive('cryptonews')}>
+          <NextUILink href="/cryptonews">Watch Crypto News!</NextUILink>
         </NavbarItem>
-        <NavbarItem>
-          <Link color="foreground" href="#">
-            Integrations
-          </Link>
-        </NavbarItem>
-      </NavbarContent> */}
+      </NavbarContent>
       <NavbarContent justify="end">
         <NavbarMenuItem className="hidden md:flex">
           <SwitchLocale />
@@ -85,9 +92,9 @@ export const Nav = () => {
         </NavbarMenuItem>
         {menuItems.map((item, index) => (
           <NavbarMenuItem key={`${item}-${index}`}>
-            <Link className="w-full" href="#" size="lg">
+            <NextUILink className="w-full" href="#" size="lg">
               {item}
-            </Link>
+            </NextUILink>
           </NavbarMenuItem>
         ))}
         <NavbarMenuItem>

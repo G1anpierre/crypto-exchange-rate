@@ -6,5 +6,12 @@
   "Stadistics": {
     "title": "Stadistics",
     "description": "Crypto Market Stadistics"
+  },
+  "Compass": {
+    "title": "Stay Ahead of the Curve: Curated Crypto News by Platform",
+    "description-1": "Get the latest crypto news from your favorite sources, all in one place!",
+    "description-2": "With our section 'Your Crypto Compass', you can easily curate your crypto news feed by selecting from top platforms like CoinDesk, Bitcoinist, Cointelegraph, Decrypt, BSC News, and even The Guardian for more mainstream financial insights.",
+    "description-3": "No more hopping between apps or websites: Just choose your desired platform and get instant access to the latest headlines, analysis, and updates.",
+    "description-4": "Stay informed and make smarter investment decisions by staying ahead of the curve with 'Your Crypto Compass';"
   }
 }
