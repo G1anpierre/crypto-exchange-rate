@@ -11,6 +11,7 @@ import {
   DropdownItem,
   Button,
 } from '@nextui-org/react'
+import {DEFAULT_NEWS_PLARFORM} from '@/static'
 
 export const SwitchLocale = () => {
   const {locale} = useParams()
@@ -47,7 +48,7 @@ export const SwitchLocale = () => {
         <DropdownItem key="es">
           <Link
             href={`${pathname}?source=${
-              searchParams.get('source') || 'coindesk'
+              searchParams.get('source') || DEFAULT_NEWS_PLARFORM
             }`}
             locale="es"
             className="block"

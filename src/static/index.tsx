@@ -83,3 +83,5 @@ export const newsSources = [
     imageUrl: '/the-guardian.png',
   },
 ]
+
+export const DEFAULT_NEWS_PLARFORM = 'coindesk'

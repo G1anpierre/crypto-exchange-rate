@@ -3,13 +3,14 @@ import {News} from '@/components/News'
 import {SelectNews} from '@/components/SelectNews'
 import {dehydrate, HydrationBoundary, QueryClient} from '@tanstack/react-query'
 import {getCryptoCurrencyNews} from '@/services/cryptoCurrencyNews'
+import {DEFAULT_NEWS_PLARFORM} from '@/static'
 
 type CryptoNewsProps = {
   searchParams: {source?: string}
 }
 
 const CrytoNewsPage = async ({searchParams}: CryptoNewsProps) => {
-  const source = searchParams?.source ?? 'coindesk'
+  const source = searchParams?.source ?? DEFAULT_NEWS_PLARFORM
   const queryClient = new QueryClient()
 
   await queryClient.prefetchQuery({
