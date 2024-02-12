@@ -16,13 +16,13 @@ export const News = ({sourceSearchParam}: {sourceSearchParam: string}) => {
   })
 
   return (
-    <div className="bg-white pb-12 sm:pb-28 ">
+    <div className="bg-white pb-12 sm:pb-28 dark:bg-black">
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
         <div className="mx-auto max-w-2xl text-center">
-          <h2 className="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">
+          <h2 className="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl dark:text-white">
             {title?.name}
           </h2>
-          <p className="mt-2 text-lg leading-8 text-gray-600">
+          <p className="mt-2 text-lg leading-8 text-gray-600 dark:text-white">
             Get the top latest news.
           </p>
         </div>

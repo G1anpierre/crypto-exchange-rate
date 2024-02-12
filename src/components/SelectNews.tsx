@@ -19,14 +19,14 @@ export const SelectNews = ({
   }
 
   return (
-    <div className="bg-white py-24 sm:py-32">
+    <div className="bg-white py-24 sm:py-32 dark:bg-black">
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
         <div className="grid grid-cols-1 items-center gap-x-8 gap-y-16 lg:grid-cols-2">
           <div className="mx-auto w-full max-w-xl lg:mx-0">
-            <h2 className="text-3xl font-bold tracking-tight text-gray-900">
+            <h2 className="text-3xl font-bold tracking-tight text-gray-900 dark:text-white">
               Stay Ahead of the Curve: Curated Crypto News by Platform
             </h2>
-            <p className="mt-6 text-lg leading-8 text-gray-600 flex flex-col gap-4">
+            <p className="mt-6 text-lg leading-8 text-gray-600 flex flex-col gap-4 dark:text-white">
               <p className="font-bold">
                 Get the latest crypto news from your favorite sources, all in
                 one place!
