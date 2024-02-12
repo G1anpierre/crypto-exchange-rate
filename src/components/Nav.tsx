@@ -42,7 +42,6 @@ export const Nav = () => {
           className="sm:hidden"
         />
         <NavbarBrand>
-          {/* <AcmeLogo /> */}
           <NextUILink href="/" color="foreground">
             <Image
               src="/cryptocurrent-high-resolution-logo-black-transparent.png"
@@ -55,16 +54,6 @@ export const Nav = () => {
       </NavbarContent>
 
       <NavbarContent className="hidden sm:flex gap-4" justify="center">
-        {/* <NavbarItem>
-          <Link color="foreground" href="#">
-            Features
-          </Link>
-        </NavbarItem> */}
-        {/* <NavbarItem isActive>
-          <Link href="#" aria-current="page">
-            Customers
-          </Link>
-        </NavbarItem> */}
         <NavbarItem isActive={isActive('cryptonews')}>
           <NextUILink href="/cryptonews">Watch Crypto News!</NextUILink>
         </NavbarItem>

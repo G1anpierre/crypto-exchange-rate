@@ -5,6 +5,7 @@ import {getCryptoCurrencyNews} from '@/services/cryptoCurrencyNews'
 import {newsSources} from '@/static'
 import {useQuery} from '@tanstack/react-query'
 import {New} from './New'
+import {SkeletonCardNew} from './SkeletonCardNew'
 
 export const News = ({sourceSearchParam}: {sourceSearchParam: string}) => {
   const title = newsSources.find(
@@ -14,6 +15,8 @@ export const News = ({sourceSearchParam}: {sourceSearchParam: string}) => {
     queryKey: ['cryptoNews', {source: sourceSearchParam}],
     queryFn: () => getCryptoCurrencyNews(sourceSearchParam),
   })
+
+  const skeletonCards = new Array(6).fill(0)
 
   return (
     <div className="bg-white pb-12 sm:pb-28 dark:bg-black">
@@ -27,18 +30,25 @@ export const News = ({sourceSearchParam}: {sourceSearchParam: string}) => {
           </p>
         </div>
         <div className="mx-auto mt-16 grid max-w-2xl grid-cols-1 gap-x-8 gap-y-20 lg:mx-0 lg:max-w-none lg:grid-cols-3">
-          {isError && (
+          {isError ? (
             <div className="text-red-500 col-span-3 text-center">
               We are sorry for the inconvenience.
             </div>
+          ) : isLoading ? (
+            <>
+              {skeletonCards.map((_, index) => (
+                <SkeletonCardNew key={index} />
+              ))}
+            </>
+          ) : (
+            data?.map(newItem => (
+              <New
+                key={newItem.url}
+                singleNew={newItem}
+                sourceSearchParam={title?.name}
+              />
+            ))
           )}
-          {data?.map(newItem => (
-            <New
-              key={newItem.url}
-              singleNew={newItem}
-              sourceSearchParam={title?.name}
-            />
-          ))}
         </div>
       </div>
     </div>
