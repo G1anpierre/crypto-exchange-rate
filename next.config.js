@@ -21,6 +21,10 @@ const nextConfig = {
       },
       {
         protocol: 'https',
+        hostname: 'images.cointelegraph.com',
+      },
+      {
+        protocol: 'https',
         hostname: 'cdn.decrypt.co',
       },
       {
