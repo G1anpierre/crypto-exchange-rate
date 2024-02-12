@@ -2,12 +2,14 @@ import React from 'react'
 import Link from 'next/link'
 import classNames from 'classnames'
 import {newsSources} from '@/static'
+import {getTranslations} from 'next-intl/server'
 
-export const SelectNews = ({
+export const SelectNews = async ({
   sourceSearchParam,
 }: {
   sourceSearchParam: string
 }) => {
+  const t = await getTranslations('Compass')
   const getSelectedStyles = (source: string) => {
     return classNames(
       'relative p-8 sm:p-10 hover:bg-secondary flex items-center justify-center w-full h-full transition-all duration-300 ease-in-out transform hover:scale-105 rounded-2xl',
@@ -24,33 +26,17 @@ export const SelectNews = ({
         <div className="grid grid-cols-1 items-center gap-x-8 gap-y-16 lg:grid-cols-2">
           <div className="mx-auto w-full max-w-xl lg:mx-0">
             <h2 className="text-3xl font-bold tracking-tight text-gray-900 dark:text-white">
-              Stay Ahead of the Curve: Curated Crypto News by Platform
+              {/* Stay Ahead of the Curve: Curated Crypto News by Platform */}
+              {t('title')}
             </h2>
             <p className="mt-6 text-lg leading-8 text-gray-600 flex flex-col gap-4 dark:text-white">
-              <p className="font-bold">
-                Get the latest crypto news from your favorite sources, all in
-                one place!
-              </p>
+              <p className="font-bold">{t('description-1')}</p>
 
-              <p>
-                With our &quot;Your Crypto Compass&quot; section, you can easily
-                curate your crypto news feed by selecting from top platforms
-                like CoinDesk, Bitcoinist, Cointelegraph, Decrypt, BSC News, and
-                even The Guardian for more mainstream financial insights.
-              </p>
+              <p>{t('description-2')}</p>
 
-              <p>
-                <span className="font-bold">
-                  No more hopping between apps or websites:
-                </span>{' '}
-                Just choose your desired platform and get instant access to the
-                latest headlines, analysis, and updates.
-              </p>
+              <p>{t('description-3')}</p>
 
-              <p className="font-bold">
-                Stay informed and make smarter investment decisions by staying
-                ahead of the curve with &quot;Your Crypto Compass.&quot;
-              </p>
+              <p className="font-bold">{t('description-4')}</p>
             </p>
             {/* <div className="mt-8 flex items-center gap-x-6">
               <a
