@@ -11,7 +11,7 @@ import {
   Link as NextUILink,
   Button,
 } from '@nextui-org/react'
-import {usePathname} from 'next/navigation'
+import {usePathname, useParams} from 'next/navigation'
 import Image from 'next/image'
 
 import {ThemeSwitcher} from './ThemeSwitcher'
@@ -22,6 +22,7 @@ import {signOut} from '@/actions/signOut'
 export const Nav = () => {
   const [isMenuOpen, setIsMenuOpen] = React.useState(false)
   const pathname = usePathname()
+
   const isActive = (path: string) => path === pathname.split('/')[2]
   const menuItems = [
     'Profile',
@@ -43,12 +44,7 @@ export const Nav = () => {
         />
         <NavbarBrand>
           <NextUILink href="/" color="foreground">
-            <Image
-              src="/cryptocurrent-high-resolution-logo-black-transparent.png"
-              alt="CryptoCurrent Logo"
-              width={200}
-              height={25}
-            />
+            <div className="bg-logo-light dark:bg-logo-dark bg-cover object-cover h-5 w-60"></div>
           </NextUILink>
         </NavbarBrand>
       </NavbarContent>

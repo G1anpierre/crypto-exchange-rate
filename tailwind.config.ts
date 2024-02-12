@@ -14,10 +14,19 @@ const config: Config = {
         'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
         'gradient-conic':
           'conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))',
+        'logo-light':
+          "url('/cryptocurrent-high-resolution-logo-black-transparent.png')",
+        'logo-dark':
+          "url('/cryptocurrent-high-resolution-logo-white-transparent.png')",
       },
     },
   },
   darkMode: 'class',
+  variants: {
+    extend: {
+      backgroundImage: ['dark'],
+    },
+  },
   plugins: [
     nextui({
       themes: {
