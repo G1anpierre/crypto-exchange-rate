@@ -1,4 +1,18 @@
 import axios, {AxiosError} from 'axios'
+import z from 'zod'
+
+const CryptoNewSchema = z.object({
+  url: z.string(),
+  title: z.string(),
+  description: z.string(),
+  thumbnail: z.string(),
+  createdAt: z.string(),
+})
+
+const CryptoNewsSchema = z.array(CryptoNewSchema)
+
+export type CryptoNewsType = z.infer<typeof CryptoNewsSchema>
+export type CryptoNewType = z.infer<typeof CryptoNewSchema>
 
 const instance = axios.create({
   baseURL: 'https://cryptocurrency-news2.p.rapidapi.com/v1',
@@ -15,7 +29,8 @@ export const getCryptoCurrencyNews = async (infoservice: string) => {
       method: 'GET',
       url: `/${infoservice}`,
     })
-    return response.data
+    const validateData = CryptoNewsSchema.parse(response.data.data)
+    return validateData
   } catch (err) {
     const errors = err as Error | AxiosError
     if (axios.isAxiosError(errors)) {

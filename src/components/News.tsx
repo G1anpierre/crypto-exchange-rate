@@ -1,44 +1,43 @@
+'use client'
+
 import React from 'react'
-import {New} from './New'
 import {getCryptoCurrencyNews} from '@/services/cryptoCurrencyNews'
-import z from 'zod'
+import {newsSources} from '@/static'
+import {useQuery} from '@tanstack/react-query'
+import {New} from './New'
 
-const CryptoNewSchema = z.object({
-  url: z.string(),
-  title: z.string(),
-  description: z.string(),
-  thumbnail: z.string(),
-  createdAt: z.string(),
-})
-
-const CryptoNewsSchema = z.array(CryptoNewSchema)
-
-export type CryptoNewsType = z.infer<typeof CryptoNewsSchema>
-export type CryptoNewType = z.infer<typeof CryptoNewSchema>
-
-const getCryptoNew = async (infoservice: string) => {
-  const response = await getCryptoCurrencyNews(infoservice)
-  const validatedData = CryptoNewsSchema.parse(response.data)
-  return validatedData
-}
-
-export const News = async () => {
-  const news = await getCryptoNew('coindesk')
+export const News = ({sourceSearchParam}: {sourceSearchParam: string}) => {
+  const title = newsSources.find(
+    source => source.searchParams === sourceSearchParam,
+  )
+  const {data, error, isLoading, isError} = useQuery({
+    queryKey: ['cryptoNews', {source: sourceSearchParam}],
+    queryFn: () => getCryptoCurrencyNews(sourceSearchParam),
+  })
 
   return (
-    <div className="bg-white py-24 sm:py-32">
+    <div className="bg-white pb-12 sm:pb-28 ">
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
         <div className="mx-auto max-w-2xl text-center">
           <h2 className="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">
-            CoinDesk News
+            {title?.name}
           </h2>
           <p className="mt-2 text-lg leading-8 text-gray-600">
-            Learn how to grow your business with our expert advice.
+            Get the top latest news.
           </p>
         </div>
         <div className="mx-auto mt-16 grid max-w-2xl grid-cols-1 gap-x-8 gap-y-20 lg:mx-0 lg:max-w-none lg:grid-cols-3">
-          {news.map(newItem => (
-            <New key={newItem.url} singleNew={newItem} />
+          {isError && (
+            <div className="text-red-500 col-span-3 text-center">
+              We are sorry for the inconvenience.
+            </div>
+          )}
+          {data?.map(newItem => (
+            <New
+              key={newItem.url}
+              singleNew={newItem}
+              sourceSearchParam={title?.name}
+            />
           ))}
         </div>
       </div>

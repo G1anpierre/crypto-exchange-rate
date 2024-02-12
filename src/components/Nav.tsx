@@ -11,12 +11,7 @@ import {
   Link as NextUILink,
   Button,
 } from '@nextui-org/react'
-import {
-  useParams,
-  usePathname,
-  useRouter,
-  useSearchParams,
-} from 'next/navigation'
+import {usePathname} from 'next/navigation'
 
 import {ThemeSwitcher} from './ThemeSwitcher'
 import {SwitchLocale} from './SwitchLocale'
@@ -49,8 +44,8 @@ export const Nav = () => {
         <NavbarBrand>
           {/* <AcmeLogo /> */}
           <NextUILink href="/" color="foreground">
-            Logo
-            <p className="font-bold text-inherit">ACME</p>
+            {/* Logo */}
+            <p className="font-bold text-inherit"> CryptoCurrent</p>
           </NextUILink>
         </NavbarBrand>
       </NavbarContent>
