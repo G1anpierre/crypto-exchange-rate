@@ -17,7 +17,6 @@ import {ThemeSwitcher} from './ThemeSwitcher'
 import {SwitchLocale} from './SwitchLocale'
 import {AuthUser} from './AuthUser'
 import {signOut} from '@/actions/signOut'
-import path from 'path'
 
 export const Nav = () => {
   const [isMenuOpen, setIsMenuOpen] = React.useState(false)

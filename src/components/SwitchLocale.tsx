@@ -1,8 +1,9 @@
 'use client'
 
-import {Link} from '@/navigation'
+import {Link, usePathname} from '@/navigation'
 import React from 'react'
 import {useParams} from 'next/navigation'
+import {useSearchParams} from 'next/navigation'
 import {
   Dropdown,
   DropdownTrigger,
@@ -13,6 +14,8 @@ import {
 
 export const SwitchLocale = () => {
   const {locale} = useParams()
+  const pathname = usePathname()
+  const searchParams = useSearchParams()
 
   const isString = (value: string | string[]) => {
     if (typeof value === 'string') {
@@ -33,12 +36,22 @@ export const SwitchLocale = () => {
         disabledKeys={[`${locale}`]}
       >
         <DropdownItem key="en">
-          <Link href="/" locale="en">
+          <Link
+            href={`${pathname}?source=${searchParams.get('source')}`}
+            locale="en"
+            className="block"
+          >
             EN
           </Link>
         </DropdownItem>
         <DropdownItem key="es">
-          <Link href="/" locale="es">
+          <Link
+            href={`${pathname}?source=${
+              searchParams.get('source') || 'coindesk'
+            }`}
+            locale="es"
+            className="block"
+          >
             ES
           </Link>
         </DropdownItem>
