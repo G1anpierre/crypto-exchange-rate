@@ -16,15 +16,17 @@ export const New = ({singleNew, sourceSearchParam}: SingleNewTypeProps) => {
     }
 
     const placeholderImage: PlaceholderImageType = {
-      cointelegraph: '/cointelegraph-icon.png',
-      bsc: '/bsc-news.svg',
-      decrypt: '/decrypt-seeklogo.svg',
-      coindesk: '/coindesk-logo-hq.png',
-      bitcoinist: '/bitcoinist.webp',
-      theguardian: '/the-guardian.png',
+      CoinTelegraph: '/cointelegraph-icon.png',
+      [`BSC News`]: '/bsc-news.svg',
+      Decrypt: '/decrypt-seeklogo.svg',
+      Coindesk: '/coindesk-logo-hq.png',
+      Bitcoinist: '/bitcoinist.webp',
+      [`The Guardian`]: '/the-guardian.png',
     }
     return placeholderImage[sourceSearchParam]
   }
+
+  console.log('sourceSearchParam', sourceSearchParam)
 
   return (
     <article className="flex flex-col">
