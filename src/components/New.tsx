@@ -37,6 +37,7 @@ export const New = ({singleNew, sourceSearchParam}: SingleNewTypeProps) => {
           height={600}
           onError={event => {
             event.currentTarget.src = getPlaceholderImage(sourceSearchParam)
+            event.currentTarget.srcset = getPlaceholderImage(sourceSearchParam)
           }}
         />
         <div className="absolute inset-0 rounded-2xl ring-1 ring-inset ring-gray-900/10" />
