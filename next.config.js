@@ -17,11 +17,13 @@ const nextConfig = {
       },
       {
         protocol: 'https',
-        hostname: 'cointelegraph.com',
+        hostname: '**.cointelegraph.com',
+        port: '',
       },
       {
         protocol: 'https',
-        hostname: 'images.cointelegraph.com',
+        hostname: '**.images.cointelegraph.com',
+        port: '',
       },
       {
         protocol: 'https',
