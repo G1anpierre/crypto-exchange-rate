@@ -9,6 +9,25 @@ type SingleNewTypeProps = {
 }
 
 export const New = ({singleNew, sourceSearchParam}: SingleNewTypeProps) => {
+  const getPlaceholderImage = (sourceSearchParam?: string) => {
+    if (!sourceSearchParam) return ''
+    type PlaceholderImageType = {
+      [key: string]: string
+    }
+
+    const placeholderImage: PlaceholderImageType = {
+      CoinTelegraph: '/cointelegraph-icon.png',
+      [`BSC News`]: '/bsc-news.svg',
+      Decrypt: '/decrypt-seeklogo.svg',
+      Coindesk: '/coindesk-logo-hq.png',
+      Bitcoinist: '/bitcoinist.webp',
+      [`The Guardian`]: '/the-guardian.png',
+    }
+    return placeholderImage[sourceSearchParam]
+  }
+
+  console.log('sourceSearchParam', sourceSearchParam)
+
   return (
     <article className="flex flex-col">
       <div className="relative w-full">
@@ -18,6 +37,10 @@ export const New = ({singleNew, sourceSearchParam}: SingleNewTypeProps) => {
           className="aspect-[16/9] w-full rounded-2xl bg-gray-100 object-cover sm:aspect-[2/1] lg:aspect-[3/2]"
           width={800}
           height={600}
+          onError={event => {
+            event.currentTarget.src = getPlaceholderImage(sourceSearchParam)
+            event.currentTarget.srcset = getPlaceholderImage(sourceSearchParam)
+          }}
         />
         <div className="absolute inset-0 rounded-2xl ring-1 ring-inset ring-gray-900/10" />
       </div>
