@@ -26,8 +26,6 @@ export const New = ({singleNew, sourceSearchParam}: SingleNewTypeProps) => {
     return placeholderImage[sourceSearchParam]
   }
 
-  console.log('sourceSearchParam', sourceSearchParam)
-
   return (
     <article className="flex flex-col">
       <div className="relative w-full">

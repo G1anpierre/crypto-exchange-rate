@@ -58,14 +58,14 @@ export default function CryptoExchange() {
   return (
     <Card>
       <form>
-        <CardHeader className="grid grid-cols-2 grid-rows-2 gap-2">
+        <CardHeader className='grid grid-cols-2 grid-rows-2 gap-2'>
           <Select
-            label="Cryptocurrency"
-            placeholder="Select a cryptocurrency"
+            label='Cryptocurrency'
+            placeholder='Select a cryptocurrency'
             // startContent={<Image src="/bitcoin.svg" width={20} height={20} />}
             defaultSelectedKeys={['BTC']}
-            name="fromCryptoCurrency"
-            color="primary"
+            name='fromCryptoCurrency'
+            color='primary'
             selectedKeys={[fromCryptoCurrency]}
             onChange={handleCryptocurrencyChange}
           >
@@ -79,12 +79,12 @@ export default function CryptoExchange() {
             ))}
           </Select>
           <Select
-            label="FiatCurrency"
-            placeholder="Select a fiatCurrency"
+            label='FiatCurrency'
+            placeholder='Select a fiatCurrency'
             // startContent={<Image src="/bitcoin.svg" width={20} height={20} />}
             defaultSelectedKeys={['USD']}
-            name="toFiatCurrency"
-            color="primary"
+            name='toFiatCurrency'
+            color='primary'
             selectedKeys={[toFiatCurrency]}
             onChange={handleFiatCurrencyChange}
           >
@@ -102,33 +102,33 @@ export default function CryptoExchange() {
       </form>
 
       <Divider />
-      <CardBody className="min-h-20">
-        <div className="mx-auto">
-          <div className="relative inline-block">
+      <CardBody className='min-h-20'>
+        <div className='mx-auto'>
+          <div className='relative inline-block'>
             Live Exchange Rate
             <span className={liveExchangeRateClass} />
           </div>
-          <div className="text-center text-2xl">
+          <div className='text-center text-2xl'>
             {isLoading ? (
-              <Spinner color="warning" labelColor="warning" size="sm" />
+              <Spinner color='warning' labelColor='warning' size='sm' />
             ) : (
-              <span className="text-success">{transformedRate}</span>
+              <span className='text-success'>{transformedRate}</span>
             )}
           </div>
         </div>
         {isError && (
-          <p className="text-red-700 text-sm min-h-8 text-center">
+          <p className='min-h-8 text-center text-sm text-red-700'>
             {error.message}
           </p>
         )}
       </CardBody>
       <Divider />
       <CardFooter>
-        <div className="flex justify-center w-full">
+        <div className='flex w-full justify-center'>
           <Link
             isExternal
             showAnchorIcon
-            href="https://github.com/G1anpierre/crypto-exchange-rate"
+            href='https://github.com/G1anpierre/crypto-exchange-rate'
           >
             Visit source code on GitHub.
           </Link>

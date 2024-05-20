@@ -21,7 +21,7 @@ export const SelectNews = async ({
   }
 
   return (
-    <div className="bg-white py-24 sm:py-32 dark:bg-black">
+    <div className="bg-white py-24 dark:bg-black sm:py-32">
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
         <div className="grid grid-cols-1 items-center gap-x-8 gap-y-16 lg:grid-cols-2">
           <div className="mx-auto w-full max-w-xl lg:mx-0">
@@ -29,7 +29,7 @@ export const SelectNews = async ({
               {/* Stay Ahead of the Curve: Curated Crypto News by Platform */}
               {t('title')}
             </h2>
-            <p className="mt-6 text-lg leading-8 text-gray-600 flex flex-col gap-4 dark:text-white">
+            <div className="mt-6 flex flex-col gap-4 text-lg leading-8 text-gray-600 dark:text-white">
               <p className="font-bold">{t('description-1')}</p>
 
               <p>{t('description-2')}</p>
@@ -37,7 +37,7 @@ export const SelectNews = async ({
               <p>{t('description-3')}</p>
 
               <p className="font-bold">{t('description-4')}</p>
-            </p>
+            </div>
             {/* <div className="mt-8 flex items-center gap-x-6">
               <a
                 href="#"
@@ -60,7 +60,7 @@ export const SelectNews = async ({
                 <img
                   className={`${
                     newsSource.name === 'Decrypt' ? 'max-h-14' : 'max-h-14'
-                  } w-full object-contain align-middle h-full`}
+                  } h-full w-full object-contain align-middle`}
                   src={newsSource.imageUrl}
                   alt={newsSource.name}
                   width={105}

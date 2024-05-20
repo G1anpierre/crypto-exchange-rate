@@ -111,10 +111,10 @@ export const cryptoStadistics = async (
           const dates = Object.keys(json?.[timePeriod[func]]).reverse()
           const prices = dates?.map(date => ({
             date: date,
-            open: Number(json[timePeriod[func]][date]?.['1b. open (USD)']),
-            high: Number(json[timePeriod[func]][date]?.['2b. high (USD)']),
-            low: Number(json[timePeriod[func]][date]?.['3b. low (USD)']),
-            close: Number(json[timePeriod[func]][date]?.['4b. close (USD)']),
+            open: Number(json[timePeriod[func]][date]?.['1. open']),
+            high: Number(json[timePeriod[func]][date]?.['2. high']),
+            low: Number(json[timePeriod[func]][date]?.['3. low']),
+            close: Number(json[timePeriod[func]][date]?.['4. close']),
           }))
 
           const dataReturn = {

@@ -35,8 +35,8 @@ export const CryptoChart = ({
   return (
     <div className="mx-auto max-w-7xl px-6 pb-24 pt-10">
       <div className="">
-        <h2 className="text-4xl font-bold px-4 dark:text-white">{title}</h2>
-        <p className="text-lg leading-8 px-4 text-gray-600 dark:text-white-600">
+        <h2 className="px-4 text-4xl font-bold dark:text-white">{title}</h2>
+        <p className="dark:text-white-600 px-4 text-lg leading-8 text-gray-600">
           {description}
         </p>
       </div>
@@ -87,7 +87,7 @@ export const CryptoChart = ({
         </CardHeader>
         <CardBody className="min-h-20">
           {isError ? (
-            <p className="text-red-700 text-sm min-h-8 text-center">
+            <p className="min-h-8 text-center text-sm text-red-700">
               You have exceeded the rate limit per minute for your plan, BASIC,
               by the API provider
             </p>
