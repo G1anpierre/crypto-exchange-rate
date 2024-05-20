@@ -1,24 +1,24 @@
-import React from 'react'
-import Link from 'next/link'
-import classNames from 'classnames'
-import {newsSources} from '@/static'
-import {getTranslations} from 'next-intl/server'
+import React from "react";
+import Link from "next/link";
+import classNames from "classnames";
+import { newsSources } from "@/static";
+import { getTranslations } from "next-intl/server";
 
 export const SelectNews = async ({
   sourceSearchParam,
 }: {
-  sourceSearchParam: string
+  sourceSearchParam: string;
 }) => {
-  const t = await getTranslations('Compass')
+  const t = await getTranslations("Compass");
   const getSelectedStyles = (source: string) => {
     return classNames(
-      'relative p-8 sm:p-10 hover:bg-secondary flex items-center justify-center w-full h-full transition-all duration-300 ease-in-out transform hover:scale-105 rounded-2xl',
+      "relative p-8 sm:p-10 hover:bg-secondary flex items-center justify-center w-full h-full transition-all duration-300 ease-in-out transform hover:scale-105 rounded-2xl",
       {
-        'bg-primary': sourceSearchParam === source,
-        'bg-gray-400/5': sourceSearchParam !== source,
-      },
-    )
-  }
+        "bg-primary": sourceSearchParam === source,
+        "bg-gray-400/5": sourceSearchParam !== source,
+      }
+    );
+  };
 
   return (
     <div className="bg-white py-24 sm:py-32 dark:bg-black">
@@ -27,17 +27,17 @@ export const SelectNews = async ({
           <div className="mx-auto w-full max-w-xl lg:mx-0">
             <h2 className="text-3xl font-bold tracking-tight text-gray-900 dark:text-white">
               {/* Stay Ahead of the Curve: Curated Crypto News by Platform */}
-              {t('title')}
+              {t("title")}
             </h2>
-            <p className="mt-6 text-lg leading-8 text-gray-600 flex flex-col gap-4 dark:text-white">
-              <p className="font-bold">{t('description-1')}</p>
+            <div className="mt-6 text-lg leading-8 text-gray-600 flex flex-col gap-4 dark:text-white">
+              <p className="font-bold">{t("description-1")}</p>
 
-              <p>{t('description-2')}</p>
+              <p>{t("description-2")}</p>
 
-              <p>{t('description-3')}</p>
+              <p>{t("description-3")}</p>
 
-              <p className="font-bold">{t('description-4')}</p>
-            </p>
+              <p className="font-bold">{t("description-4")}</p>
+            </div>
             {/* <div className="mt-8 flex items-center gap-x-6">
               <a
                 href="#"
@@ -51,7 +51,7 @@ export const SelectNews = async ({
             </div> */}
           </div>
           <div className="-mx-6 grid grid-cols-2 gap-0.5 overflow-hidden sm:mx-0 sm:rounded-2xl md:grid-cols-3">
-            {newsSources.map(newsSource => (
+            {newsSources.map((newsSource) => (
               <Link
                 key={newsSource.id}
                 href={`/cryptonews?source=${newsSource.searchParams}`}
@@ -59,7 +59,7 @@ export const SelectNews = async ({
               >
                 <img
                   className={`${
-                    newsSource.name === 'Decrypt' ? 'max-h-14' : 'max-h-14'
+                    newsSource.name === "Decrypt" ? "max-h-14" : "max-h-14"
                   } w-full object-contain align-middle h-full`}
                   src={newsSource.imageUrl}
                   alt={newsSource.name}
@@ -72,5 +72,5 @@ export const SelectNews = async ({
         </div>
       </div>
     </div>
-  )
-}
+  );
+};

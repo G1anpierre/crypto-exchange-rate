@@ -1,9 +1,9 @@
-'use client'
+"use client";
 
-import React from 'react'
-import {useQuery} from '@tanstack/react-query'
-import {cryptoStadistics} from '@/services/exchangeRate'
-import {Charts} from './Charts'
+import React from "react";
+import { useQuery } from "@tanstack/react-query";
+import { cryptoStadistics } from "@/services/exchangeRate";
+import { Charts } from "./Charts";
 import {
   Card,
   CardBody,
@@ -11,26 +11,31 @@ import {
   SelectItem,
   CardHeader,
   Skeleton,
-} from '@nextui-org/react'
-import {cryptocurrencies, dataKeys, fiatCurrencies, timePeriods} from '@/static'
+} from "@nextui-org/react";
+import {
+  cryptocurrencies,
+  dataKeys,
+  fiatCurrencies,
+  timePeriods,
+} from "@/static";
 
 export const CryptoChart = ({
   title,
   description,
 }: {
-  title: string
-  description: string
+  title: string;
+  description: string;
 }) => {
-  const [market, setMarket] = React.useState('EUR')
-  const [symbol, setSymbol] = React.useState('BTC')
-  const [func, setFunct] = React.useState('DIGITAL_CURRENCY_MONTHLY')
+  const [market, setMarket] = React.useState("EUR");
+  const [symbol, setSymbol] = React.useState("BTC");
+  const [func, setFunct] = React.useState("DIGITAL_CURRENCY_MONTHLY");
 
-  const {data, error, isLoading, isError} = useQuery({
-    queryKey: ['cryptoStadistics', {symbol, market, func}],
+  const { data, error, isLoading, isError } = useQuery({
+    queryKey: ["cryptoStadistics", { symbol, market, func }],
     queryFn: () => cryptoStadistics(market, symbol, func),
-  })
+  });
 
-  console.error(error?.message)
+  console.error(error?.message);
 
   return (
     <div className="mx-auto max-w-7xl px-6 pb-24 pt-10">
@@ -47,9 +52,9 @@ export const CryptoChart = ({
             placeholder="Select market"
             color="primary"
             selectedKeys={[market]}
-            onChange={e => setMarket(e.target.value)}
+            onChange={(e) => setMarket(e.target.value)}
           >
-            {fiatCurrencies.map(fiatCurrency => (
+            {fiatCurrencies.map((fiatCurrency) => (
               <SelectItem key={fiatCurrency.value} value={fiatCurrency.value}>
                 {fiatCurrency.label}
               </SelectItem>
@@ -60,9 +65,9 @@ export const CryptoChart = ({
             placeholder="Select symbol"
             color="primary"
             selectedKeys={[symbol]}
-            onChange={e => setSymbol(e.target.value)}
+            onChange={(e) => setSymbol(e.target.value)}
           >
-            {cryptocurrencies.map(cryptoCurrency => (
+            {cryptocurrencies.map((cryptoCurrency) => (
               <SelectItem
                 key={cryptoCurrency.value}
                 value={cryptoCurrency.value}
@@ -76,9 +81,9 @@ export const CryptoChart = ({
             placeholder="Select Time Period"
             color="primary"
             selectedKeys={[func]}
-            onChange={e => setFunct(e.target.value)}
+            onChange={(e) => setFunct(e.target.value)}
           >
-            {timePeriods.map(timePeriod => (
+            {timePeriods.map((timePeriod) => (
               <SelectItem key={timePeriod.value} value={timePeriod.value}>
                 {timePeriod.label}
               </SelectItem>
@@ -96,7 +101,7 @@ export const CryptoChart = ({
               <Skeleton className="rounded-lg">
                 <div className="h-96 rounded-lg bg-default-300"></div>
               </Skeleton>
-              {dataKeys.map(dataKey => (
+              {dataKeys.map((dataKey) => (
                 <Skeleton className="rounded-lg" key={dataKey.type}>
                   <div className="h-48 rounded-lg bg-default-300"></div>
                 </Skeleton>
@@ -108,5 +113,5 @@ export const CryptoChart = ({
         </CardBody>
       </Card>
     </div>
-  )
-}
+  );
+};
