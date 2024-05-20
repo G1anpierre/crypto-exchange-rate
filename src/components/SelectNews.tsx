@@ -1,5 +1,5 @@
 import React from 'react'
-import Link from 'next/link'
+import {Link} from '@/navigation'
 import classNames from 'classnames'
 import {newsSources} from '@/static'
 import {getTranslations} from 'next-intl/server'
