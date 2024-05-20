@@ -18,11 +18,13 @@ export const News = ({sourceSearchParam}: {sourceSearchParam: string}) => {
 
   const skeletonCards = new Array(6).fill(0)
 
+  if (isError) console.log('News Error:', error?.message)
+
   return (
-    <div className="bg-white pb-12 sm:pb-28 dark:bg-black">
+    <div className="bg-white pb-12 dark:bg-black sm:pb-28">
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
         <div className="mx-auto max-w-2xl text-center">
-          <h2 className="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl dark:text-white">
+          <h2 className="text-3xl font-bold tracking-tight text-gray-900 dark:text-white sm:text-4xl">
             {title?.name}
           </h2>
           <p className="mt-2 text-lg leading-8 text-gray-600 dark:text-white">
@@ -31,7 +33,7 @@ export const News = ({sourceSearchParam}: {sourceSearchParam: string}) => {
         </div>
         <div className="mx-auto mt-16 grid max-w-2xl grid-cols-1 gap-x-8 gap-y-20 lg:mx-0 lg:max-w-none lg:grid-cols-3">
           {isError ? (
-            <div className="text-red-500 col-span-3 text-center">
+            <div className="col-span-3 text-center text-red-500">
               We are sorry for the inconvenience.
             </div>
           ) : isLoading ? (

@@ -30,7 +30,7 @@ export const CryptoChart = ({
     queryFn: () => cryptoStadistics(market, symbol, func),
   })
 
-  console.error(error?.message)
+  if (isError) console.log('CryptoChart Error:', error?.message)
 
   return (
     <div className="mx-auto max-w-7xl px-6 pb-24 pt-10">

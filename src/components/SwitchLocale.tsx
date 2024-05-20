@@ -38,7 +38,9 @@ export const SwitchLocale = () => {
       >
         <DropdownItem key="en">
           <Link
-            href={`${pathname}?source=${searchParams.get('source')}`}
+            href={`${pathname}?source=${
+              searchParams.get('source') || DEFAULT_NEWS_PLARFORM
+            }`}
             locale="en"
             className="block"
           >
