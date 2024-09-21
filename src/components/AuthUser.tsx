@@ -7,9 +7,9 @@ import {
   DropdownMenu,
   DropdownItem,
   User,
+  Link as NextUILink,
 } from '@nextui-org/react'
 import React from 'react'
-import {signIn} from '@/actions/signIn'
 import {signOut} from '@/actions/signOut'
 import {useSession} from 'next-auth/react'
 
@@ -19,6 +19,7 @@ type AuthUserProps = {
 
 export const AuthUser = ({isDropDownDisabled}: AuthUserProps) => {
   const session = useSession()
+
   if (session.status === 'loading') return null
   return (
     <>
@@ -67,17 +68,16 @@ export const AuthUser = ({isDropDownDisabled}: AuthUserProps) => {
         </Dropdown>
       ) : (
         <div className="flex gap-2">
-          <form action={signIn}>
-            <Button color="primary" variant="ghost" type="submit">
+          <NextUILink href="/login">
+            <Button color="primary" variant="ghost">
               Login
             </Button>
-          </form>
-
-          <form action={signIn}>
-            <Button color="primary" variant="flat" type="submit">
+          </NextUILink>
+          <NextUILink href="/signup">
+            <Button color="primary" variant="flat">
               Sign Up
             </Button>
-          </form>
+          </NextUILink>
         </div>
       )}
     </>

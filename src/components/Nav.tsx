@@ -12,7 +12,6 @@ import {
   Button,
 } from '@nextui-org/react'
 import {usePathname, useParams} from 'next/navigation'
-import Image from 'next/image'
 
 import {ThemeSwitcher} from './ThemeSwitcher'
 import {SwitchLocale} from './SwitchLocale'
@@ -44,12 +43,12 @@ export const Nav = () => {
         />
         <NavbarBrand>
           <NextUILink href="/" color="foreground">
-            <div className="bg-logo-light dark:bg-logo-dark bg-cover object-cover h-5 w-60"></div>
+            <div className="h-5 w-60 bg-logo-light bg-cover object-cover dark:bg-logo-dark"></div>
           </NextUILink>
         </NavbarBrand>
       </NavbarContent>
 
-      <NavbarContent className="hidden sm:flex gap-4" justify="center">
+      <NavbarContent className="hidden gap-4 sm:flex" justify="center">
         <NavbarItem isActive={isActive('cryptonews')}>
           <NextUILink href="/cryptonews">Watch Crypto News!</NextUILink>
         </NavbarItem>
