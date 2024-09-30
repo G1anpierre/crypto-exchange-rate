@@ -31,6 +31,8 @@ export const AuthUser = ({isDropDownDisabled}: AuthUserProps) => {
               avatarProps={{
                 isBordered: true,
                 src: `${session.data.user?.image}`,
+                name: `${session.data.user?.name?.[0]}`,
+                showFallback: true,
               }}
               className="transition-transform"
               name={session.data.user?.name}
@@ -43,14 +45,14 @@ export const AuthUser = ({isDropDownDisabled}: AuthUserProps) => {
                 <p className="font-bold">Signed in as</p>
                 <p className="font-bold">{session.data.user?.email}</p>
               </DropdownItem>
-              <DropdownItem key="settings">My Settings</DropdownItem>
+              {/* <DropdownItem key="settings">My Settings</DropdownItem>
               <DropdownItem key="team_settings">Team Settings</DropdownItem>
               <DropdownItem key="analytics">Analytics</DropdownItem>
               <DropdownItem key="system">System</DropdownItem>
               <DropdownItem key="configurations">Configurations</DropdownItem>
               <DropdownItem key="help_and_feedback">
                 Help & Feedback
-              </DropdownItem>
+              </DropdownItem> */}
               <DropdownItem key="logout" color="danger">
                 <form action={signOut}>
                   <Button
