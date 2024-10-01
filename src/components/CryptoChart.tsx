@@ -13,6 +13,7 @@ import {
   Skeleton,
 } from '@nextui-org/react'
 import {cryptocurrencies, dataKeys, fiatCurrencies, timePeriods} from '@/static'
+import {useQueryState, parseAsString} from 'nuqs'
 
 export const CryptoChart = ({
   title,
@@ -21,9 +22,18 @@ export const CryptoChart = ({
   title: string
   description: string
 }) => {
-  const [market, setMarket] = React.useState('EUR')
-  const [symbol, setSymbol] = React.useState('BTC')
-  const [func, setFunct] = React.useState('DIGITAL_CURRENCY_MONTHLY')
+  const [market, setMarket] = useQueryState(
+    'market',
+    parseAsString.withDefault('EUR'),
+  )
+  const [symbol, setSymbol] = useQueryState(
+    'symbol',
+    parseAsString.withDefault('BTC'),
+  )
+  const [func, setFunct] = useQueryState(
+    'func',
+    parseAsString.withDefault('DIGITAL_CURRENCY_MONTHLY'),
+  )
 
   const {data, error, isLoading, isError} = useQuery({
     queryKey: ['cryptoStadistics', {symbol, market, func}],

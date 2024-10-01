@@ -12,14 +12,14 @@ import {
   Button,
 } from '@nextui-org/react'
 import {usePathname, useParams} from 'next/navigation'
-import Image from 'next/image'
 
 import {ThemeSwitcher} from './ThemeSwitcher'
 import {SwitchLocale} from './SwitchLocale'
 import {AuthUser} from './AuthUser'
 import {signOut} from '@/actions/signOut'
+import {Session} from 'next-auth'
 
-export const Nav = () => {
+export const Nav = ({user}: {user: Session | null}) => {
   const [isMenuOpen, setIsMenuOpen] = React.useState(false)
   const pathname = usePathname()
 
@@ -44,12 +44,12 @@ export const Nav = () => {
         />
         <NavbarBrand>
           <NextUILink href="/" color="foreground">
-            <div className="bg-logo-light dark:bg-logo-dark bg-cover object-cover h-5 w-60"></div>
+            <div className="h-5 w-60 bg-logo-light bg-cover object-cover dark:bg-logo-dark"></div>
           </NextUILink>
         </NavbarBrand>
       </NavbarContent>
 
-      <NavbarContent className="hidden sm:flex gap-4" justify="center">
+      <NavbarContent className="hidden gap-4 sm:flex" justify="center">
         <NavbarItem isActive={isActive('cryptonews')}>
           <NextUILink href="/cryptonews">Watch Crypto News!</NextUILink>
         </NavbarItem>
@@ -62,12 +62,12 @@ export const Nav = () => {
           <ThemeSwitcher />
         </NavbarItem>
         <NavbarItem className="hidden md:flex">
-          <AuthUser />
+          <AuthUser user={user} />
         </NavbarItem>
       </NavbarContent>
       <NavbarMenu>
         <NavbarMenuItem>
-          <AuthUser isDropDownDisabled />
+          <AuthUser user={user} isDropDownDisabled />
         </NavbarMenuItem>
         <NavbarMenuItem>
           <ThemeSwitcher />

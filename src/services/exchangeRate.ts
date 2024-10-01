@@ -10,8 +10,8 @@ const instance = axios.create({
 })
 
 export const getExchangeRate = async (
-  fromCryptoCurrency = 'BTC',
-  toFiatCurrency = 'USD',
+  fromCryptoCurrency: string = 'BTC',
+  toFiatCurrency: string = 'USD',
 ) => {
   try {
     const response = await instance({

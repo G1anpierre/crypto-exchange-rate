@@ -1,4 +1,3 @@
-'use client'
 import {
   Button,
   NavbarItem,
@@ -7,49 +6,50 @@ import {
   DropdownMenu,
   DropdownItem,
   User,
+  Link as NextUILink,
 } from '@nextui-org/react'
 import React from 'react'
-import {signIn} from '@/actions/signIn'
 import {signOut} from '@/actions/signOut'
-import {useSession} from 'next-auth/react'
+import {Session} from 'next-auth'
 
 type AuthUserProps = {
   isDropDownDisabled?: boolean
+  user: Session | null
 }
 
-export const AuthUser = ({isDropDownDisabled}: AuthUserProps) => {
-  const session = useSession()
-  if (session.status === 'loading') return null
+export const AuthUser = ({isDropDownDisabled, user}: AuthUserProps) => {
   return (
     <>
-      {session.data ? (
+      {user ? (
         <Dropdown placement="bottom-start" isDisabled={!!isDropDownDisabled}>
           <DropdownTrigger>
             <User
               as="button"
               avatarProps={{
                 isBordered: true,
-                src: `${session.data.user?.image}`,
+                src: `${user.user?.image}`,
+                name: `${user.user?.name}`,
+                showFallback: true,
               }}
               className="transition-transform"
-              name={session.data.user?.name}
-              description={session.data.user?.email}
+              name={user.user?.name}
+              description={user.user?.email}
             />
           </DropdownTrigger>
           {!isDropDownDisabled && (
             <DropdownMenu aria-label="User Actions" variant="flat">
               <DropdownItem key="profile" className="h-14 gap-2">
                 <p className="font-bold">Signed in as</p>
-                <p className="font-bold">{session.data.user?.email}</p>
+                <p className="font-bold">{user.user?.email}</p>
               </DropdownItem>
-              <DropdownItem key="settings">My Settings</DropdownItem>
+              {/* <DropdownItem key="settings">My Settings</DropdownItem>
               <DropdownItem key="team_settings">Team Settings</DropdownItem>
               <DropdownItem key="analytics">Analytics</DropdownItem>
               <DropdownItem key="system">System</DropdownItem>
               <DropdownItem key="configurations">Configurations</DropdownItem>
               <DropdownItem key="help_and_feedback">
                 Help & Feedback
-              </DropdownItem>
+              </DropdownItem> */}
               <DropdownItem key="logout" color="danger">
                 <form action={signOut}>
                   <Button
@@ -67,17 +67,16 @@ export const AuthUser = ({isDropDownDisabled}: AuthUserProps) => {
         </Dropdown>
       ) : (
         <div className="flex gap-2">
-          <form action={signIn}>
-            <Button color="primary" variant="ghost" type="submit">
+          <NextUILink href="/login">
+            <Button color="primary" variant="ghost">
               Login
             </Button>
-          </form>
-
-          <form action={signIn}>
-            <Button color="primary" variant="flat" type="submit">
+          </NextUILink>
+          <NextUILink href="/signup">
+            <Button color="primary" variant="flat">
               Sign Up
             </Button>
-          </form>
+          </NextUILink>
         </div>
       )}
     </>

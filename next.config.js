@@ -41,6 +41,10 @@ const nextConfig = {
         protocol: 'https',
         hostname: 'i.guim.co.uk',
       },
+      {
+        protocol: 'https',
+        hostname: 'storage.bsc.news',
+      },
     ],
   },
 }
