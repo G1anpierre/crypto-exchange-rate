@@ -17,8 +17,9 @@ import {ThemeSwitcher} from './ThemeSwitcher'
 import {SwitchLocale} from './SwitchLocale'
 import {AuthUser} from './AuthUser'
 import {signOut} from '@/actions/signOut'
+import {Session} from 'next-auth'
 
-export const Nav = () => {
+export const Nav = ({user}: {user: Session | null}) => {
   const [isMenuOpen, setIsMenuOpen] = React.useState(false)
   const pathname = usePathname()
 
@@ -61,12 +62,12 @@ export const Nav = () => {
           <ThemeSwitcher />
         </NavbarItem>
         <NavbarItem className="hidden md:flex">
-          <AuthUser />
+          <AuthUser user={user} />
         </NavbarItem>
       </NavbarContent>
       <NavbarMenu>
         <NavbarMenuItem>
-          <AuthUser isDropDownDisabled />
+          <AuthUser user={user} isDropDownDisabled />
         </NavbarMenuItem>
         <NavbarMenuItem>
           <ThemeSwitcher />

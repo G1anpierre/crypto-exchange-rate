@@ -1,4 +1,3 @@
-'use client'
 import {
   Button,
   NavbarItem,
@@ -11,39 +10,37 @@ import {
 } from '@nextui-org/react'
 import React from 'react'
 import {signOut} from '@/actions/signOut'
-import {useSession} from 'next-auth/react'
+import {Session} from 'next-auth'
 
 type AuthUserProps = {
   isDropDownDisabled?: boolean
+  user: Session | null
 }
 
-export const AuthUser = ({isDropDownDisabled}: AuthUserProps) => {
-  const session = useSession()
-
-  if (session.status === 'loading') return null
+export const AuthUser = ({isDropDownDisabled, user}: AuthUserProps) => {
   return (
     <>
-      {session.data ? (
+      {user ? (
         <Dropdown placement="bottom-start" isDisabled={!!isDropDownDisabled}>
           <DropdownTrigger>
             <User
               as="button"
               avatarProps={{
                 isBordered: true,
-                src: `${session.data.user?.image}`,
-                name: `${session.data.user?.name?.[0]}`,
+                src: `${user.user?.image}`,
+                name: `${user.user?.name}`,
                 showFallback: true,
               }}
               className="transition-transform"
-              name={session.data.user?.name}
-              description={session.data.user?.email}
+              name={user.user?.name}
+              description={user.user?.email}
             />
           </DropdownTrigger>
           {!isDropDownDisabled && (
             <DropdownMenu aria-label="User Actions" variant="flat">
               <DropdownItem key="profile" className="h-14 gap-2">
                 <p className="font-bold">Signed in as</p>
-                <p className="font-bold">{session.data.user?.email}</p>
+                <p className="font-bold">{user.user?.email}</p>
               </DropdownItem>
               {/* <DropdownItem key="settings">My Settings</DropdownItem>
               <DropdownItem key="team_settings">Team Settings</DropdownItem>
