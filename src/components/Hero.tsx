@@ -1,6 +1,7 @@
 import React from 'react'
 import CryptoExchange from './CryptoExchange'
 import {getTranslations} from 'next-intl/server'
+import Image from 'next/image'
 export const Hero = async () => {
   const t = await getTranslations('Index')
   return (
@@ -30,10 +31,12 @@ export const Hero = async () => {
       </svg>
       <div className="mx-auto flex max-w-7xl flex-col gap-10 px-6 pb-24 pt-10 sm:pb-32 lg:flex-row lg:px-8 lg:py-20">
         <div className="mx-auto max-w-2xl lg:mx-0 lg:max-w-xl lg:flex-shrink-0 lg:pt-8">
-          <img
+          <Image
             className="h-11"
-            src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600"
-            alt="Your Company"
+            src="/cryptocurrency.png"
+            alt="Crypto Exchange App"
+            width={40}
+            height={10}
           />
 
           <h1 className="mt-10 text-4xl font-bold tracking-tight text-gray-900 dark:text-white sm:text-6xl">
