@@ -1,5 +1,5 @@
 'use server'
-
+import {request} from 'undici'
 type InitialStateType = {
   message: string
 }
@@ -12,7 +12,7 @@ export const CalculateExchangeRate = async (
   const toFiatCurrency = formData.get('toFiatCurrency')
 
   try {
-    const exchangeRate = await fetch(
+    const {statusCode, headers, trailers, body} = await request(
       `https://alpha-vantage.p.rapidapi.com/query?&to_currency=${toFiatCurrency}&function=CURRENCY_EXCHANGE_RATE&from_currency=${fromCryptoCurrency}`,
       {
         method: 'GET',
@@ -20,10 +20,10 @@ export const CalculateExchangeRate = async (
           'x-rapidapi-key': process.env.RAPID_API_KEY as string,
           'x-rapidapi-host': 'alpha-vantage.p.rapidapi.com',
         },
-        cache: 'no-store',
       },
     )
-    const response = await exchangeRate.json()
+
+    const response = await body.json()
     return response
   } catch (e) {
     console.error(e)
