@@ -1,5 +1,6 @@
 import GitHub from 'next-auth/providers/github'
 import Google from 'next-auth/providers/google'
+import Auth0 from 'next-auth/providers/auth0'
 import Credentials from 'next-auth/providers/credentials'
 import type {NextAuthConfig} from 'next-auth'
 import {prismaDB} from './database-prisma'
@@ -9,6 +10,7 @@ export default {
   providers: [
     GitHub,
     Google,
+    Auth0,
     Credentials({
       async authorize(credentials) {
         if (!credentials.email || !credentials.password) {
