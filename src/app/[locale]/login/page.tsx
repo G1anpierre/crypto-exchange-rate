@@ -3,7 +3,7 @@
 import React from 'react'
 import {Button, Input, Checkbox, Link, Divider} from '@nextui-org/react'
 import {Icon} from '@iconify/react'
-import {signInGithub, signInGoogle} from '@/actions/signIn'
+import {signInAuth0, signInGithub, signInGoogle} from '@/actions/signIn'
 import {Form, FormControl, FormField, FormItem} from '@/components/ui/form'
 import {z} from 'zod'
 import {zodResolver} from '@hookform/resolvers/zod'
@@ -171,6 +171,22 @@ export default function LoginPage() {
               type="submit"
             >
               Continue with Github
+            </Button>
+          </form>
+          <form action={signInAuth0}>
+            <Button
+              startContent={
+                <Icon
+                  className="text-default-500"
+                  icon="cib:auth0"
+                  width={24}
+                />
+              }
+              fullWidth
+              variant="bordered"
+              type="submit"
+            >
+              Continue with Auth0
             </Button>
           </form>
         </div>

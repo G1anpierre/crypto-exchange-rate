@@ -10,7 +10,11 @@ export default {
   providers: [
     GitHub,
     Google,
-    Auth0,
+    Auth0({
+      clientId: process.env.AUTH_AUTH0_ID,
+      clientSecret: process.env.AUTH_AUTH0_SECRET,
+      issuer: process.env.AUTH_AUTH0_ISSUER_BASE_URL,
+    }),
     Credentials({
       async authorize(credentials) {
         if (!credentials.email || !credentials.password) {
