@@ -8,3 +8,11 @@ export async function signInGithub() {
 export async function signInGoogle() {
   return auth.signIn('google', {redirectTo: '/'})
 }
+
+export async function signInAuth0() {
+  return auth.signIn('auth0', {redirectTo: '/'})
+}
+
+export async function signIn(provider: string, options: {redirectTo: string}) {
+  return auth.signIn(provider, options)
+}
