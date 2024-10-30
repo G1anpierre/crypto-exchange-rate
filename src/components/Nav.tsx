@@ -18,7 +18,7 @@ import {SwitchLocale} from './SwitchLocale'
 import {AuthUser} from './AuthUser'
 import {signOut} from '@/actions/signOut'
 import {Session} from 'next-auth'
-import {MetaMaskProvider} from '@metamask/sdk-react'
+// import {MetaMaskProvider} from '@metamask/sdk-react'
 import {ConnectWalletButton} from './ConnectWalletButton'
 
 export const Nav = ({user}: {user: Session | null}) => {
@@ -38,17 +38,17 @@ export const Nav = ({user}: {user: Session | null}) => {
     'Help & Feedback',
   ]
 
-  const host =
-    typeof window !== 'undefined' ? window.location.host : 'defaultHost'
+  // const host =
+  //   typeof window !== 'undefined' ? window.location.host : 'defaultHost'
 
-  const sdkOptions = {
-    logging: {developerMode: false},
-    checkInstallationImmediately: false,
-    dappMetadata: {
-      name: 'CryptoExchangeApp',
-      url: host, // using the host constant defined above
-    },
-  }
+  // const sdkOptions = {
+  //   logging: {developerMode: false},
+  //   checkInstallationImmediately: false,
+  //   dappMetadata: {
+  //     name: 'CryptoExchangeApp',
+  //     url: host, // using the host constant defined above
+  //   },
+  // }
 
   return (
     <Navbar onMenuOpenChange={setIsMenuOpen}>
@@ -80,9 +80,9 @@ export const Nav = ({user}: {user: Session | null}) => {
           <AuthUser user={user} />
         </NavbarItem>
         <NavbarItem className="hidden md:flex">
-          <MetaMaskProvider debug={true} sdkOptions={sdkOptions}>
+          {/* <MetaMaskProvider debug={true} sdkOptions={sdkOptions}> */}
             <ConnectWalletButton />
-          </MetaMaskProvider>
+          {/* </MetaMaskProvider> */}
         </NavbarItem>
       </NavbarContent>
       <NavbarMenu>

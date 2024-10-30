@@ -1,57 +1,90 @@
 'use client'
 
-import Link from 'next/link'
-
 // import WalletIcon from '../public/icons/WalletIcon'
 
-import {Button} from './ui/button'
-import {Button as ButtonNextUI} from '@nextui-org/react'
-
-import {useSDK} from '@metamask/sdk-react'
-import {formatAddress} from '../lib/utils'
-import {Popover, PopoverTrigger, PopoverContent} from '@/components/ui/popover'
+import {
+  Dropdown,
+  DropdownTrigger,
+  DropdownMenu,
+  DropdownItem,
+  Button,
+  cn,
+} from '@nextui-org/react'
+import {Chip} from '@nextui-org/react'
 import {Icon} from '@iconify/react'
+import {Connector, useConnect, useAccount, useDisconnect} from 'wagmi'
+import {formatWalletAddress} from '@/utils'
+import {useState} from 'react'
 
 export const ConnectWalletButton = () => {
-  const {sdk, connected, connecting, account} = useSDK()
+  const {connectors, connect} = useConnect()
+  const {isConnected, addresses: acoundAdresses} = useAccount()
+  const {disconnect} = useDisconnect()
 
-  const connect = async () => {
-    try {
-      await sdk?.connect()
-    } catch (err) {
-      console.warn(`No accounts found`, err)
-    }
+  const handleDisconnect = () => {
+    disconnect()
   }
 
-  const disconnect = () => {
-    if (sdk) {
-      sdk.terminate()
-    }
-  }
-
-  return (
-    <div className="relative">
-      {connected && account ? (
-        <Popover>
-          <PopoverTrigger>
-            <Button>{formatAddress(account)}</Button>
-          </PopoverTrigger>
-          <PopoverContent className="right-0 top-10 z-10 mt-2 w-44 rounded-md border bg-gray-100 shadow-lg">
-            <ButtonNextUI onClick={disconnect} color="danger">
-              Disconnect
-            </ButtonNextUI>
-          </PopoverContent>
-        </Popover>
-      ) : (
-        <ButtonNextUI
-          disabled={connecting}
-          onClick={connect}
-          startContent={<Icon icon="marketeq:wallet" />}
-          color="success"
+  if (isConnected && acoundAdresses) {
+    return (
+      <div className="flex gap-1">
+        <Dropdown>
+          <DropdownTrigger>
+            <Button
+              variant="bordered"
+              startContent={<Icon icon="akar-icons:wallet" className="mr-2" />}
+            >
+              Connected Wallets
+            </Button>
+          </DropdownTrigger>
+          <DropdownMenu
+            variant="faded"
+            aria-label="Dropdown menu with description"
+          >
+            {acoundAdresses.map((address: string) => (
+              <DropdownItem key={address}>
+                <Chip
+                  startContent={
+                    <Icon icon="akar-icons:wallet" className="mr-2" />
+                  }
+                  size="lg"
+                  onClose={() => handleDisconnect()}
+                >
+                  {formatWalletAddress(address)}
+                </Chip>
+              </DropdownItem>
+            ))}
+          </DropdownMenu>
+        </Dropdown>
+      </div>
+    )
+  } else {
+    return (
+      <Dropdown>
+        <DropdownTrigger>
+          <Button
+            variant="bordered"
+            startContent={<Icon icon="akar-icons:wallet" className="mr-2" />}
+          >
+            Connect
+          </Button>
+        </DropdownTrigger>
+        <DropdownMenu
+          variant="faded"
+          aria-label="Dropdown menu with description"
         >
-          Connect Wallet
-        </ButtonNextUI>
-      )}
-    </div>
-  )
+          {connectors.map((connector: Connector) => (
+            <DropdownItem
+              key={connector.id}
+              shortcut="⌘O"
+              description="Connect to your wallet"
+              onClick={() => connect({connector})}
+            >
+              {connector.name}
+            </DropdownItem>
+          ))}
+        </DropdownMenu>
+      </Dropdown>
+    )
+  }
 }

@@ -6,8 +6,17 @@ import {SessionProvider} from 'next-auth/react'
 import {useState} from 'react'
 import {QueryClient, QueryClientProvider} from '@tanstack/react-query'
 import {ReactQueryDevtools} from '@tanstack/react-query-devtools'
+import {State, WagmiProvider} from 'wagmi'
+import {getConfig} from '@/config'
 
-export function Providers({children}: {children: React.ReactNode}) {
+export function Providers({
+  children,
+  initialState,
+}: {
+  children: React.ReactNode
+  initialState: State | undefined
+}) {
+  const [config] = useState(() => getConfig())
   const [queryClient] = useState(
     () =>
       new QueryClient({
@@ -22,13 +31,17 @@ export function Providers({children}: {children: React.ReactNode}) {
   )
 
   return (
-    <QueryClientProvider client={queryClient}>
-      <SessionProvider>
-        <NextUIProvider>
-          <NextThemesProvider attribute="class">{children}</NextThemesProvider>
-        </NextUIProvider>
-      </SessionProvider>
-      <ReactQueryDevtools initialIsOpen={false} />
-    </QueryClientProvider>
+    <WagmiProvider config={config} initialState={initialState}>
+      <QueryClientProvider client={queryClient}>
+        <SessionProvider>
+          <NextUIProvider>
+            <NextThemesProvider attribute="class">
+              {children}
+            </NextThemesProvider>
+          </NextUIProvider>
+        </SessionProvider>
+        <ReactQueryDevtools initialIsOpen={false} />
+      </QueryClientProvider>
+    </WagmiProvider>
   )
 }

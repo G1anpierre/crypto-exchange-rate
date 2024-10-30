@@ -6,6 +6,9 @@ import {Nav} from '@/components/Nav'
 import {Footer} from '@/components/Footer'
 import {Toaster} from '@/components/ui/toaster'
 import {auth} from '@/auth'
+import {headers} from 'next/headers'
+import {cookieToInitialState} from 'wagmi'
+import {getConfig} from '@/config'
 
 const inter = Inter({subsets: ['latin']})
 
@@ -38,6 +41,10 @@ export default async function RootLayout({
   params: {locale: string}
 }) {
   const user = await auth()
+  const initialState = cookieToInitialState(
+    getConfig(),
+    headers().get('cookie'),
+  )
 
   return (
     <html lang={locale} suppressHydrationWarning>
