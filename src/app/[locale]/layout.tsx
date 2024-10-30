@@ -49,7 +49,7 @@ export default async function RootLayout({
   return (
     <html lang={locale} suppressHydrationWarning>
       <body className={`${inter.className} `} suppressHydrationWarning>
-        <Providers>
+        <Providers initialState={initialState}>
           <Nav user={user} />
           {children}
           <Footer />

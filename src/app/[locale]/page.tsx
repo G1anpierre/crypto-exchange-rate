@@ -1,5 +1,6 @@
 import {CryptoChart} from '@/components/CryptoChart'
 import {Hero} from '@/components/Hero'
+import {headers} from 'next/headers'
 import {StadisticChart} from '@/components/StadisticChart'
 import {getTranslations} from 'next-intl/server'
 
@@ -16,6 +17,10 @@ export default async function Home() {
     ],
     queryFn: () => cryptoStadistics('EUR', 'BTC', 'DIGITAL_CURRENCY_MONTHLY'),
   })
+
+  const headerValues = headers()
+
+  console.log({headerValues})
 
   const t = await getTranslations('Stadistics')
   return (
