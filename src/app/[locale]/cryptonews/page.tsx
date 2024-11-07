@@ -6,10 +6,11 @@ import {getCryptoCurrencyNews} from '@/services/cryptoCurrencyNews'
 import {DEFAULT_NEWS_PLARFORM} from '@/static'
 
 type CryptoNewsProps = {
-  searchParams: {source?: string}
+  searchParams: Promise<{source?: string}>
 }
 
-const CrytoNewsPage = async ({searchParams}: CryptoNewsProps) => {
+const CrytoNewsPage = async (props: CryptoNewsProps) => {
+  const searchParams = await props.searchParams;
   const source = searchParams?.source ?? DEFAULT_NEWS_PLARFORM
   const queryClient = new QueryClient()
 

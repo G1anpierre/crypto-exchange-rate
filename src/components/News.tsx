@@ -13,7 +13,7 @@ export const News = ({sourceSearchParam}: {sourceSearchParam: string}) => {
   )
   const {data, error, isLoading, isError} = useQuery({
     queryKey: ['cryptoNews', {source: sourceSearchParam}],
-    queryFn: () => getCryptoCurrencyNews(sourceSearchParam),
+    queryFn: async () => getCryptoCurrencyNews(sourceSearchParam),
   })
 
   const skeletonCards = new Array(6).fill(0)

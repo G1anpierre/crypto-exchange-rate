@@ -1,7 +1,5 @@
 import {CryptoChart} from '@/components/CryptoChart'
 import {Hero} from '@/components/Hero'
-import {headers} from 'next/headers'
-import {StadisticChart} from '@/components/StadisticChart'
 import {getTranslations} from 'next-intl/server'
 
 import {dehydrate, HydrationBoundary, QueryClient} from '@tanstack/react-query'
@@ -15,12 +13,9 @@ export default async function Home() {
       'cryptoStadistics',
       {func: 'DIGITAL_CURRENCY_MONTHLY', market: 'EUR', symbol: 'BTC'},
     ],
-    queryFn: () => cryptoStadistics('EUR', 'BTC', 'DIGITAL_CURRENCY_MONTHLY'),
+    queryFn: async () =>
+      cryptoStadistics('EUR', 'BTC', 'DIGITAL_CURRENCY_MONTHLY'),
   })
-
-  const headerValues = headers()
-
-  console.log({headerValues})
 
   const t = await getTranslations('Stadistics')
   return (

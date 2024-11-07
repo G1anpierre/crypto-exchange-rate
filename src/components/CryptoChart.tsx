@@ -1,7 +1,7 @@
 'use client'
 
 import React from 'react'
-import {useQuery} from '@tanstack/react-query'
+import {useQuery, useSuspenseQuery} from '@tanstack/react-query'
 import {cryptoStadistics} from '@/services/exchangeRate'
 import {Charts} from './Charts'
 import {
@@ -39,8 +39,6 @@ export const CryptoChart = ({
     queryKey: ['cryptoStadistics', {symbol, market, func}],
     queryFn: () => cryptoStadistics(market, symbol, func),
   })
-
-  if (isError) console.log('CryptoChart Error:', error?.message)
 
   return (
     <div className="mx-auto max-w-7xl px-6 pb-24 pt-10">
@@ -113,7 +111,7 @@ export const CryptoChart = ({
               ))}
             </div>
           ) : (
-            <Charts prices={data.prices} dataKeys={dataKeys} />
+            <Charts prices={data} dataKeys={dataKeys} />
           )}
         </CardBody>
       </Card>

@@ -52,12 +52,7 @@ export const AuthUser = ({isDropDownDisabled, user}: AuthUserProps) => {
               </DropdownItem> */}
               <DropdownItem key="logout" color="danger">
                 <form action={signOut}>
-                  <Button
-                    color="danger"
-                    variant="ghost"
-                    type="submit"
-                    size="sm"
-                  >
+                  <Button color="danger" type="submit" size="sm">
                     Logout
                   </Button>
                 </form>

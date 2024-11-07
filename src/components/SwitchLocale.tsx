@@ -28,7 +28,7 @@ export const SwitchLocale = () => {
     <Dropdown showArrow placement="bottom-end">
       <DropdownTrigger>
         <Button variant="bordered" size="sm">
-          {isString(locale)}
+          {isString(locale!!)}
         </Button>
       </DropdownTrigger>
       <DropdownMenu
