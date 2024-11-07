@@ -34,44 +34,45 @@ export const getExchangeRate = async (
 // This is not being used in the app
 // export const getTimeSeriesDailyAdjusted = async (symbol: string) => {
 //   try {
+//     const response = await fetch(
+//       `${baseURL}/query?datatype=json&function=TIME_SERIES_DAILY_ADJUSTED&outputsize=compact&symbol=${symbol}`,
+//       {
+//         method: 'GET',
+//         headers: {
+//           'content-type': 'application/octet-stream',
+//           'x-rapidapi-host': 'alpha-vantage.p.rapidapi.com',
+//           'x-rapidapi-key': process.env.NEXT_PUBLIC_RAPID_API_KEY as string,
+//         },
+//       },
+//     )
 
-//     const response = await fetch(`${baseURL}/query?datatype=json&function=TIME_SERIES_DAILY_ADJUSTED&outputsize=compact&symbol=${symbol}`, {
-//       "method": "GET",
-//       "headers": {
-//         "content-type": "application/octet-stream",
-//         "x-rapidapi-host": "alpha-vantage.p.rapidapi.com",
-//         "x-rapidapi-key": process.env.NEXT_PUBLIC_RAPID_API_KEY as string
-//       }
-//     });
+//     const data = await response.json()
 
-//     const data = await response.json();
+//     if (!data) return
 
-//     if (!data) return;
-
-//     const dates = Object.keys(data?.['Time Series (Daily)']).reverse();
-//     const symbol = data?.['Meta Data']?.['2. Symbol'];
-//     const refreshed = data?.['Meta Data']?.['3. Last Refreshed'];
+//     const dates = Object.keys(data?.['Time Series (Daily)']).reverse()
+//     const symbol = data?.['Meta Data']?.['2. Symbol']
+//     const refreshed = data?.['Meta Data']?.['3. Last Refreshed']
 //     const prices = dates?.map(date => ({
 //       date: date,
 //       open: Number(data['Time Series (Daily)'][date]?.['1. open']),
 //       high: Number(data['Time Series (Daily)'][date]?.['2. high']),
 //       low: Number(data['Time Series (Daily)'][date]?.['3. low']),
 //       close: Number(data['Time Series (Daily)'][date]?.['4. close']),
-//     }));
+//     }))
 
 //     const dataReturn = {
 //       symbol,
 //       refreshed,
 //       prices,
-//     };
+//     }
 
-//     return dataReturn;
-
+//     return dataReturn
 //   } catch (error) {
-//       if (error instanceof Error) {
-//       throw new Error(error.message);
+//     if (error instanceof Error) {
+//       throw new Error(error.message)
 //     } else {
-//       throw new Error('An unknown error occurred');
+//       throw new Error('An unknown error occurred')
 //     }
 //   }
 // }

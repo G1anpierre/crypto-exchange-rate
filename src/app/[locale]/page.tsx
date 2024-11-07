@@ -1,13 +1,9 @@
 import {CryptoChart} from '@/components/CryptoChart'
 import {Hero} from '@/components/Hero'
-import {StadisticChart} from '@/components/StadisticChart'
 import {getTranslations} from 'next-intl/server'
 
 import {dehydrate, HydrationBoundary, QueryClient} from '@tanstack/react-query'
 import {cryptoStadistics} from '@/services/exchangeRate'
-import {Suspense} from 'react'
-import {Skeleton} from '@nextui-org/skeleton'
-import {dataKeys} from '@/static'
 
 export default async function Home() {
   const queryClient = new QueryClient()
@@ -28,7 +24,6 @@ export default async function Home() {
         <HydrationBoundary state={dehydrate(queryClient)}>
           <Hero />
           {/* <StadisticChart /> */}
-
           <CryptoChart title={t('title')} description={t('description')} />
         </HydrationBoundary>
       </div>
