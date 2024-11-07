@@ -1,4 +1,5 @@
 'use client'
+
 import React from 'react'
 import {
   XAxis,
@@ -16,7 +17,7 @@ import {SingleCharts} from './SingleCharts'
 export type PriceType = {
   date: string
   open: number
-  hight: number
+  high: number
   low: number
   close: number
 }
@@ -27,7 +28,7 @@ export type DataKeyType = {
 }
 
 export type ChartProps = {
-  prices: PriceType[]
+  prices?: PriceType[]
   dataKeys?: DataKeyType[]
 }
 

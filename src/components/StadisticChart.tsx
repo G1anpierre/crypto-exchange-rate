@@ -10,7 +10,7 @@ export const StadisticChart = () => {
 
   const {data, error, isLoading, isError} = useQuery({
     queryKey: ['TimeSeriesDaily', {symbol}],
-    queryFn: () => getTimeSeriesDailyAdjusted(symbol),
+    queryFn: async () => getTimeSeriesDailyAdjusted(symbol),
   })
 
   return (

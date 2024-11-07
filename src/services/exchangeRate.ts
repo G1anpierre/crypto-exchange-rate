@@ -1,84 +1,80 @@
-import axios, {AxiosError} from 'axios'
+'user server'
 
-const instance = axios.create({
-  baseURL: 'https://alpha-vantage.p.rapidapi.com',
-  headers: {
-    'content-type': 'application/octet-stream',
-    'x-rapidapi-host': 'alpha-vantage.p.rapidapi.com',
-    'x-rapidapi-key': process.env.NEXT_PUBLIC_RAPID_API_KEY as string,
-  },
-})
+import {PriceType} from '@/components/Charts'
+
+const baseURL = 'https://alpha-vantage.p.rapidapi.com'
 
 export const getExchangeRate = async (
   fromCryptoCurrency: string = 'BTC',
   toFiatCurrency: string = 'USD',
 ) => {
   try {
-    const response = await instance({
-      method: 'GET',
-      url: '/query',
-      params: {
-        from_currency: fromCryptoCurrency,
-        function: 'CURRENCY_EXCHANGE_RATE',
-        to_currency: toFiatCurrency,
-      },
-    })
-    return response.data
-  } catch (err) {
-    const errors = err as Error | AxiosError
-    if (axios.isAxiosError(errors)) {
-      throw new Error(errors.response?.data.message)
-    } else {
-      throw new Error(errors.message)
-    }
-  }
-}
-
-export const getTimeSeriesDailyAdjusted = async (symbol: string) => {
-  try {
-    const response = await instance({
-      method: 'GET',
-      url: '/query',
-      params: {
-        outputsize: 'compact',
-        datatype: 'json',
-        function: 'TIME_SERIES_DAILY_ADJUSTED',
-        symbol: symbol.toUpperCase(),
-      },
-      transformResponse: [
-        function (data) {
-          if (!data) return
-          const json = JSON.parse(data)
-          const dates = Object.keys(json?.['Time Series (Daily)']).reverse()
-          const symbol = json?.['Meta Data']?.['2. Symbol']
-          const refreshed = json?.['Meta Data']?.['3. Last Refreshed']
-          const prices = dates?.map(date => ({
-            date: date,
-            open: Number(json['Time Series (Daily)'][date]?.['1. open']),
-            high: Number(json['Time Series (Daily)'][date]?.['2. high']),
-            low: Number(json['Time Series (Daily)'][date]?.['3. low']),
-            close: Number(json['Time Series (Daily)'][date]?.['4. close']),
-          }))
-
-          const dataReturn = {
-            symbol,
-            refreshed,
-            prices,
-          }
-          return dataReturn
+    const response = await fetch(
+      `${baseURL}/query?from_currency=${fromCryptoCurrency}&function=CURRENCY_EXCHANGE_RATE&to_currency=${toFiatCurrency}`,
+      {
+        method: 'GET',
+        headers: {
+          'content-type': 'application/octet-stream',
+          'x-rapidapi-host': 'alpha-vantage.p.rapidapi.com',
+          'x-rapidapi-key': process.env.NEXT_PUBLIC_RAPID_API_KEY as string,
         },
-      ],
-    })
-    return response.data
-  } catch (err) {
-    const errors = err as Error | AxiosError
-    if (axios.isAxiosError(errors)) {
-      throw new Error(errors.response?.data.message)
+      },
+    )
+
+    return response.json()
+  } catch (error) {
+    if (error instanceof Error) {
+      throw new Error(error.message)
     } else {
-      throw new Error(errors.message)
+      throw new Error('An unknown error occurred')
     }
   }
 }
+
+// This is not being used in the app
+// export const getTimeSeriesDailyAdjusted = async (symbol: string) => {
+//   try {
+
+//     const response = await fetch(`${baseURL}/query?datatype=json&function=TIME_SERIES_DAILY_ADJUSTED&outputsize=compact&symbol=${symbol}`, {
+//       "method": "GET",
+//       "headers": {
+//         "content-type": "application/octet-stream",
+//         "x-rapidapi-host": "alpha-vantage.p.rapidapi.com",
+//         "x-rapidapi-key": process.env.NEXT_PUBLIC_RAPID_API_KEY as string
+//       }
+//     });
+
+//     const data = await response.json();
+
+//     if (!data) return;
+
+//     const dates = Object.keys(data?.['Time Series (Daily)']).reverse();
+//     const symbol = data?.['Meta Data']?.['2. Symbol'];
+//     const refreshed = data?.['Meta Data']?.['3. Last Refreshed'];
+//     const prices = dates?.map(date => ({
+//       date: date,
+//       open: Number(data['Time Series (Daily)'][date]?.['1. open']),
+//       high: Number(data['Time Series (Daily)'][date]?.['2. high']),
+//       low: Number(data['Time Series (Daily)'][date]?.['3. low']),
+//       close: Number(data['Time Series (Daily)'][date]?.['4. close']),
+//     }));
+
+//     const dataReturn = {
+//       symbol,
+//       refreshed,
+//       prices,
+//     };
+
+//     return dataReturn;
+
+//   } catch (error) {
+//       if (error instanceof Error) {
+//       throw new Error(error.message);
+//     } else {
+//       throw new Error('An unknown error occurred');
+//     }
+//   }
+// }
 
 type timePeriodType = {
   [key: string]: string
@@ -94,44 +90,38 @@ export const cryptoStadistics = async (
   market: string = 'CNY',
   symbol: string = 'BTC',
   func: string = 'DIGITAL_CURRENCY_WEEKLY',
-) => {
+): Promise<PriceType[]> => {
   try {
-    const response = await instance({
-      method: 'GET',
-      url: '/query',
-      params: {
-        market,
-        symbol,
-        function: func,
-      },
-      transformResponse: [
-        function (data) {
-          if (!data) return
-          const json = JSON.parse(data)
-          const dates = Object.keys(json?.[timePeriod[func]]).reverse()
-          const prices = dates?.map(date => ({
-            date: date,
-            open: Number(json[timePeriod[func]][date]?.['1. open']),
-            high: Number(json[timePeriod[func]][date]?.['2. high']),
-            low: Number(json[timePeriod[func]][date]?.['3. low']),
-            close: Number(json[timePeriod[func]][date]?.['4. close']),
-          }))
-
-          const dataReturn = {
-            prices,
-          }
-          return dataReturn
+    const response = await fetch(
+      `${baseURL}/query?market=${market}&symbol=${symbol}&function=${func}`,
+      {
+        method: 'GET',
+        headers: {
+          'content-type': 'application/octet-stream',
+          'x-rapidapi-host': 'alpha-vantage.p.rapidapi.com',
+          'x-rapidapi-key': process.env.NEXT_PUBLIC_RAPID_API_KEY as string,
         },
-      ],
-    })
-    return response.data
-  } catch (err) {
-    const errors = err as Error | AxiosError
-    console.error(errors)
-    if (axios.isAxiosError(errors)) {
-      throw new Error(errors.response?.data.message)
+      },
+    )
+
+    const data = await response.json()
+
+    const dates = Object.keys(data?.[timePeriod[func]]).reverse()
+
+    const prices = dates?.map(date => ({
+      date: date,
+      open: Number(data[timePeriod[func]][date]?.['1. open']),
+      high: Number(data[timePeriod[func]][date]?.['2. high']),
+      low: Number(data[timePeriod[func]][date]?.['3. low']),
+      close: Number(data[timePeriod[func]][date]?.['4. close']),
+    }))
+
+    return prices
+  } catch (error) {
+    if (error instanceof Error) {
+      throw new Error(error.message)
     } else {
-      throw new Error(errors.message)
+      throw new Error('An unknown error occurred')
     }
   }
 }

@@ -1,4 +1,4 @@
-import axios, {AxiosError} from 'axios'
+
 import z from 'zod'
 
 const CryptoNewSchema = z.object({
@@ -14,29 +14,38 @@ const CryptoNewsSchema = z.array(CryptoNewSchema)
 export type CryptoNewsType = z.infer<typeof CryptoNewsSchema>
 export type CryptoNewType = z.infer<typeof CryptoNewSchema>
 
-const instance = axios.create({
-  baseURL: 'https://cryptocurrency-news2.p.rapidapi.com/v1',
-  headers: {
-    'content-type': 'application/octet-stream',
-    'x-rapidapi-host': 'cryptocurrency-news2.p.rapidapi.com',
-    'x-rapidapi-key': process.env.NEXT_PUBLIC_RAPID_API_KEY as string,
-  },
-})
+const baseURL = 'https://cryptocurrency-news2.p.rapidapi.com/v1'
+
+
+// const instance = axios.create({
+//   baseURL: 'https://cryptocurrency-news2.p.rapidapi.com/v1',
+//   headers: {
+//     'content-type': 'application/octet-stream',
+//     'x-rapidapi-host': 'cryptocurrency-news2.p.rapidapi.com',
+//     'x-rapidapi-key': process.env.NEXT_PUBLIC_RAPID_API_KEY as string,
+//   },
+// })
 
 export const getCryptoCurrencyNews = async (infoservice: string) => {
   try {
-    const response = await instance({
+    const response = await fetch(`${baseURL}/${infoservice}`, {
       method: 'GET',
-      url: `/${infoservice}`,
+      headers: {
+        'content-type': 'application/octet-stream',
+        'x-rapidapi-host': 'cryptocurrency-news2.p.rapidapi.com',
+        'x-rapidapi-key': process.env.NEXT_PUBLIC_RAPID_API_KEY as string,
+      },
     })
-    const validateData = CryptoNewsSchema.parse(response.data.data)
+
+    const data = await response.json()
+
+    const validateData = CryptoNewsSchema.parse(data.data)
     return validateData
   } catch (err) {
-    const errors = err as Error | AxiosError
-    if (axios.isAxiosError(errors)) {
-      throw new Error(errors.response?.data.message)
+    if (err instanceof Error) {
+      throw new Error(err.message)
     } else {
-      throw new Error(errors.message)
+      throw new Error('An unknown error occurred')
     }
   }
 }

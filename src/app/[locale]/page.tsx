@@ -5,6 +5,9 @@ import {getTranslations} from 'next-intl/server'
 
 import {dehydrate, HydrationBoundary, QueryClient} from '@tanstack/react-query'
 import {cryptoStadistics} from '@/services/exchangeRate'
+import {Suspense} from 'react'
+import {Skeleton} from '@nextui-org/skeleton'
+import {dataKeys} from '@/static'
 
 export default async function Home() {
   const queryClient = new QueryClient()
@@ -14,7 +17,8 @@ export default async function Home() {
       'cryptoStadistics',
       {func: 'DIGITAL_CURRENCY_MONTHLY', market: 'EUR', symbol: 'BTC'},
     ],
-    queryFn: () => cryptoStadistics('EUR', 'BTC', 'DIGITAL_CURRENCY_MONTHLY'),
+    queryFn: async () =>
+      cryptoStadistics('EUR', 'BTC', 'DIGITAL_CURRENCY_MONTHLY'),
   })
 
   const t = await getTranslations('Stadistics')
@@ -24,6 +28,7 @@ export default async function Home() {
         <HydrationBoundary state={dehydrate(queryClient)}>
           <Hero />
           {/* <StadisticChart /> */}
+
           <CryptoChart title={t('title')} description={t('description')} />
         </HydrationBoundary>
       </div>
