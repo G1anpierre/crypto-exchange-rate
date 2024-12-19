@@ -1,3 +1,5 @@
+
+
 import type {Metadata} from 'next'
 import {Inter} from 'next/font/google'
 import './globals.css'
@@ -33,21 +35,15 @@ export const metadata: Metadata = {
   },
 }
 
-export default async function RootLayout(
-  props: {
-    children: React.ReactNode
-    params: Promise<{locale: string}>
-  }
-) {
-  const params = await props.params;
+export default async function RootLayout(props: {
+  children: React.ReactNode
+  params: Promise<{locale: string}>
+}) {
+  const params = await props.params
 
-  const {
-    locale
-  } = params;
+  const {locale} = params
 
-  const {
-    children
-  } = props;
+  const {children} = props
 
   const user = await auth()
   const initialState = cookieToInitialState(

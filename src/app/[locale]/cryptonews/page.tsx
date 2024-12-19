@@ -1,3 +1,5 @@
+'use server'
+
 import React from 'react'
 import {News} from '@/components/News'
 import {SelectNews} from '@/components/SelectNews'
@@ -16,7 +18,7 @@ const CrytoNewsPage = async (props: CryptoNewsProps) => {
 
   await queryClient.prefetchQuery({
     queryKey: ['cryptoNews', {source}],
-    queryFn: () => getCryptoCurrencyNews(source),
+    queryFn: async () => await getCryptoCurrencyNews(source),
   })
 
   return (

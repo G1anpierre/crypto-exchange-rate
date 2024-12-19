@@ -47,5 +47,35 @@ export default {
         ? Promise.resolve(baseUrl)
         : Promise.resolve(baseUrl)
     },
+    async session({token, session}) {
+      if (token) {
+        session.user.name = token.name ?? ''
+        session.user.email = token.email ?? ''
+        session.user.image = token.picture ?? ''
+        session.user.role = String(token.role) ?? ''
+      }
+
+      return session
+    },
+    async jwt({token, user}) {
+      const dbUser = await prismaDB.user.findFirst({
+        where: {
+          email: token.email,
+        },
+      })
+
+      if (!dbUser) {
+        token.id = user!.id
+        return token
+      }
+
+      return {
+        id: dbUser.id,
+        name: dbUser.name,
+        email: dbUser.email,
+        image: dbUser.image,
+        role: dbUser.role,
+      }
+    },
   },
 } satisfies NextAuthConfig

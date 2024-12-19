@@ -5,7 +5,7 @@ const CryptoNewSchema = z.object({
   url: z.string(),
   title: z.string(),
   description: z.string(),
-  thumbnail: z.string(),
+  thumbnail: z.string().optional(),
   createdAt: z.string(),
 })
 
@@ -40,6 +40,7 @@ export const getCryptoCurrencyNews = async (infoservice: string) => {
     const data = await response.json()
 
     const validateData = CryptoNewsSchema.parse(data.data)
+
     return validateData
   } catch (err) {
     if (err instanceof Error) {
