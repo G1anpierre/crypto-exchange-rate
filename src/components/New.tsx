@@ -30,7 +30,7 @@ export const New = ({singleNew, sourceSearchParam}: SingleNewTypeProps) => {
     <article className="flex flex-col">
       <div className="relative w-full">
         <Image
-          src={singleNew.thumbnail}
+          src={singleNew.thumbnail ?? ''}
           alt=""
           className="aspect-[16/9] w-full rounded-2xl bg-gray-100 object-cover sm:aspect-[2/1] lg:aspect-[3/2]"
           width={800}
