@@ -61,13 +61,5 @@
     "tailwindcss": "^3.3.0",
     "typescript": "^5"
   },
-  "overrides": {
-    "@types/react": "npm:types-react@19.0.0-rc.1",
-    "@types/react-dom": "npm:types-react-dom@19.0.0-rc.1"
-  },
-  "pnpm": {
-    "overrides": {
-      "react-is": "19.0.0-rc-02c0e824-20241028"
-    }
-  }
+  "packageManager": "pnpm@9.15.0"
 }
