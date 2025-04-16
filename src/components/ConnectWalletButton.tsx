@@ -9,8 +9,8 @@ import {
   DropdownItem,
   Button,
   cn,
-} from '@nextui-org/react'
-import {Chip} from '@nextui-org/react'
+} from "@heroui/react"
+import {Chip} from "@heroui/react"
 import {Icon} from '@iconify/react'
 import {Connector, useConnect, useAccount, useDisconnect} from 'wagmi'
 import {formatWalletAddress} from '@/utils'

@@ -11,7 +11,7 @@ import {
   Select,
   SelectItem,
   Spinner,
-} from '@nextui-org/react'
+} from "@heroui/react"
 import {GenerateCalculation} from './GenerateCalculation'
 import {cryptocurrencies, fiatCurrencies} from '@/static'
 import {useQuery} from '@tanstack/react-query'

@@ -1,5 +1,3 @@
-
-
 import type {Metadata} from 'next'
 import {Inter} from 'next/font/google'
 import './globals.css'
@@ -11,6 +9,9 @@ import {auth} from '@/auth'
 import {headers} from 'next/headers'
 import {cookieToInitialState} from 'wagmi'
 import {getConfig} from '@/config'
+import {hasLocale} from 'next-intl'
+import {notFound} from 'next/navigation'
+import {routing} from '@/i18n/routing'
 
 const inter = Inter({subsets: ['latin']})
 
@@ -43,6 +44,10 @@ export default async function RootLayout(props: {
 
   const {locale} = params
 
+  if (!hasLocale(routing.locales, locale)) {
+    notFound()
+  }
+
   const {children} = props
 
   const user = await auth()
@@ -54,7 +59,7 @@ export default async function RootLayout(props: {
   return (
     <html lang={locale} suppressHydrationWarning>
       <body className={`${inter.className} `} suppressHydrationWarning>
-        <Providers initialState={initialState}>
+        <Providers initialState={initialState} locale={locale}>
           <Nav user={user} />
           {children}
           <Footer />

@@ -1,6 +1,5 @@
 'use client'
 
-import {Link, usePathname} from '@/navigation'
 import React from 'react'
 import {useParams} from 'next/navigation'
 import {useSearchParams} from 'next/navigation'
@@ -10,8 +9,9 @@ import {
   DropdownMenu,
   DropdownItem,
   Button,
-} from '@nextui-org/react'
+} from '@heroui/react'
 import {DEFAULT_NEWS_PLARFORM} from '@/static'
+import {Link, usePathname} from '@/i18n/navigation'
 
 export const SwitchLocale = () => {
   const {locale} = useParams()

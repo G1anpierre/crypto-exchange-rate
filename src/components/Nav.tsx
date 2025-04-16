@@ -10,7 +10,7 @@ import {
   NavbarMenuItem,
   Link as NextUILink,
   Button,
-} from '@nextui-org/react'
+} from "@heroui/react"
 import {usePathname, useParams} from 'next/navigation'
 
 import {ThemeSwitcher} from './ThemeSwitcher'

@@ -11,7 +11,7 @@ import {
   SelectItem,
   CardHeader,
   Skeleton,
-} from '@nextui-org/react'
+} from "@heroui/react"
 import {cryptocurrencies, dataKeys, fiatCurrencies, timePeriods} from '@/static'
 import {useQueryState, parseAsString} from 'nuqs'
 

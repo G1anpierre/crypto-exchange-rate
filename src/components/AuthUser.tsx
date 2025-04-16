@@ -7,7 +7,7 @@ import {
   DropdownItem,
   User,
   Link as NextUILink,
-} from '@nextui-org/react'
+} from "@heroui/react"
 import React from 'react'
 import {signOut} from '@/actions/signOut'
 import {Session} from 'next-auth'
