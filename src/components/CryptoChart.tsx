@@ -58,7 +58,7 @@ export const CryptoChart = ({
             onChange={e => setMarket(e.target.value)}
           >
             {fiatCurrencies.map(fiatCurrency => (
-              <SelectItem key={fiatCurrency.value} value={fiatCurrency.value}>
+              <SelectItem key={fiatCurrency.value}>
                 {fiatCurrency.label}
               </SelectItem>
             ))}
@@ -73,7 +73,6 @@ export const CryptoChart = ({
             {cryptocurrencies.map(cryptoCurrency => (
               <SelectItem
                 key={cryptoCurrency.value}
-                value={cryptoCurrency.value}
               >
                 {cryptoCurrency.label}
               </SelectItem>
@@ -87,7 +86,7 @@ export const CryptoChart = ({
             onChange={e => setFunct(e.target.value)}
           >
             {timePeriods.map(timePeriod => (
-              <SelectItem key={timePeriod.value} value={timePeriod.value}>
+              <SelectItem key={timePeriod.value}>
                 {timePeriod.label}
               </SelectItem>
             ))}
