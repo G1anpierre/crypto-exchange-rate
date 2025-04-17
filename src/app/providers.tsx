@@ -39,7 +39,7 @@ export function Providers({
         <SessionProvider>
           <NextIntlClientProvider locale={locale}>
             <HeroUIProvider>
-              <NextThemesProvider attribute="class">
+              <NextThemesProvider attribute="class" defaultTheme="dark">
                 {children}
               </NextThemesProvider>
             </HeroUIProvider>

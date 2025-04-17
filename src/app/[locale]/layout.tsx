@@ -57,8 +57,8 @@ export default async function RootLayout(props: {
   )
 
   return (
-    <html lang={locale} suppressHydrationWarning>
-      <body className={`${inter.className} `} suppressHydrationWarning>
+    <html lang={locale}>
+      <body className={`${inter.className} `}>
         <Providers initialState={initialState} locale={locale}>
           <Nav user={user} />
           {children}

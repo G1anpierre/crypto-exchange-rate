@@ -1,5 +1,5 @@
 import type {Config} from 'tailwindcss'
-import {heroui} from "@heroui/react"
+import {heroui} from "@heroui/react" // Make sure this package is correctly installed
 
 const config: Config = {
   content: [
@@ -22,20 +22,15 @@ const config: Config = {
     },
   },
   darkMode: 'class',
-  variants: {
-    extend: {
-      backgroundImage: ['dark'],
-    },
-  },
   plugins: [
+    // Use the heroui plugin with proper configuration
     heroui({
       themes: {
         light: {
           colors: {
-            background: '#FFFFFF', // or DEFAULT
-            foreground: '#11181C', // or 50 to 900 DEFAULT
+            background: '#FFFFFF',
+            foreground: '#11181C',
             primary: {
-              //... 50 to 900
               foreground: '#FFFFFF',
               DEFAULT: '#006FEE',
             },
@@ -43,18 +38,17 @@ const config: Config = {
         },
         dark: {
           colors: {
-            background: '#000000', // or DEFAULT
-            foreground: '#ECEDEE', // or 50 to 900 DEFAULT
+            background: '#000000',
+            foreground: '#ECEDEE',
             primary: {
-              //... 50 to 900
               foreground: '#FFFFFF',
               DEFAULT: '#006FEE',
             },
           },
-          // ... rest of the colors
         },
       },
     }),
   ],
 }
+
 export default config

@@ -10,8 +10,8 @@ import {
   NavbarMenuItem,
   Link as NextUILink,
   Button,
-} from "@heroui/react"
-import {usePathname, useParams} from 'next/navigation'
+} from '@heroui/react'
+import {usePathname} from 'next/navigation'
 
 import {ThemeSwitcher} from './ThemeSwitcher'
 import {SwitchLocale} from './SwitchLocale'
@@ -81,7 +81,7 @@ export const Nav = ({user}: {user: Session | null}) => {
         </NavbarItem>
         <NavbarItem className="hidden md:flex">
           {/* <MetaMaskProvider debug={true} sdkOptions={sdkOptions}> */}
-            <ConnectWalletButton />
+          <ConnectWalletButton />
           {/* </MetaMaskProvider> */}
         </NavbarItem>
       </NavbarContent>
