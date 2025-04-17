@@ -91,4 +91,4 @@ export const newsSources = [
   }
 ]
 
-export const DEFAULT_NEWS_PLARFORM = 'bitcoinist'
+export const DEFAULT_NEWS_PLATFORM = 'bitcoinist'

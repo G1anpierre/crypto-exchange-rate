@@ -32,7 +32,7 @@ export const New = ({singleNew, sourceSearchParam}: SingleNewTypeProps) => {
 
   return (
     <article className="flex flex-col">
-      <a href={singleNew.url} target="_blank">
+      <a href={singleNew.url} target="_blank" rel="noopener noreferrer">
         <div className="relative w-full">
           <Image
             src={singleNew.thumbnail ?? ''}
@@ -69,7 +69,7 @@ export const New = ({singleNew, sourceSearchParam}: SingleNewTypeProps) => {
         </div>
         <div className="group relative">
           <h3 className="mt-3 text-lg font-semibold leading-6 text-gray-900 group-hover:text-gray-600 dark:text-gray-50">
-            <a href={singleNew.url} target="_blank">
+            <a href={singleNew.url} target="_blank" rel="noopener noreferrer">
               <span className="absolute inset-0" />
               {singleNew.title}
             </a>

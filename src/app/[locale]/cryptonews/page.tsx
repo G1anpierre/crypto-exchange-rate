@@ -9,7 +9,7 @@ import {getTranslations} from 'next-intl/server'
 import {cryptoStadistics} from '@/services/exchangeRate'
 
 
-const CrytoNewsPage = async () => {
+const CryptoNewsPage = async () => {
   const queryClient = new QueryClient()
 
   await queryClient.prefetchQuery({
@@ -35,4 +35,4 @@ const CrytoNewsPage = async () => {
   )
 }
 
-export default CrytoNewsPage
+export default CryptoNewsPage
