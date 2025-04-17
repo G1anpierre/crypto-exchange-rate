@@ -46,42 +46,49 @@ export const dataKeys = [
 ]
 
 export const newsSources = [
+  
   {
     id: '1',
-    name: 'Coindesk',
-    searchParams: 'coindesk',
-    imageUrl: '/coindesk-logo-hq.png',
-  },
-  {
-    id: '2',
     name: 'Bitcoinist',
     searchParams: 'bitcoinist',
     imageUrl: '/bitcoinist.webp',
   },
   {
-    id: '3',
+    id: '2',
     name: 'CoinTelegraph',
     searchParams: 'cointelegraph',
     imageUrl: '/cointelegraph.png',
   },
   {
-    id: '4',
+    id: '3',
     name: 'Decrypt',
     searchParams: 'decrypt',
     imageUrl: '/decrypt-seeklogo.svg',
   },
   {
-    id: '5',
+    id: '4',
     name: 'BSC News',
     searchParams: 'bsc',
     imageUrl: '/bsc-news.svg',
   },
   {
-    id: '6',
+    id: '5',
     name: 'The Guardian',
     searchParams: 'theguardian',
     imageUrl: '/the-guardian.png',
   },
+  {
+    id: '6',
+    name: 'Coindesk',
+    searchParams: 'coindesk',
+    imageUrl: '/coindesk-logo-hq.png',
+  },
+  {
+    id: '7',
+    name: 'Cryptodaily',
+    searchParams: 'cryptodaily',
+    imageUrl: '/crypto-daily-logo.png',
+  }
 ]
 
-export const DEFAULT_NEWS_PLARFORM = 'coindesk'
+export const DEFAULT_NEWS_PLATFORM = 'bitcoinist'

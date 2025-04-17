@@ -67,11 +67,11 @@ export const AuthUser = ({isDropDownDisabled, user}: AuthUserProps) => {
               Login
             </Button>
           </NextUILink>
-          <NextUILink href="/signup">
+          {/* <NextUILink href="/signup">
             <Button color="primary" variant="flat">
               Sign Up
             </Button>
-          </NextUILink>
+          </NextUILink> */}
         </div>
       )}
     </>

@@ -11,6 +11,8 @@ export const News = ({sourceSearchParam}: {sourceSearchParam: string}) => {
   const title = newsSources.find(
     source => source.searchParams === sourceSearchParam,
   )
+
+  // TODO: Add Lazy Loading and Infinite Queries TanksTack
   const {data, error, isLoading, isError} = useQuery({
     queryKey: ['cryptoNews', {source: sourceSearchParam}],
     queryFn: async () => getCryptoCurrencyNews(sourceSearchParam),
@@ -34,7 +36,7 @@ export const News = ({sourceSearchParam}: {sourceSearchParam: string}) => {
         <div className="mx-auto mt-16 grid max-w-2xl grid-cols-1 gap-x-8 gap-y-20 lg:mx-0 lg:max-w-none lg:grid-cols-3">
           {isError ? (
             <div className="col-span-3 text-center text-red-500">
-              We are sorry for the inconvenience.
+              At the moment {sourceSearchParam.toUpperCase()} is not available, We are sorry for the inconvenience.
             </div>
           ) : isLoading ? (
             <>

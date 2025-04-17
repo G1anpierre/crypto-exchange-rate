@@ -10,7 +10,7 @@ import {
   DropdownItem,
   Button,
 } from '@heroui/react'
-import {DEFAULT_NEWS_PLARFORM} from '@/static'
+import {DEFAULT_NEWS_PLATFORM} from '@/static'
 import {Link, usePathname} from '@/i18n/navigation'
 
 export const SwitchLocale = () => {
@@ -39,7 +39,7 @@ export const SwitchLocale = () => {
         <DropdownItem key="en">
           <Link
             href={`${pathname}?source=${
-              searchParams.get('source') || DEFAULT_NEWS_PLARFORM
+              searchParams.get('source') || DEFAULT_NEWS_PLATFORM
             }`}
             locale="en"
             className="block"
@@ -50,7 +50,7 @@ export const SwitchLocale = () => {
         <DropdownItem key="es">
           <Link
             href={`${pathname}?source=${
-              searchParams.get('source') || DEFAULT_NEWS_PLARFORM
+              searchParams.get('source') || DEFAULT_NEWS_PLATFORM
             }`}
             locale="es"
             className="block"

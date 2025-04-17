@@ -4,7 +4,7 @@ import z from 'zod'
 const CryptoNewSchema = z.object({
   url: z.string(),
   title: z.string(),
-  description: z.string(),
+  description: z.string().or(z.object({})),
   thumbnail: z.string().optional(),
   createdAt: z.string(),
 })

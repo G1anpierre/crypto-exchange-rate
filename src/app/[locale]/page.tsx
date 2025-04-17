@@ -1,32 +1,32 @@
-import {CryptoChart} from '@/components/CryptoChart'
-import {Hero} from '@/components/Hero'
-import {getTranslations} from 'next-intl/server'
+
 
 import {dehydrate, HydrationBoundary, QueryClient} from '@tanstack/react-query'
-import {cryptoStadistics} from '@/services/exchangeRate'
+import {SelectNews} from '@/components/SelectNews'
+import {News} from '@/components/News'
+import {DEFAULT_NEWS_PLATFORM} from '@/static'
+import {getCryptoCurrencyNews} from '@/services/cryptoCurrencyNews'
 
-export default async function Home() {
-  const queryClient = new QueryClient()
+type CryptoNewsProps = {
+  searchParams: Promise<{source?: string}>
+}
 
-  await queryClient.prefetchQuery({
-    queryKey: [
-      'cryptoStadistics',
-      {func: 'DIGITAL_CURRENCY_MONTHLY', market: 'EUR', symbol: 'BTC'},
-    ],
-    queryFn: async () =>
-      cryptoStadistics('EUR', 'BTC', 'DIGITAL_CURRENCY_MONTHLY'),
-  })
+export default async function Home(props: CryptoNewsProps) {
 
-  const t = await getTranslations('Stadistics')
-  return (
-    <main className="flex min-h-screen flex-col">
+  const searchParams = await props.searchParams;
+    const source = searchParams?.source ?? DEFAULT_NEWS_PLATFORM
+    const queryClient = new QueryClient()
+  
+    await queryClient.prefetchQuery({
+      queryKey: ['cryptoNews', {source}],
+      queryFn: async () => await getCryptoCurrencyNews(source),
+    })
+  
+    return (
       <div>
         <HydrationBoundary state={dehydrate(queryClient)}>
-          <Hero />
-          {/* <StadisticChart /> */}
-          <CryptoChart title={t('title')} description={t('description')} />
+          <SelectNews sourceSearchParam={source} />
+          <News sourceSearchParam={source} />
         </HydrationBoundary>
       </div>
-    </main>
-  )
+    )
 }
