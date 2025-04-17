@@ -1,8 +1,9 @@
 import React from 'react'
-import {Link} from '@/navigation'
+
 import classNames from 'classnames'
 import {newsSources} from '@/static'
 import {getTranslations} from 'next-intl/server'
+import {Link} from '@/i18n/navigation'
 
 export const SelectNews = async ({
   sourceSearchParam,

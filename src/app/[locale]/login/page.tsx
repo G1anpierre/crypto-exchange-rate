@@ -1,7 +1,7 @@
 'use client'
 
 import React from 'react'
-import {Button, Input, Checkbox, Link, Divider} from '@nextui-org/react'
+import {Button, Input, Checkbox, Link, Divider} from "@heroui/react"
 import {Icon} from '@iconify/react'
 import {signInAuth0, signInGithub, signInGoogle} from '@/actions/signIn'
 import {Form, FormControl, FormField, FormItem} from '@/components/ui/form'

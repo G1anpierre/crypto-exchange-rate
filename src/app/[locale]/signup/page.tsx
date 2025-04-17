@@ -1,11 +1,11 @@
 'use client'
 
 import React from 'react'
-import {Button, Input, Link, Divider} from '@nextui-org/react'
+import {Button, Input, Link, Divider} from "@heroui/react"
 import {Icon} from '@iconify/react'
 import {signInGithub, signInGoogle} from '@/actions/signIn'
 import {useMutation} from '@tanstack/react-query'
-import {CircularProgress} from '@nextui-org/react'
+import {CircularProgress} from "@heroui/react"
 import {useToast} from '@/hooks/use-toast'
 
 import {Form, FormControl, FormField, FormItem} from '@/components/ui/form'
