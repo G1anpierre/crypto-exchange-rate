@@ -20,7 +20,6 @@ import classNames from 'classnames'
 import {transform} from '@/utils'
 import {useQueryState, parseAsString} from 'nuqs'
 
-// TODO: Continue integrating nugs
 export default function CryptoExchange() {
   const [fromCryptoCurrency, setFromCryptoCurrency] = useQueryState(
     'crypto',

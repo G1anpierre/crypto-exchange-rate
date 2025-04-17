@@ -1,9 +1,11 @@
+
 import React from 'react'
 
 import classNames from 'classnames'
 import {newsSources} from '@/static'
 import {getTranslations} from 'next-intl/server'
 import {Link} from '@/i18n/navigation'
+import {Tooltip} from "@heroui/tooltip";
 
 export const SelectNews = async ({
   sourceSearchParam,
@@ -55,9 +57,15 @@ export const SelectNews = async ({
             {newsSources.map(newsSource => (
               <Link
                 key={newsSource.id}
-                href={`/cryptonews?source=${newsSource.searchParams}`}
+                href={`/?source=${newsSource.searchParams}`}
                 className={getSelectedStyles(newsSource.searchParams)}
               >
+                <Tooltip
+                  content={newsSource.name}
+                  placement="top"
+                  className="bg-primary text-white"
+                  >
+
                 <img
                   className={`${
                     newsSource.name === 'Decrypt' ? 'max-h-14' : 'max-h-14'
@@ -66,7 +74,8 @@ export const SelectNews = async ({
                   alt={newsSource.name}
                   width={105}
                   height={48}
-                />
+                  />
+                  </Tooltip>
               </Link>
             ))}
           </div>

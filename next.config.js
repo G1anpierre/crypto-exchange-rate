@@ -45,6 +45,14 @@ const nextConfig = {
         protocol: 'https',
         hostname: 'storage.bsc.news',
       },
+      {
+        protocol: 'https',
+        hostname: 'images.cryptodaily.co.uk'
+      },
+      {
+        protocol: 'https',
+        hostname: 'app.chainwire.org'
+      }
     ],
   },
 }

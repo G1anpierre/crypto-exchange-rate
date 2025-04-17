@@ -26,22 +26,28 @@ export const New = ({singleNew, sourceSearchParam}: SingleNewTypeProps) => {
     return placeholderImage[sourceSearchParam]
   }
 
+  const description = typeof singleNew.description === 'string'
+    ? singleNew.description
+    : ""
+
   return (
     <article className="flex flex-col">
-      <div className="relative w-full">
-        <Image
-          src={singleNew.thumbnail ?? ''}
-          alt=""
-          className="aspect-[16/9] w-full rounded-2xl bg-gray-100 object-cover sm:aspect-[2/1] lg:aspect-[3/2]"
-          width={800}
-          height={600}
-          onError={event => {
-            event.currentTarget.src = getPlaceholderImage(sourceSearchParam)
-            event.currentTarget.srcset = getPlaceholderImage(sourceSearchParam)
-          }}
-        />
-        <div className="absolute inset-0 rounded-2xl ring-1 ring-inset ring-gray-900/10" />
-      </div>
+      <a href={singleNew.url} target="_blank" rel="noopener noreferrer">
+        <div className="relative w-full">
+          <Image
+            src={singleNew.thumbnail ?? ''}
+            alt=""
+            className="aspect-[16/9] w-full rounded-2xl bg-gray-100 object-cover sm:aspect-[2/1] lg:aspect-[3/2] hover:scale-105 transition-all duration-300 ease-in-out"
+            width={800}
+            height={600}
+            onError={event => {
+              event.currentTarget.src = getPlaceholderImage(sourceSearchParam)
+              event.currentTarget.srcset = getPlaceholderImage(sourceSearchParam)
+            }}
+          />
+          <div className="absolute inset-0 rounded-2xl ring-1 ring-inset ring-gray-900/10" />
+        </div>
+      </a>
       <div className="max-w-xl">
         <div className="mt-8 flex items-center gap-x-4 text-xs">
           <time dateTime={singleNew.createdAt} className="text-gray-500">
@@ -63,13 +69,13 @@ export const New = ({singleNew, sourceSearchParam}: SingleNewTypeProps) => {
         </div>
         <div className="group relative">
           <h3 className="mt-3 text-lg font-semibold leading-6 text-gray-900 group-hover:text-gray-600 dark:text-gray-50">
-            <a href={singleNew.url} target="_blank">
+            <a href={singleNew.url} target="_blank" rel="noopener noreferrer">
               <span className="absolute inset-0" />
               {singleNew.title}
             </a>
           </h3>
           <p className="mt-5 line-clamp-3 text-sm leading-6 text-gray-600 dark:text-gray-50">
-            {singleNew.description}
+            {description}
           </p>
         </div>
         {/* <div className="relative mt-8 flex items-center gap-x-4">
