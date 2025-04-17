@@ -11,7 +11,7 @@ import {
   Select,
   SelectItem,
   Spinner,
-} from '@nextui-org/react'
+} from "@heroui/react"
 import {GenerateCalculation} from './GenerateCalculation'
 import {cryptocurrencies, fiatCurrencies} from '@/static'
 import {useQuery} from '@tanstack/react-query'
@@ -80,7 +80,6 @@ export default function CryptoExchange() {
             {cryptocurrencies.map(cryptocurrency => (
               <SelectItem
                 key={cryptocurrency.value}
-                value={cryptocurrency.value}
               >
                 {cryptocurrency.label}
               </SelectItem>
@@ -97,7 +96,7 @@ export default function CryptoExchange() {
             onChange={handleFiatCurrencyChange}
           >
             {fiatCurrencies.map(fiatCurrency => (
-              <SelectItem key={fiatCurrency.value} value={fiatCurrency.value}>
+              <SelectItem key={fiatCurrency.value}>
                 {fiatCurrency.label}
               </SelectItem>
             ))}
