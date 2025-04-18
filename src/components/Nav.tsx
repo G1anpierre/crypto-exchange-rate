@@ -20,8 +20,10 @@ import {signOut} from '@/actions/signOut'
 import {Session} from 'next-auth'
 // import {MetaMaskProvider} from '@metamask/sdk-react'
 import {ConnectWalletButton} from './ConnectWalletButton'
+import { useRouter } from 'next/navigation'
 
 export const Nav = ({user}: {user: Session | null}) => {
+  const router = useRouter()
   const [isMenuOpen, setIsMenuOpen] = React.useState(false)
   const pathname = usePathname()
 
@@ -50,6 +52,10 @@ export const Nav = ({user}: {user: Session | null}) => {
   //   },
   // }
 
+  const handleDonationRedirect = () => {
+    router.push('/donate')
+  }
+
   return (
     <Navbar onMenuOpenChange={setIsMenuOpen}>
       <NavbarContent>
@@ -66,7 +72,7 @@ export const Nav = ({user}: {user: Session | null}) => {
 
       <NavbarContent className="hidden gap-4 sm:flex" justify="center">
         <NavbarItem isActive={isActive('cryptonews')}>
-          <NextUILink href="/cryptonews">Watch Crypto News!</NextUILink>
+          <NextUILink href="/cryptoexchange">Watch Crypto Exchange!</NextUILink>
         </NavbarItem>
       </NavbarContent>
       <NavbarContent justify="end">
@@ -81,8 +87,10 @@ export const Nav = ({user}: {user: Session | null}) => {
         </NavbarItem>
         <NavbarItem className="hidden md:flex">
           {/* <MetaMaskProvider debug={true} sdkOptions={sdkOptions}> */}
-          <ConnectWalletButton />
+          {/* <ConnectWalletButton /> */}
+          {/* TODO: Locate it in Logins */}
           {/* </MetaMaskProvider> */}
+          <Button color="primary" onPress={handleDonationRedirect}>Donate</Button>
         </NavbarItem>
       </NavbarContent>
       <NavbarMenu>

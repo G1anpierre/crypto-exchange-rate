@@ -52,6 +52,10 @@ const nextConfig = {
       {
         protocol: 'https',
         hostname: 'app.chainwire.org'
+      },
+      {
+        protocol: 'https',
+        hostname: 'heroui.com'
       }
     ],
   },
