@@ -27,7 +27,7 @@ export async function createDonationCheckout(amount: number): Promise<string> {
 
     // Create a Stripe checkout session
     const session = await stripe.checkout.sessions.create({
-      payment_method_types: ["card", "twint", "klarna", "paypal"],
+      payment_method_types: ["card", "twint", "klarna"],
       line_items: [
         {
           price_data: {
