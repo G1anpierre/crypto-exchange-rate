@@ -1,7 +1,7 @@
 "use client"
 
 import React, { useState } from 'react'
-import Image from 'next/image'
+import {Image} from '@heroui/react'
 import { useRouter } from "next/navigation"
 import {Card, CardHeader, CardBody, Slider, Button} from "@heroui/react";
 import { createDonationCheckout } from '@/actions/donation';
@@ -54,9 +54,10 @@ const DonatePage = () => {
             <div className="grid md:grid-cols-2 container max-w-5xl mx-auto gap-12 items-center">
                 <div className="relative h-[450]  md:h-full rounded-lg overflow-hidden flex-1">
                     <Image
-                        src="https://heroui.com/images/hero-card.jpeg"
-                        alt="German language classroom"
-                        fill
+                        src="/crypto-donation.jpg"
+                        alt="crypto-gold-donation"
+                        width={500}
+                        height={424}
                         className="object-cover"
                     />
                 </div>
@@ -128,7 +129,7 @@ const DonatePage = () => {
                     <Card
                     key={donationPurposes.key}
                     isPressable
-                    className="flex min-h-[360px] flex-col justify-between bg-default-100 p-[28px]"
+                    className="flex min-h-[360px] flex-col justify-between bg-primary-100 p-[28px]"
                     shadow="none"
                     >
                         <CardHeader className="flex flex-col gap-2 p-0">
@@ -140,7 +141,7 @@ const DonatePage = () => {
                             {donationPurposes.descriptions.map((description, index) => (
                                 <div
                                     key={index}
-                                    className="flex min-h-[50px] rounded-medium bg-content3 px-3 py-2 text-content3-foreground"
+                                    className="flex min-h-[50px] rounded-medium bg-content1 px-3 py-2 text-content3-foreground"
                                 >
                                 <p className="text-small">{description}</p>
                                 </div>

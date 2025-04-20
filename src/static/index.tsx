@@ -99,7 +99,7 @@ export const donationPurposes = [
   {
     key: "education",
     title: "Support Crypto Education",
-    icon: <Icon className="h-full w-full" icon="solar:lightbulb-linear" />,
+    icon: <Icon className="h-full w-full" icon="mdi:school-outline" />,
     descriptions: [
       "Help fund educational resources for blockchain and cryptocurrency.",
       "Support workshops and seminars to spread crypto awareness.",
@@ -109,7 +109,7 @@ export const donationPurposes = [
   {
     key: "development",
     title: "Fund Crypto Development",
-    icon: <Icon className="h-full w-full" icon="solar:square-academic-cap-2-linear" />,
+    icon: <Icon className="h-full w-full" icon="mdi:code-tags" />,
     descriptions: [
       "Contribute to the development of open-source blockchain projects.",
       "Support innovative crypto tools and applications.",
@@ -119,7 +119,7 @@ export const donationPurposes = [
   {
     key: "community",
     title: "Empower Crypto Communities",
-    icon: <Icon className="h-full w-full" icon="solar:cloud-sun-2-outline" />,
+    icon: <Icon className="h-full w-full" icon="mdi:account-group-outline" />,
     descriptions: [
       "Support local crypto meetups and events.",
       "Help build stronger communities around blockchain technology.",
