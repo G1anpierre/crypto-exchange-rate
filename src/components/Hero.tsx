@@ -2,6 +2,8 @@ import React from 'react'
 import CryptoExchange from './CryptoExchange'
 import {getTranslations} from 'next-intl/server'
 import Image from 'next/image'
+
+
 export const Hero = async () => {
   const t = await getTranslations('Index')
   return (
