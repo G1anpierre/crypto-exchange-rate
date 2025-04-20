@@ -121,7 +121,7 @@ const DonatePage = () => {
                                 {/* Add this block to display the error message */}
                                 {error && (
                                     <p className="mt-2 text-sm text-danger text-center">
-                                        {error}
+                                        An error occurred. Please try again later.
                                     </p>
                                 )}
                             </div>
