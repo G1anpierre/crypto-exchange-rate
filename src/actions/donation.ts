@@ -16,7 +16,7 @@ export async function createDonationCheckout(amount: number): Promise<string> {
 
     // Initialize Stripe with the API key
     const stripe = new Stripe(stripeSecretKey, {
-      apiVersion: "2025-03-31.basil",
+      apiVersion: (process.env.STRIPE_API_VERSION || "2025-03-31.basil") as any,
       typescript: true,
     })
 
@@ -54,9 +54,13 @@ export async function createDonationCheckout(amount: number): Promise<string> {
 
     // Return the URL to redirect to
     return session.url || ""
-  } catch (error) {
-    console.error("Error creating checkout session:", error)
-    throw new Error("Failed to create checkout session")
+  } catch (error: unknown) {
+    console.error("Error creating checkout session:", error);
+    if (error instanceof Error && (error as any).type === 'StripeCardError') {
+      throw new Error(`Stripe error: ${error.message}`);
+    } else {
+      throw new Error("Failed to create checkout session");
+    }
   }
 }
 
@@ -81,7 +85,7 @@ export async function getSessionDetails(sessionId: string) {
 
     // Initialize Stripe with the API key
     const stripe = new Stripe(stripeSecretKey, {
-      apiVersion: "2025-03-31.basil",
+      apiVersion: (process.env.STRIPE_API_VERSION || "2025-03-31.basil") as any,
     })
 
     // Retrieve the session from Stripe

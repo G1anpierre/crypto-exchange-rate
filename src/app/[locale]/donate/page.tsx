@@ -52,7 +52,7 @@ const DonatePage = () => {
                 </div>
             </div>
             <div className="grid md:grid-cols-2 container max-w-5xl mx-auto gap-12 items-center">
-                <div className="relative h-[450]  md:h-full rounded-lg overflow-hidden flex-1">
+                <div className="relative h-[450px]  md:h-full rounded-lg overflow-hidden flex-1">
                     <Image
                         src="/crypto-donation.jpg"
                         alt="crypto-gold-donation"
