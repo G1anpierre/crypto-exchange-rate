@@ -27,7 +27,7 @@ export const SuccessMessage = (props: SuccessMessageProps) => {
       </CardHeader>
       <CardBody className="space-y-4 text-center">
         <p>
-          We've sent a confirmation to your email address. Your donation directly supports the development of innovative features and a seamless trading experience.
+          We&apos;ve sent a confirmation to your email address. Your donation directly supports the development of innovative features and a seamless trading experience.
         </p>
         {amount && currency && (
           <p>
@@ -46,7 +46,7 @@ export const SuccessMessage = (props: SuccessMessageProps) => {
         )}
         <div className="rounded-lg bg-primary-50 p-4">
           <p className="text-sm text-muted-foreground">
-            "The future of finance is decentralized, and together, we are shaping it."
+            &ldquo;The future of finance is decentralized, and together, we are shaping it.&rdquo;
           </p>
           <p className="text-sm font-medium mt-2">— CryptoCurrent Team</p>
         </div>
