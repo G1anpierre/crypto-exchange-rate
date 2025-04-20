@@ -20,22 +20,25 @@ import {signOut} from '@/actions/signOut'
 import {Session} from 'next-auth'
 // import {MetaMaskProvider} from '@metamask/sdk-react'
 import {ConnectWalletButton} from './ConnectWalletButton'
+import { useRouter } from 'next/navigation'
+import { HandCoins } from 'lucide-react'
 
 export const Nav = ({user}: {user: Session | null}) => {
+  const router = useRouter()
   const [isMenuOpen, setIsMenuOpen] = React.useState(false)
   const pathname = usePathname()
 
   const isActive = (path: string) => path === pathname.split('/')[2]
-  const menuItems = [
-    'Profile',
-    'Dashboard',
-    'Activity',
-    'Analytics',
-    'System',
-    'Deployments',
-    'My Settings',
-    'Team Settings',
-    'Help & Feedback',
+  const menuItems: string[] = [
+    // 'Profile',
+    // 'Dashboard',
+    // 'Activity',
+    // 'Analytics',
+    // 'System',
+    // 'Deployments',
+    // 'My Settings',
+    // 'Team Settings',
+    // 'Help & Feedback',
   ]
 
   // const host =
@@ -50,6 +53,10 @@ export const Nav = ({user}: {user: Session | null}) => {
   //   },
   // }
 
+  const handleDonationRedirect = () => {
+    router.push('/donate')
+  }
+
   return (
     <Navbar onMenuOpenChange={setIsMenuOpen}>
       <NavbarContent>
@@ -63,10 +70,9 @@ export const Nav = ({user}: {user: Session | null}) => {
           </NextUILink>
         </NavbarBrand>
       </NavbarContent>
-
       <NavbarContent className="hidden gap-4 sm:flex" justify="center">
         <NavbarItem isActive={isActive('cryptonews')}>
-          <NextUILink href="/cryptonews">Watch Crypto News!</NextUILink>
+          <NextUILink href="/cryptoexchange">Watch Crypto Exchange!</NextUILink>
         </NavbarItem>
       </NavbarContent>
       <NavbarContent justify="end">
@@ -81,19 +87,25 @@ export const Nav = ({user}: {user: Session | null}) => {
         </NavbarItem>
         <NavbarItem className="hidden md:flex">
           {/* <MetaMaskProvider debug={true} sdkOptions={sdkOptions}> */}
-          <ConnectWalletButton />
+          {/* <ConnectWalletButton /> */}
+          {/* TODO: Locate it in Logins */}
           {/* </MetaMaskProvider> */}
+          <Button endContent={<HandCoins />} color="primary" onPress={handleDonationRedirect}>Donate</Button>
         </NavbarItem>
       </NavbarContent>
+      {/* Mobile */}
       <NavbarMenu>
-        <NavbarMenuItem>
-          <AuthUser user={user} isDropDownDisabled />
-        </NavbarMenuItem>
         <NavbarMenuItem>
           <ThemeSwitcher />
         </NavbarMenuItem>
         <NavbarMenuItem>
           <SwitchLocale />
+        </NavbarMenuItem>
+        <NavbarMenuItem>
+          <AuthUser user={user} isDropDownDisabled />
+        </NavbarMenuItem>
+        <NavbarMenuItem>
+          <Button endContent={<HandCoins />} color="primary" onPress={handleDonationRedirect}>Donate</Button>
         </NavbarMenuItem>
         {menuItems.map((item, index) => (
           <NavbarMenuItem key={`${item}-${index}`}>
