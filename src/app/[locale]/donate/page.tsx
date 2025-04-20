@@ -116,8 +116,14 @@ const DonatePage = () => {
                             </div>
                             <div>
                                 <Button color="primary" className="w-full h-12 text-lg mt-4" onPress={handleDonation} isLoading={isLoading}>
-                                    {isLoading ? "Processing..." : error ? error : `Donate ${amount} CHF`}
+                                {isLoading ? "Processing..." : `Donate ${amount} CHF`}
                                 </Button>
+                                {/* Add this block to display the error message */}
+                                {error && (
+                                    <p className="mt-2 text-sm text-danger text-center">
+                                        An error occurred. Please try again later.
+                                    </p>
+                                )}
                             </div>
                         </div>
                     </CardBody>
