@@ -1,15 +1,22 @@
 'use server'
 
 import React from 'react'
-
 import {dehydrate, HydrationBoundary, QueryClient} from '@tanstack/react-query'
 import {CryptoChart} from '@/components/CryptoChart'
 import {Hero} from '@/components/Hero'
 import {getTranslations} from 'next-intl/server'
 import {cryptoStadistics} from '@/services/exchangeRate'
+import {auth} from '@/auth'
+import { redirect } from 'next/navigation'
 
 
 const CryptoNewsPage = async () => {
+  const user = await auth()
+
+  if(!user) {
+   redirect('/login')
+  }
+
   const queryClient = new QueryClient()
 
   await queryClient.prefetchQuery({
@@ -20,6 +27,8 @@ const CryptoNewsPage = async () => {
     queryFn: async () =>
       cryptoStadistics('EUR', 'BTC', 'DIGITAL_CURRENCY_MONTHLY'),
   })
+
+ 
 
   const t = await getTranslations('Stadistics')
   return (
