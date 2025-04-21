@@ -22,7 +22,7 @@ export default async function Home(props: CryptoNewsProps) {
     })
   
     return (
-      <div>
+      <div className='flex min-h-screen flex-col'>
         <HydrationBoundary state={dehydrate(queryClient)}>
           <SelectNews sourceSearchParam={source} />
           <News sourceSearchParam={source} />
