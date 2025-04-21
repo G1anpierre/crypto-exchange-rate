@@ -57,6 +57,7 @@ export const Nav = ({user}: {user: Session | null}) => {
     router.push('/donate')
   }
 
+
   return (
     <Navbar onMenuOpenChange={setIsMenuOpen}>
       <NavbarContent>
@@ -70,7 +71,7 @@ export const Nav = ({user}: {user: Session | null}) => {
           </NextUILink>
         </NavbarBrand>
       </NavbarContent>
-      {user && (
+      {user && user.user && (
         <NavbarContent className="hidden gap-4 sm:flex" justify="center">
           <NavbarItem isActive={isActive('cryptonews')}>
             <NextUILink href="/cryptoexchange">Watch Crypto Exchange!</NextUILink>
