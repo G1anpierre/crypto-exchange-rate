@@ -20,7 +20,7 @@ type AuthUserProps = {
 export const AuthUser = ({isDropDownDisabled, user}: AuthUserProps) => {
   return (
     <>
-      {user ? (
+      {user && user.user ? (
         <Dropdown placement="bottom-start" isDisabled={!!isDropDownDisabled}>
           <DropdownTrigger>
             <User

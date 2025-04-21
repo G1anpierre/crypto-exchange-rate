@@ -13,7 +13,7 @@ import { redirect } from 'next/navigation'
 const CryptoNewsPage = async () => {
   const user = await auth()
 
-  if(!user) {
+  if(!user || !user.user) {
    redirect('/login')
   }
 
