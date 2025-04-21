@@ -70,11 +70,13 @@ export const Nav = ({user}: {user: Session | null}) => {
           </NextUILink>
         </NavbarBrand>
       </NavbarContent>
-      <NavbarContent className="hidden gap-4 sm:flex" justify="center">
-        <NavbarItem isActive={isActive('cryptonews')}>
-          <NextUILink href="/cryptoexchange">Watch Crypto Exchange!</NextUILink>
-        </NavbarItem>
-      </NavbarContent>
+      {user && (
+        <NavbarContent className="hidden gap-4 sm:flex" justify="center">
+          <NavbarItem isActive={isActive('cryptonews')}>
+            <NextUILink href="/cryptoexchange">Watch Crypto Exchange!</NextUILink>
+          </NavbarItem>
+        </NavbarContent>
+      )}
       <NavbarContent justify="end">
         <NavbarMenuItem className="hidden md:flex">
           <SwitchLocale />
