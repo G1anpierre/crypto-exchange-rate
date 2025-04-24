@@ -2,3 +2,64 @@
 @tailwind components;
 @tailwind utilities;
 
+:root {
+  /* General Chat Window & Colors - Mapped to your theme */
+  --chat--color-primary: #570df8; 
+  --chat--color-primary-shade-50: #4506cb; 
+  --chat--color-primary-shade-100: #3d04b3; 
+  --chat--color-secondary: #f000b8; 
+  --chat--color-secondary-shade-50: #bd0091; 
+  --chat--color-white: #ffffff; 
+  --chat--color-light: #f9fafb; 
+  --chat--color-light-shade-50: #f3f4f6; 
+  --chat--color-light-shade-100: #1f2937; 
+  --chat--color-medium: #f3f4f6; 
+  --chat--color-dark: #374151; 
+  --chat--color-disabled: #9ca3af; 
+  --chat--color-typing: #1f2937; 
+
+  /* --- Modern Look Adjustments --- */
+
+  /* Spacing & Styling */
+  /* --chat--spacing: 1rem; */ /* Base spacing unit */
+  --chat--border-radius: 2rem; /* More pronounced rounding (like rounded-xl) */
+  /* --chat--transition-duration: 0.15s; */
+
+  /* Window Dimensions */
+  --chat--window--width: 420px; /* Slightly wider */
+  --chat--window--height: 640px; /* Slightly taller */
+
+  /* Header */
+  /* --chat--header-height: auto; */
+  --chat--header--padding: 1rem 1.25rem; /* More horizontal padding */
+  --chat--header--background: #374151; 
+  --chat--header--color: #ffffff; 
+
+  /* Textarea */
+  /* --chat--textarea--height: 50px; */
+
+  /* Messages */
+  /* --chat--message--font-size: 1rem; */
+  --chat--message--padding: 0.875rem 1rem; /* Slightly more padding (like p-3.5/p-4) */
+  --chat--message--border-radius: var(--chat--border-radius); /* Use the main border radius */
+  /* --chat--message-line-height: 1.7; */ /* Slightly increased line height */
+  --chat--message--bot--background: #f3f4f6; /* Use base-300 for bot messages */
+  --chat--message--bot--color: #1f2937; 
+  /* --chat--message--bot--border: 1px solid #e5e7eb; */ /* Optional subtle border */
+  --chat--message--user--background: #570df8; 
+  --chat--message--user--color: #ffffff; 
+  /* --chat--message--user--border: none; */
+  /* --chat--message--pre--background: rgba(0, 0, 0, 0.05); */
+
+  /* Toggle Button */
+  --chat--toggle--background: #570df8; 
+  --chat--toggle--hover--background: #4506cb; 
+  --chat--toggle--active--background: #3d04b3; 
+  --chat--toggle--color: #ffffff; 
+  /* --chat--toggle--size: 60px; */ /* Slightly smaller toggle */
+
+  /* --- End Modern Look Adjustments --- */
+}
+
+/* ... Rest of your globals.css ... */
+
