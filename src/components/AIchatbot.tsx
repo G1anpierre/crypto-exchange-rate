@@ -4,7 +4,7 @@ import { useEffect } from 'react';
 import '@n8n/chat/style.css';
 import { createChat } from '@n8n/chat';
 
-export const AIchatbot = () => {
+export const AIChatbot = () => {
   useEffect(() => {
     // 1. Get the webhook URL from environment variables
     const webhookUrl = process.env.NEXT_PUBLIC_N8N_WEBHOOK_URL;
