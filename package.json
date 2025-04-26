@@ -17,6 +17,7 @@
     "@heroui/switch": "^2.2.15",
     "@heroui/tooltip": "^2.2.14",
     "@hookform/resolvers": "^3.9.1",
+    "@n8n/chat": "^0.27.1",
     "@prisma/client": "^5.22.0",
     "@radix-ui/react-label": "^2.1.0",
     "@radix-ui/react-popover": "^1.1.2",
