@@ -9,7 +9,7 @@ import {ReactQueryDevtools} from '@tanstack/react-query-devtools'
 import {State, WagmiProvider} from 'wagmi'
 import {getConfig} from '@/config'
 import {NextIntlClientProvider} from 'next-intl'
-import { AIchatbot } from '@/components/AIchatbot'
+import { AIChatbot } from '@/components/AIchatbot'
 
 export function Providers({
   children,
@@ -42,7 +42,7 @@ export function Providers({
             <HeroUIProvider>
               <NextThemesProvider attribute="class" defaultTheme="dark">
                 {children}
-                <AIchatbot />
+                <AIChatbot />
               </NextThemesProvider>
             </HeroUIProvider>
           </NextIntlClientProvider>
