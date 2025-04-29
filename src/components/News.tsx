@@ -23,7 +23,7 @@ export const News = ({sourceSearchParam}: {sourceSearchParam: string}) => {
   if (isError) console.log('News Error:', error?.message)
 
   return (
-    <div className="bg-white pb-12 dark:bg-black sm:pb-28">
+    <div className="bg-white pb-12 dark:bg-black sm:pb-28" id="news-title">
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
         <div className="mx-auto max-w-2xl text-center">
           <h2 className="text-3xl font-bold tracking-tight text-gray-900 dark:text-white sm:text-4xl">

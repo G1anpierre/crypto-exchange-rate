@@ -1,18 +1,22 @@
+"use client"
 
 import React from 'react'
-
 import classNames from 'classnames'
 import {newsSources} from '@/static'
-import {getTranslations} from 'next-intl/server'
+import {useTranslations} from 'next-intl'
 import {Link} from '@/i18n/navigation'
 import {Tooltip} from "@heroui/tooltip";
+import { useQueryClient } from '@tanstack/react-query'
+import { getCryptoCurrencyNews } from '@/services/cryptoCurrencyNews'
 
-export const SelectNews = async ({
+export const SelectNews = ({
   sourceSearchParam,
 }: {
   sourceSearchParam: string
 }) => {
-  const t = await getTranslations('Compass')
+  const t = useTranslations('Compass')
+  const queryClient = useQueryClient();
+
   const getSelectedStyles = (source: string) => {
     return classNames(
       'relative p-8 sm:p-10 hover:bg-secondary flex items-center justify-center w-full h-full transition-all duration-300 ease-in-out transform hover:scale-105 rounded-2xl',
@@ -21,6 +25,13 @@ export const SelectNews = async ({
         'bg-gray-400/5': sourceSearchParam !== source,
       },
     )
+  }
+
+  const handlePrefetch = (source: string) => {
+    queryClient.prefetchQuery({
+      queryKey: ['cryptoNews', {source}],
+      queryFn: async () => getCryptoCurrencyNews(source),
+    })
   }
 
   return (
@@ -41,24 +52,17 @@ export const SelectNews = async ({
 
               <p className="font-bold">{t('description-4')}</p>
             </div>
-            {/* <div className="mt-8 flex items-center gap-x-6">
-              <a
-                href="#"
-                className="rounded-md bg-indigo-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-              >
-                Create account
-              </a>
-              <a href="#" className="text-sm font-semibold text-gray-900">
-                Contact us <span aria-hidden="true">&rarr;</span>
-              </a>
-            </div> */}
           </div>
           <div className="-mx-6 grid grid-cols-2 gap-0.5 overflow-hidden sm:mx-0 sm:rounded-2xl md:grid-cols-3">
             {newsSources.map(newsSource => (
               <Link
                 key={newsSource.id}
-                href={`/?source=${newsSource.searchParams}`}
+                href={`/?source=${newsSource.searchParams}#news-title`}
                 className={getSelectedStyles(newsSource.searchParams)}
+                prefetch={false}
+                onMouseEnter={() => {
+                  handlePrefetch(newsSource.searchParams)
+                }}
               >
                 <Tooltip
                   content={newsSource.name}
