@@ -36,7 +36,7 @@ export const New = ({singleNew, sourceSearchParam}: SingleNewTypeProps) => {
         <div className="relative w-full">
           <Image
             src={singleNew.thumbnail ?? ''}
-            alt=""
+            alt={singleNew.title}
             className="aspect-[16/9] w-full rounded-2xl bg-gray-100 object-cover sm:aspect-[2/1] lg:aspect-[3/2] hover:scale-105 transition-all duration-300 ease-in-out"
             width={800}
             height={600}
@@ -44,6 +44,7 @@ export const New = ({singleNew, sourceSearchParam}: SingleNewTypeProps) => {
               event.currentTarget.src = getPlaceholderImage(sourceSearchParam)
               event.currentTarget.srcset = getPlaceholderImage(sourceSearchParam)
             }}
+            loading="lazy"
           />
           <div className="absolute inset-0 rounded-2xl ring-1 ring-inset ring-gray-900/10" />
         </div>
