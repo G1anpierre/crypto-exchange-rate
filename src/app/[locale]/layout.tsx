@@ -13,6 +13,7 @@ import {getConfig} from '@/config'
 import {hasLocale} from 'next-intl'
 import {notFound} from 'next/navigation'
 import {routing} from '@/i18n/routing'
+import {getMessages} from 'next-intl/server'
 
 const inter = Inter({subsets: ['latin']})
 
@@ -36,10 +37,12 @@ export default async function RootLayout(props: {
     (await headers()).get('cookie'),
   )
 
+  const messages = await getMessages()
+
   return (
-    <html lang={locale}>
+    <html lang={locale} className="scroll-smooth">
       <body className={`${inter.className} `}>
-        <Providers initialState={initialState} locale={locale}>
+        <Providers initialState={initialState} locale={locale} messages={messages}>
           <Nav user={user} />
           {children}
           <Footer />

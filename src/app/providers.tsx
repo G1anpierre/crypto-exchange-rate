@@ -10,15 +10,17 @@ import {State, WagmiProvider} from 'wagmi'
 import {getConfig} from '@/config'
 import {NextIntlClientProvider} from 'next-intl'
 import { AIChatbot } from '@/components/AIchatbot'
-
+import { Messages } from 'next-intl'
 export function Providers({
   children,
   initialState,
   locale,
+  messages,
 }: {
   children: React.ReactNode
   initialState: State | undefined
   locale: string
+  messages: Messages
 }) {
   const [config] = useState(() => getConfig())
   const [queryClient] = useState(
@@ -38,7 +40,7 @@ export function Providers({
     <WagmiProvider config={config} initialState={initialState}>
       <QueryClientProvider client={queryClient}>
         <SessionProvider>
-          <NextIntlClientProvider locale={locale}>
+          <NextIntlClientProvider locale={locale} messages={messages}>
             <HeroUIProvider>
               <NextThemesProvider attribute="class" defaultTheme="dark">
                 {children}
