@@ -10,7 +10,7 @@ import {State, WagmiProvider} from 'wagmi'
 import {getConfig} from '@/config'
 import {NextIntlClientProvider} from 'next-intl'
 import { AIChatbot } from '@/components/AIchatbot'
-
+import { Messages } from 'next-intl'
 export function Providers({
   children,
   initialState,
@@ -20,7 +20,7 @@ export function Providers({
   children: React.ReactNode
   initialState: State | undefined
   locale: string
-  messages: any
+  messages: Messages
 }) {
   const [config] = useState(() => getConfig())
   const [queryClient] = useState(
