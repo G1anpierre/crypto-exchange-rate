@@ -1,4 +1,26 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Crypto Exchange Rate
+
+![Crypto Exchange Rate](https://github.com/G1anpierre/crypto-exchange-rate/raw/main/public/crypto-preview.png)
+
+A modern web application for live cryptocurrency exchange rate tracking, built with Next.js and RapidAPI.
+
+## Features
+
+- Real-time cryptocurrency price tracking
+- Currency conversion calculator
+- Responsive design for all devices
+- Interactive charts for price history
+- Dark/light mode toggle
+- Search functionality for finding specific cryptocurrencies
+
+## Tech Stack
+
+- **Framework**: [Next.js](https://nextjs.org/)
+- **Styling**: Tailwind CSS
+- **Data Source**: RapidAPI cryptocurrency endpoints
+- **Deployment**: Vercel
+- **Authentication**: NextAuth.js
+- **State Management**: React Context API
 
 ## Getting Started
 
@@ -16,21 +38,29 @@ bun dev
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Environment Variables
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+Create a `.env.local` file in the root directory with the following variables:
 
-## Learn More
+```
+RAPIDAPI_KEY=your_rapidapi_key
+RAPIDAPI_HOST=your_rapidapi_host
+```
 
-To learn more about Next.js, take a look at the following resources:
+## Project Structure
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+The project follows a clean architecture pattern:
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+- `/app` - Next.js app router components and pages
+- `/components` - Reusable UI components
+- `/hooks` - Custom React hooks
+- `/lib` - Utility functions and API client
+- `/public` - Static assets
 
-## Deploy on Vercel
+## Contributions
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+Contributions, issues, and feature requests are welcome!
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+## License
+
+[MIT](LICENSE)
