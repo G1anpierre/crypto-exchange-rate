@@ -8,7 +8,9 @@
     "start": "next start",
     "lint": "next lint",
     "format": "prettier --check --ignore-path .gitignore .",
-    "format:write": "prettier --write --ignore-path .gitignore ."
+    "format:write": "prettier --write --ignore-path .gitignore .",
+    "test:e2e": "playwright test",
+    "test:e2e:ui": "playwright test --ui"
   },
   "dependencies": {
     "@auth/prisma-adapter": "^1.0.16",
@@ -52,6 +54,7 @@
   },
   "devDependencies": {
     "@iconify/react": "^5.0.2",
+    "@playwright/test": "^1.55.0",
     "@tailwindcss/postcss": "^4.1.4",
     "@types/bcrypt": "^5.0.2",
     "@types/node": "^20",
