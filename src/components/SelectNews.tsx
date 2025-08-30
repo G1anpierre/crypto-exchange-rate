@@ -43,7 +43,7 @@ export const SelectNews = ({
               {/* Stay Ahead of the Curve: Curated Crypto News by Platform */}
               {t('title')}
             </h2>
-            <div className="mt-6 flex flex-col gap-4 text-lg leading-8 text-gray-600 dark:text-white">
+            <div className="mt-6 flex flex-col gap-4 text-lg leading-8 text-gray-800 dark:text-white">
               <p className="font-bold">{t('description-1')}</p>
 
               <p>{t('description-2')}</p>

@@ -29,7 +29,7 @@ export const News = ({sourceSearchParam}: {sourceSearchParam: string}) => {
           <h2 className="text-3xl font-bold tracking-tight text-gray-900 dark:text-white sm:text-4xl">
             {title?.name}
           </h2>
-          <p className="mt-2 text-lg leading-8 text-gray-600 dark:text-white">
+          <p className="mt-2 text-lg leading-8 text-gray-800 dark:text-white">
             Get the top latest news.
           </p>
         </div>

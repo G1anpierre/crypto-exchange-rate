@@ -44,7 +44,7 @@ export const CryptoChart = ({
     <div className="mx-auto max-w-7xl px-6 pb-24 pt-10">
       <div className="">
         <h2 className="px-4 text-4xl font-bold dark:text-white">{title}</h2>
-        <p className="dark:text-white-600 px-4 text-lg leading-8 text-gray-600">
+        <p className="dark:text-white-600 px-4 text-lg leading-8 text-gray-800">
           {description}
         </p>
       </div>

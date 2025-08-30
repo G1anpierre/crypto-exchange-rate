@@ -8,19 +8,30 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Added
-- Playwright E2E testing setup with example tests
+- Playwright E2E testing setup with comprehensive test suite
 - CLAUDE.local.md file for AI assistant context
 - CHANGELOG.md for tracking implementations
 - plan.md for project planning and roadmap
+- **UI Improvement Workflow** - Agentic screenshot-based UI analysis system
+- Visual regression testing with automated screenshot capture
+- UI analysis script for accessibility and performance evaluation
+- Comprehensive test coverage for homepage, navigation, themes, and locales
 
 ### Changed
 - Updated Providers component with better type safety for messages prop
 - Renamed AIchatbot component to AIChatbot for consistency
 - Enhanced image performance with lazy loading and proper alt attributes
+- **Improved text contrast ratios across the application**
+  - Hero component description: `text-gray-600` → `text-gray-800`
+  - News components: Multiple gray text colors darkened for WCAG AA compliance
+  - Chart descriptions: Enhanced contrast for better readability
+  - Footer social icons: Improved hover state contrast
 
 ### Fixed
 - Type safety improvements in Providers component
 - Image optimization and accessibility improvements
+- **Accessibility contrast issues** - Fixed 8 text elements with low contrast ratios
+- **WCAG AA Compliance** - Text contrast ratios now meet or approach 4.5:1 standard
 
 ## [0.1.0] - 2024-12-23
 
