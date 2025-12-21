@@ -48,48 +48,48 @@ export const dataKeys = [
 ]
 
 export const newsSources = [
-  
+
   {
     id: '1',
     name: 'Bitcoinist',
     searchParams: 'bitcoinist',
     imageUrl: '/bitcoinist.webp',
+    rssUrl: 'https://bitcoinist.com/feed/',
   },
   {
     id: '2',
     name: 'CoinTelegraph',
     searchParams: 'cointelegraph',
     imageUrl: '/cointelegraph.png',
+    rssUrl: 'https://cointelegraph.com/rss',
   },
   {
     id: '3',
     name: 'Decrypt',
     searchParams: 'decrypt',
     imageUrl: '/decrypt-seeklogo.svg',
+    rssUrl: 'https://decrypt.co/feed',
   },
   {
     id: '4',
     name: 'BSC News',
     searchParams: 'bsc',
     imageUrl: '/bsc-news.svg',
+    rssUrl: 'https://bsc.news/feed.xml',
   },
   {
     id: '5',
-    name: 'The Guardian',
-    searchParams: 'theguardian',
-    imageUrl: '/the-guardian.png',
-  },
-  {
-    id: '6',
     name: 'Coindesk',
     searchParams: 'coindesk',
     imageUrl: '/coindesk-logo-hq.png',
+    rssUrl: 'https://www.coindesk.com/arc/outboundfeeds/rss/',
   },
   {
-    id: '7',
+    id: '6',
     name: 'Cryptodaily',
     searchParams: 'cryptodaily',
     imageUrl: '/crypto-daily-logo.png',
+    rssUrl: 'https://cryptodaily.co.uk/feed',
   }
 ]
 

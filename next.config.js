@@ -27,7 +27,7 @@ const nextConfig = {
       },
       {
         protocol: 'https',
-        hostname: 'cdn.decrypt.co',
+        hostname: '**.decrypt.co',
       },
       {
         protocol: 'https',
@@ -56,6 +56,14 @@ const nextConfig = {
       {
         protocol: 'https',
         hostname: 'heroui.com'
+      },
+      {
+        protocol: 'https',
+        hostname: 'cdn.sanity.io'
+      },
+      {
+        protocol: 'https',
+        hostname: 'app.playnewswire.com'
       }
     ],
   },

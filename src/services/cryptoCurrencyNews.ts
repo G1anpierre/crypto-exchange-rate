@@ -1,4 +1,3 @@
-
 import z from 'zod'
 
 const CryptoNewSchema = z.object({
@@ -14,32 +13,20 @@ const CryptoNewsSchema = z.array(CryptoNewSchema)
 export type CryptoNewsType = z.infer<typeof CryptoNewsSchema>
 export type CryptoNewType = z.infer<typeof CryptoNewSchema>
 
-const baseURL = 'https://cryptocurrency-news2.p.rapidapi.com/v1'
-
-
-// const instance = axios.create({
-//   baseURL: 'https://cryptocurrency-news2.p.rapidapi.com/v1',
-//   headers: {
-//     'content-type': 'application/octet-stream',
-//     'x-rapidapi-host': 'cryptocurrency-news2.p.rapidapi.com',
-//     'x-rapidapi-key': process.env.NEXT_PUBLIC_RAPID_API_KEY as string,
-//   },
-// })
-
+// Updated to use RSS feeds via API route (server-side to avoid CORS)
 export const getCryptoCurrencyNews = async (infoservice: string) => {
   try {
-    const response = await fetch(`${baseURL}/${infoservice}`, {
-      method: 'GET',
-      headers: {
-        'content-type': 'application/octet-stream',
-        'x-rapidapi-host': 'cryptocurrency-news2.p.rapidapi.com',
-        'x-rapidapi-key': process.env.NEXT_PUBLIC_RAPID_API_KEY as string,
-      },
-    })
+    // Fetch news from API route (server-side, no CORS issues)
+    const response = await fetch(`/api/news?source=${infoservice}`)
+
+    if (!response.ok) {
+      throw new Error(`Failed to fetch news: ${response.statusText}`)
+    }
 
     const data = await response.json()
 
-    const validateData = CryptoNewsSchema.parse(data.data)
+    // Validate the data with existing schema for backward compatibility
+    const validateData = CryptoNewsSchema.parse(data)
 
     return validateData
   } catch (err) {
