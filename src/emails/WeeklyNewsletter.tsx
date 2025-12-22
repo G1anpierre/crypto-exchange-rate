@@ -42,7 +42,7 @@ export default function WeeklyNewsletter({
       <Body style={main}>
         <Container style={container}>
           <Section style={header}>
-            <Heading style={h1}>🚀 Weekly Crypto Newsletter</Heading>
+            <Heading style={h1}>Weekly Crypto Newsletter</Heading>
             <Text style={greeting}>
               {userName ? `Hi ${userName},` : 'Hi there,'}
             </Text>
@@ -88,7 +88,7 @@ export default function WeeklyNewsletter({
 
           <Section style={footer}>
             <Text style={footerText}>
-              You're receiving this email because you subscribed to our weekly
+              You are receiving this email because you subscribed to our weekly
               crypto newsletter.
             </Text>
             <Text style={footerText}>
