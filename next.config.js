@@ -1,5 +1,8 @@
 /** @type {import('next').NextConfig} */
-const withNextIntl = require('next-intl/plugin')()
+const withNextIntl = require('next-intl/plugin')(
+  // Specify the path to your i18n request configuration
+  './src/i18n/request.ts'
+)
 const nextConfig = {
   images: {
     remotePatterns: [
