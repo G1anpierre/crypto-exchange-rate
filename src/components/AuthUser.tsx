@@ -1,3 +1,5 @@
+'use client'
+
 import {
   Button,
   NavbarItem,
@@ -9,7 +11,8 @@ import {
   Link as NextUILink,
 } from "@heroui/react"
 import React from 'react'
-import {signOut} from '@/actions/signOut'
+import {serverSignOut} from '@/actions/signOut'
+import {signOut as clientSignOut} from 'next-auth/react'
 import {Session} from 'next-auth'
 
 type AuthUserProps = {
@@ -18,6 +21,10 @@ type AuthUserProps = {
 }
 
 export const AuthUser = ({isDropDownDisabled, user}: AuthUserProps) => {
+  const handleSignOut = async () => {
+    await serverSignOut()
+    await clientSignOut({ redirectTo: '/' })
+  }
   return (
     <>
       {user && user.user ? (
@@ -51,11 +58,9 @@ export const AuthUser = ({isDropDownDisabled, user}: AuthUserProps) => {
                 Help & Feedback
               </DropdownItem> */}
               <DropdownItem key="logout" color="danger">
-                <form action={signOut}>
-                  <Button color="danger" type="submit" size="sm">
-                    Logout
-                  </Button>
-                </form>
+                <Button color="danger" size="sm" onPress={handleSignOut}>
+                  Logout
+                </Button>
               </DropdownItem>
             </DropdownMenu>
           )}

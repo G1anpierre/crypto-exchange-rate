@@ -7,7 +7,7 @@ import {Nav} from '@/components/Nav'
 import {Footer} from '@/components/Footer'
 import {Toaster} from '@/components/ui/toaster'
 import {auth} from '@/auth'
-import {headers} from 'next/headers'
+import {cookies} from 'next/headers'
 import {cookieToInitialState} from 'wagmi'
 import {getConfig} from '@/config'
 import {hasLocale} from 'next-intl'
@@ -32,10 +32,14 @@ export default async function RootLayout(props: {
   const {children} = props
 
   const user = await auth()
-  const initialState = cookieToInitialState(
-    getConfig(),
-    (await headers()).get('cookie'),
-  )
+
+  // Reconstruct cookie header from Next.js cookies API to avoid URL-encoding issues
+  const cookieStore = await cookies()
+  const cookieHeader = cookieStore
+    .getAll()
+    .map(cookie => `${cookie.name}=${cookie.value}`)
+    .join('; ')
+  const initialState = cookieToInitialState(getConfig(), cookieHeader || null)
 
   const messages = await getMessages()
 
