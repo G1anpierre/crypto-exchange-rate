@@ -142,7 +142,7 @@ export async function GET(request: NextRequest) {
 
       try {
         await resend.emails.send({
-          from: 'Crypto Exchange Newsletter <newsletter@yourdomain.com>',
+          from: 'Crypto Exchange Newsletter <newsletter@swissprodone.com>',
           to: subscriber.user.email!,
           subject: `🚀 Top 5 Crypto News This Week - ${new Date().toLocaleDateString('en-US', {month: 'short', day: 'numeric', year: 'numeric'})}`,
           react: WeeklyNewsletter({
