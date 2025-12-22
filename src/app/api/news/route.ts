@@ -1,6 +1,9 @@
 import {fetchNewsBySource} from '@/services/rssFeedParser'
 import {NextRequest, NextResponse} from 'next/server'
 
+// Mark this route as dynamic (uses searchParams)
+export const dynamic = 'force-dynamic'
+
 // Enable caching for 5 minutes to reduce RSS feed requests
 export const revalidate = 300 // 5 minutes
 
