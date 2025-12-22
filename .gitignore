@@ -36,3 +36,18 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# Playwright
+node_modules/
+/test-results/
+/playwright-report/
+/blob-report/
+/playwright/.cache/
+
+# Claude AI context
+.claude/
+.context/
+CORS_FIX.md
+NEWSLETTER_SETUP.md
+NEXT_STEPS.md
+NODE_VERSION_FIX.md

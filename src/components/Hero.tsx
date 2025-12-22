@@ -44,7 +44,7 @@ export const Hero = async () => {
           <h1 className="mt-10 text-4xl font-bold tracking-tight text-gray-900 dark:text-white sm:text-6xl">
             {t('title')}
           </h1>
-          <p className="dark:text-white-600 mt-6 text-lg leading-8 text-gray-600">
+          <p className="dark:text-white-600 mt-6 text-lg leading-8 text-gray-800">
             {t('description')}
           </p>
         </div>

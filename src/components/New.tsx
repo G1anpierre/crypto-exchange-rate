@@ -51,7 +51,7 @@ export const New = ({singleNew, sourceSearchParam}: SingleNewTypeProps) => {
       </a>
       <div className="max-w-xl">
         <div className="mt-8 flex items-center gap-x-4 text-xs">
-          <time dateTime={singleNew.createdAt} className="text-gray-500">
+          <time dateTime={singleNew.createdAt} className="text-gray-700">
             {new Date(singleNew.createdAt).toLocaleDateString('en', {
               year: 'numeric',
               month: 'long',
@@ -63,19 +63,19 @@ export const New = ({singleNew, sourceSearchParam}: SingleNewTypeProps) => {
           <a
             target="_blank"
             href={singleNew.url}
-            className="relative z-10 rounded-full bg-gray-50 px-3 py-1.5 font-medium text-gray-600 hover:bg-gray-100"
+            className="relative z-10 rounded-full bg-gray-50 px-3 py-1.5 font-medium text-gray-800 hover:bg-gray-100"
           >
             {sourceSearchParam}
           </a>
         </div>
         <div className="group relative">
-          <h3 className="mt-3 text-lg font-semibold leading-6 text-gray-900 group-hover:text-gray-600 dark:text-gray-50">
+          <h3 className="mt-3 text-lg font-semibold leading-6 text-gray-900 group-hover:text-gray-800 dark:text-gray-50">
             <a href={singleNew.url} target="_blank" rel="noopener noreferrer">
               <span className="absolute inset-0" />
               {singleNew.title}
             </a>
           </h3>
-          <p className="mt-5 line-clamp-3 text-sm leading-6 text-gray-600 dark:text-gray-50">
+          <p className="mt-5 line-clamp-3 text-sm leading-6 text-gray-800 dark:text-gray-50">
             {description}
           </p>
         </div>
