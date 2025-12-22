@@ -1,5 +1,8 @@
 /** @type {import('next').NextConfig} */
-const withNextIntl = require('next-intl/plugin')()
+const withNextIntl = require('next-intl/plugin')(
+  // Specify the path to your i18n request configuration
+  './src/i18n/request.ts'
+)
 const nextConfig = {
   images: {
     remotePatterns: [
@@ -27,7 +30,7 @@ const nextConfig = {
       },
       {
         protocol: 'https',
-        hostname: 'cdn.decrypt.co',
+        hostname: '**.decrypt.co',
       },
       {
         protocol: 'https',
@@ -56,6 +59,14 @@ const nextConfig = {
       {
         protocol: 'https',
         hostname: 'heroui.com'
+      },
+      {
+        protocol: 'https',
+        hostname: 'cdn.sanity.io'
+      },
+      {
+        protocol: 'https',
+        hostname: 'app.playnewswire.com'
       }
     ],
   },

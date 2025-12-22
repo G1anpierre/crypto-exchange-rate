@@ -47,3 +47,7 @@ node_modules/
 # Claude AI context
 .claude/
 .context/
+CORS_FIX.md
+NEWSLETTER_SETUP.md
+NEXT_STEPS.md
+NODE_VERSION_FIX.md
