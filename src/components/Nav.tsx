@@ -16,7 +16,8 @@ import {usePathname} from 'next/navigation'
 import {ThemeSwitcher} from './ThemeSwitcher'
 import {SwitchLocale} from './SwitchLocale'
 import {AuthUser} from './AuthUser'
-import {signOut} from '@/actions/signOut'
+import {serverSignOut} from '@/actions/signOut'
+import {signOut as clientSignOut} from 'next-auth/react'
 import {Session} from 'next-auth'
 // import {MetaMaskProvider} from '@metamask/sdk-react'
 import {ConnectWalletButton} from './ConnectWalletButton'
@@ -55,6 +56,11 @@ export const Nav = ({user}: {user: Session | null}) => {
 
   const handleDonationRedirect = () => {
     router.push('/donate')
+  }
+
+  const handleSignOut = async () => {
+    await serverSignOut()
+    await clientSignOut({ redirectTo: '/' })
   }
 
 
@@ -118,11 +124,9 @@ export const Nav = ({user}: {user: Session | null}) => {
           </NavbarMenuItem>
         ))}
         <NavbarMenuItem>
-          <form action={signOut}>
-            <Button color="danger" variant="ghost" type="submit" size="md">
-              Logout
-            </Button>
-          </form>
+          <Button color="danger" variant="ghost" size="md" onPress={handleSignOut}>
+            Logout
+          </Button>
         </NavbarMenuItem>
       </NavbarMenu>
     </Navbar>

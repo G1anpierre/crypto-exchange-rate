@@ -12,50 +12,30 @@ import {
 } from "@heroui/react"
 import {Chip} from "@heroui/react"
 import {Icon} from '@iconify/react'
-import {Connector, useConnect, useAccount, useDisconnect} from 'wagmi'
+import {Connector, useConnect, useConnection, useDisconnect, useConnectors} from 'wagmi'
 import {formatWalletAddress} from '@/utils'
 import {useState} from 'react'
 
 export const ConnectWalletButton = () => {
-  const {connectors, connect} = useConnect()
-  const {isConnected, addresses: acoundAdresses} = useAccount()
+  const {connect} = useConnect()
+  const connectors = useConnectors()
+  const {isConnected, address} = useConnection()
   const {disconnect} = useDisconnect()
 
   const handleDisconnect = () => {
     disconnect()
   }
 
-  if (isConnected && acoundAdresses) {
+  if (isConnected && address) {
     return (
       <div className="flex gap-1">
-        <Dropdown>
-          <DropdownTrigger>
-            <Button
-              variant="bordered"
-              startContent={<Icon icon="akar-icons:wallet" className="mr-2" />}
-            >
-              Connected Wallets
-            </Button>
-          </DropdownTrigger>
-          <DropdownMenu
-            variant="faded"
-            aria-label="Dropdown menu with description"
-          >
-            {acoundAdresses.map((address: string) => (
-              <DropdownItem key={address}>
-                <Chip
-                  startContent={
-                    <Icon icon="akar-icons:wallet" className="mr-2" />
-                  }
-                  size="lg"
-                  onClose={() => handleDisconnect()}
-                >
-                  {formatWalletAddress(address)}
-                </Chip>
-              </DropdownItem>
-            ))}
-          </DropdownMenu>
-        </Dropdown>
+        <Button
+          variant="bordered"
+          startContent={<Icon icon="akar-icons:wallet" className="mr-2" />}
+          onPress={() => handleDisconnect()}
+        >
+          {formatWalletAddress(address)}
+        </Button>
       </div>
     )
   } else {
