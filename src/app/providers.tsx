@@ -9,8 +9,8 @@ import {ReactQueryDevtools} from '@tanstack/react-query-devtools'
 import {State, WagmiProvider} from 'wagmi'
 import {getConfig} from '@/config'
 import {NextIntlClientProvider} from 'next-intl'
-import { AIChatbot } from '@/components/AIchatbot'
 import { Messages } from 'next-intl'
+import { FloatingChatWidget } from '@/components/chat/FloatingChatWidget'
 export function Providers({
   children,
   initialState,
@@ -44,7 +44,7 @@ export function Providers({
             <HeroUIProvider>
               <NextThemesProvider attribute="class" defaultTheme="dark">
                 {children}
-                <AIChatbot />
+                <FloatingChatWidget />
               </NextThemesProvider>
             </HeroUIProvider>
           </NextIntlClientProvider>
