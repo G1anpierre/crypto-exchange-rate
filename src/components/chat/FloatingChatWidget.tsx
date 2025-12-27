@@ -59,7 +59,7 @@ export function FloatingChatWidget() {
                 <MessageCircle className="h-5 w-5 text-white" />
                 <div>
                   <h3 className="font-semibold text-white">CryptoCurrent AI</h3>
-                  <p className="text-xs text-blue-100">Powered by Llama 3.3 70B (Free)</p>
+                  <p className="text-xs text-blue-100">Powered by Llama 3.1 70B</p>
                 </div>
               </div>
               <button

@@ -1,4 +1,4 @@
-import { openrouter } from '@openrouter/ai-sdk-provider';
+import { createWorkersAI } from 'workers-ai-provider';
 import { streamText, tool, convertToModelMessages, UIMessage, stepCountIs } from 'ai';
 import { z } from 'zod';
 import { getExchangeRate } from '@/services/exchangeRate';
@@ -9,14 +9,24 @@ export const maxDuration = 30;
 export async function POST(req: Request) {
   const { messages }: { messages: UIMessage[] } = await req.json();
 
+  // Initialize Cloudflare Workers AI with API credentials
+  const workersai = createWorkersAI({
+    accountId: process.env.CLOUDFLARE_ACCOUNT_ID!,
+    apiKey: process.env.CLOUDFLARE_API_KEY!,
+  });
+
   const result = streamText({
-    // Using Meta Llama 3.3 70B (free) - powerful model with tool calling support
-    // Alternative free options:
-    // - google/gemini-2.0-flash-exp:free (fast, reliable)
-    // - qwen/qwq-32b:free (good reasoning)
-    // - deepseek/deepseek-chat-v3-0324:free (very capable)
-    model: openrouter('meta-llama/llama-3.3-70b-instruct:free'),
-    stopWhen: stepCountIs(5), // Allow up to 5 steps for tool calls and responses
+    // Using Llama 3.1 70B - FINAL ATTEMPT with most powerful Cloudflare model
+    // 70B parameters = best instruction following and reasoning capabilities
+    // Costs ~140 neurons per request = ~71 requests/day with 10,000 free neurons
+    // Native function calling support built into Llama 3.1
+    // If this fails: revert to OpenRouter (proven working)
+    // Previously tried and failed:
+    // - @cf/mistralai/mistral-small-3.1-24b-instruct (24B, empty responses)
+    // - @hf/nousresearch/hermes-2-pro-mistral-7b (7B, no tool calls)
+    // - @cf/meta/llama-3.1-8b-instruct (8B, raw JSON responses)
+    model: workersai('@cf/meta/llama-3.1-70b-instruct'),
+    stopWhen: stepCountIs(5), // CRITICAL: Allow AI to continue after tool calls to provide summaries
     system: `You are a helpful AI assistant for CryptoCurrent, a cryptocurrency exchange platform.
 
 Your role is to:
