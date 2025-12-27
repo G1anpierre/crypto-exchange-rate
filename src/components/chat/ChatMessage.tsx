@@ -13,19 +13,12 @@ export function ChatMessage({ message }: ChatMessageProps) {
 
   // Render message parts
   const renderMessageContent = () => {
-    console.log('=== ChatMessage Render ===');
-    console.log('Message ID:', message.id);
-    console.log('Message role:', message.role);
-    console.log('Message parts count:', message.parts?.length);
-    console.log('All parts:', JSON.stringify(message.parts, null, 2));
 
     return message.parts.map((part: any, index: number) => {
-      console.log(`Part ${index} type:`, part.type);
 
       // Text content
       if (part.type === 'text' || typeof part === 'string') {
         const text = typeof part === 'string' ? part : part.text;
-        console.log(`Part ${index} text:`, text);
 
         // Skip empty text parts
         if (!text || text.trim() === '') {
