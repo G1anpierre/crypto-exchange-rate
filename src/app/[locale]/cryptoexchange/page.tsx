@@ -5,7 +5,7 @@ import {dehydrate, HydrationBoundary, QueryClient} from '@tanstack/react-query'
 import {CryptoChart} from '@/components/CryptoChart'
 import {Hero} from '@/components/Hero'
 import {getTranslations} from 'next-intl/server'
-import {cryptoStadistics} from '@/services/exchangeRate'
+import {cryptoStadistics} from '@/services/ccxt/historicalData'
 import {auth} from '@/auth'
 import { redirect } from 'next/navigation'
 

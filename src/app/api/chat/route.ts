@@ -1,7 +1,7 @@
 import { openrouter } from '@openrouter/ai-sdk-provider';
 import { streamText, tool, convertToModelMessages, UIMessage, stepCountIs } from 'ai';
 import { z } from 'zod';
-import { getExchangeRate } from '@/services/exchangeRate';
+import { getMultiExchangeRate, getExchangeRate as getCCXTRate } from '@/services/ccxt/exchangeRate';
 
 // Allow streaming responses up to 30 seconds
 export const maxDuration = 30;
@@ -20,7 +20,9 @@ export async function POST(req: Request) {
     system: `You are a helpful AI assistant for CryptoCurrent, a cryptocurrency exchange platform.
 
 Your role is to:
-- Help users understand cryptocurrency exchange rates and pricing
+- Help users understand cryptocurrency exchange rates and pricing across multiple exchanges
+- Show price comparisons from Binance, Coinbase, and Kraken simultaneously
+- Detect and explain arbitrage opportunities (price differences between exchanges)
 - Summarize and explain crypto news in detail
 - Educate users about cryptocurrency concepts, blockchain, wallets, and trading
 - Provide accurate, helpful information about crypto markets
@@ -28,49 +30,112 @@ Your role is to:
 - Always emphasize that crypto investments carry risks
 
 IMPORTANT INSTRUCTIONS FOR TOOL USAGE:
+- When you use the getExchangeRate tool, you'll receive prices from 3 exchanges - ALWAYS show all of them
+- Highlight which exchange has the best (lowest) price
+- If there's an arbitrage opportunity (>0.1% price difference), mention it explicitly
+- Explain that USDT is Tether, a stablecoin pegged 1:1 to USD
 - When you use the getNews tool, ALWAYS provide a detailed summary of the articles returned
 - Format news summaries with bullet points highlighting key points from each article
-- When you use the getExchangeRate tool, explain what the rate means and any relevant context
 - When you use the educateCrypto tool, provide a comprehensive explanation
+
+FORMATTING TIPS:
+- When showing prices from multiple exchanges, use a clear list format
+- Example: "BTC prices: Binance $87,634, Coinbase $87,531 (best), Kraken $87,532"
+- If arbitrage exists, explain: "You could buy on Coinbase and sell on Binance for a 0.12% profit"
 
 Be conversational, friendly, and informative. Use emojis sparingly. Keep responses concise but thorough.`,
     messages: await convertToModelMessages(messages),
     tools: {
       getExchangeRate: tool({
-        description: 'Get current exchange rate between cryptocurrency and fiat currency',
+        description: 'Get cryptocurrency exchange rates from multiple exchanges with arbitrage detection. Shows prices from Binance, Coinbase, and Kraken simultaneously.',
         inputSchema: z.object({
-          fromCryptoCurrency: z.string().describe('Cryptocurrency symbol like BTC, ETH, LTC'),
-          toFiatCurrency: z.string().describe('Fiat currency code like USD, EUR, GBP'),
+          fromCryptoCurrency: z.string().describe('Cryptocurrency symbol like BTC, ETH, SOL, XRP'),
+          toFiatCurrency: z.string().describe('Fiat currency code like USD, EUR, CHF, GBP'),
         }),
         execute: async ({ fromCryptoCurrency, toFiatCurrency }) => {
           try {
-            const data = await getExchangeRate(fromCryptoCurrency.toUpperCase(), toFiatCurrency.toUpperCase());
+            const crypto = fromCryptoCurrency.toUpperCase();
+            const fiat = toFiatCurrency.toUpperCase();
 
-            if (data['Realtime Currency Exchange Rate']) {
-              const rate = data['Realtime Currency Exchange Rate'];
+            // Smart currency handling:
+            // - Most exchanges use USDT (Tether) instead of USD
+            // - Kraken supports real fiat: USD, EUR, CHF
+            // - Coinbase supports USD
+            let targetCurrency = fiat;
+            let exchanges = ['binance', 'coinbase', 'kraken'];
+
+            // If user asks for USD, try USDT first (most liquid), fallback to USD
+            if (fiat === 'USD') {
+              targetCurrency = 'USDT'; // Most exchanges use USDT
+            }
+
+            // Fetch from multiple exchanges
+            const data = await getMultiExchangeRate(crypto, targetCurrency, exchanges);
+
+            // Format response for the LLM
+            return {
+              success: true,
+              pair: data.pair,
+              prices: data.results.map(r => ({
+                exchange: r.exchange,
+                price: r.price,
+                volume24h: r.volume24h,
+                change24h: r.changePercent24h,
+              })),
+              bestPrice: {
+                exchange: data.bestPrice.exchange,
+                price: data.bestPrice.price,
+                message: `Cheapest on ${data.bestPrice.exchange}`,
+              },
+              worstPrice: {
+                exchange: data.worstPrice.exchange,
+                price: data.worstPrice.price,
+                message: `Most expensive on ${data.worstPrice.exchange}`,
+              },
+              averagePrice: data.averagePrice,
+              arbitrageOpportunity: data.priceSpreadPercent > 0.1 ? {
+                spreadPercent: data.priceSpreadPercent,
+                spreadAmount: data.priceSpread,
+                buyOn: data.bestPrice.exchange,
+                sellOn: data.worstPrice.exchange,
+                message: `Arbitrage opportunity: Buy on ${data.bestPrice.exchange}, sell on ${data.worstPrice.exchange} for ${data.priceSpreadPercent.toFixed(2)}% profit`,
+              } : null,
+              note: targetCurrency === 'USDT' ? 'Note: Prices shown in USDT (Tether stablecoin), which is pegged 1:1 to USD' : null,
+            };
+          } catch (error) {
+            // Fallback: Try single exchange if multi-exchange fails
+            try {
+              const crypto = fromCryptoCurrency.toUpperCase();
+              let fiat = toFiatCurrency.toUpperCase();
+              let exchange = 'binance';
+
+              // Smart fallback: Use USDT for Binance, USD for Kraken
+              if (fiat === 'USD' || fiat === 'EUR' || fiat === 'CHF') {
+                exchange = 'kraken'; // Kraken supports real fiat
+              } else {
+                fiat = 'USDT'; // Binance uses USDT
+              }
+
+              const singleData = await getCCXTRate(crypto, fiat, exchange);
+
               return {
                 success: true,
-                from: rate['1. From_Currency Code'],
-                fromName: rate['2. From_Currency Name'],
-                to: rate['3. To_Currency Code'],
-                toName: rate['4. To_Currency Name'],
-                rate: rate['5. Exchange Rate'],
-                lastRefreshed: rate['6. Last Refreshed'],
-                timezone: rate['7. Time Zone'],
-                bidPrice: rate['8. Bid Price'],
-                askPrice: rate['9. Ask Price'],
+                pair: singleData.pair,
+                exchange: singleData.exchange,
+                price: singleData.price,
+                volume24h: singleData.volume24h,
+                change24h: singleData.changePercent24h,
+                high24h: singleData.high24h,
+                low24h: singleData.low24h,
+                message: 'Single exchange data (multi-exchange comparison unavailable)',
               };
-            } else {
+            } catch (fallbackError) {
               return {
                 success: false,
-                error: 'Unable to fetch exchange rate. Please check the currency symbols.',
+                error: error instanceof Error ? error.message : 'Failed to fetch exchange rate',
+                suggestion: 'Try a different currency pair or check the cryptocurrency symbol',
               };
             }
-          } catch (error) {
-            return {
-              success: false,
-              error: error instanceof Error ? error.message : 'Failed to fetch exchange rate',
-            };
           }
         },
       }),

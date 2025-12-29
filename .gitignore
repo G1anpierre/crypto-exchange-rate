@@ -37,6 +37,11 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 
+# Compiled test files (shouldn't be committed)
+src/**/*.js
+src/**/*.js.map
+!src/**/*.config.js
+
 # Playwright
 node_modules/
 /test-results/
@@ -51,3 +56,6 @@ CORS_FIX.md
 NEWSLETTER_SETUP.md
 NEXT_STEPS.md
 NODE_VERSION_FIX.md
+CASCADE_LABS_MASTER_BUSINESS_PLAN.md
+LANGCHAIN_LEARNING_PLAN.md
+CHATBOT_UPDATE_COMPLETE.md
