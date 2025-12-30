@@ -27,7 +27,11 @@ import { createAgent, createMiddleware } from 'langchain'
 import { MemorySaver, REMOVE_ALL_MESSAGES } from '@langchain/langgraph'
 import { RemoveMessage } from '@langchain/core/messages'
 import { auth } from '@/auth'
-import { getExchangeRateTool } from '@/lib/langchain/tools'
+import {
+  getExchangeRateTool,
+  getNewsTool,
+  compareCoinsTool,
+} from '@/lib/langchain/tools'
 
 // Allow streaming responses up to 30 seconds (same as Vercel AI SDK endpoint)
 export const maxDuration = 30
@@ -185,8 +189,11 @@ export async function POST(req: Request) {
     //
     // KEY CONCEPT: Tools
     // Tools give the agent capabilities to interact with external systems
-    // In this case, we're adding the ability to fetch real-time crypto prices
-    const tools = [getExchangeRateTool]
+    // Now we have 3 tools:
+    // 1. getExchangeRateTool - Real-time crypto prices from multiple exchanges
+    // 2. getNewsTool - Latest cryptocurrency news from RSS feeds
+    // 3. compareCoinsTool - Side-by-side comparison of multiple cryptocurrencies
+    const tools = [getExchangeRateTool, getNewsTool, compareCoinsTool]
 
     console.log('🛠️  Tools loaded:', tools.map(t => t.name))
 
@@ -212,6 +219,8 @@ export async function POST(req: Request) {
 
 Your role is to:
 - Help users understand cryptocurrency exchange rates and pricing
+- Provide real-time cryptocurrency news and market updates
+- Compare multiple cryptocurrencies side-by-side
 - Show price comparisons from multiple exchanges (Binance, Coinbase, Kraken)
 - Detect and explain arbitrage opportunities (price differences between exchanges)
 - Explain cryptocurrency concepts, blockchain, wallets, and trading
@@ -225,12 +234,39 @@ CONVERSATION MEMORY:
 - If comparing multiple items, remember what was discussed earlier
 
 IMPORTANT TOOL USAGE INSTRUCTIONS:
-- When users ask about crypto prices or exchange rates, use the get_exchange_rate tool
-- Always show prices from ALL exchanges returned in the tool result
-- Highlight which exchange has the best (lowest) price
-- If there's an arbitrage opportunity (>0.1% difference), mention it explicitly
-- Explain that USDT is Tether, a stablecoin pegged 1:1 to USD
-- For general knowledge questions (like "What is blockchain?"), answer directly without using tools
+
+1. **get_exchange_rate** - Use when users ask about a SINGLE cryptocurrency price:
+   - Example: "What's the Bitcoin price?" or "How much is ETH?"
+   - Always show prices from ALL exchanges returned in the tool result
+   - Highlight which exchange has the best (lowest) price
+   - If there's an arbitrage opportunity (>0.1% difference), mention it explicitly
+   - Explain that USDT is Tether, a stablecoin pegged 1:1 to USD
+
+2. **get_news** - Use when users ask about crypto news or current events:
+   - Example: "What's the latest crypto news?" or "Any Bitcoin news?"
+   - Can fetch from all sources or specific sources (bitcoinist, cointelegraph, decrypt, bscnews)
+   - **PARAMETER LIMITS**: limit must be between 1-20 (default: 5)
+   - **IMPORTANT**: If user requests more than 20 articles:
+     * Call the tool with limit=20 (maximum allowed)
+     * In your response, explain you're showing the maximum of 20 articles
+     * Example: "Here are the latest 20 crypto news articles (showing maximum, you requested 100):"
+   - Never pass limit > 20 or the tool call will fail with an error
+   - Summarize the key headlines and provide context
+   - Include links so users can read more
+
+3. **compare_coins** - Use when users ask to compare MULTIPLE cryptocurrencies:
+   - Example: "Compare Bitcoin and Ethereum" or "Which is better: SOL, ADA, or XRP?"
+   - Requires 2-10 coins for comparison
+   - Highlight the best/worst performers, cheapest/most expensive
+   - Provide insights on 24h price changes and volumes
+
+MULTI-TOOL ORCHESTRATION:
+- You can use multiple tools in one response! Examples:
+  - "Bitcoin price and latest news" → Use BOTH get_exchange_rate AND get_news
+  - "Compare BTC and ETH, and show me crypto news" → Use compare_coins AND get_news
+- Think about what information the user needs and use the appropriate tools
+
+For general knowledge questions (like "What is blockchain?"), answer directly without using tools.
 
 Be conversational, friendly, and informative. Use emojis sparingly. Keep responses concise but thorough.`,
       middleware: [trimMessagesMiddleware],

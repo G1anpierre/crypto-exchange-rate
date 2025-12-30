@@ -23,6 +23,13 @@ import { getMultiExchangeRate, getExchangeRate as getCCXTRate } from '@/services
 
 export const getExchangeRateTool = tool(
   async ({ fromCryptoCurrency, toFiatCurrency }) => {
+    console.log(`💱 getExchangeRate tool called:`, {
+      fromCryptoCurrency,
+      toFiatCurrency,
+      fromType: typeof fromCryptoCurrency,
+      toType: typeof toFiatCurrency,
+    })
+
     try {
       const crypto = fromCryptoCurrency.toUpperCase()
       const fiat = toFiatCurrency.toUpperCase()
@@ -113,8 +120,14 @@ export const getExchangeRateTool = tool(
     name: 'get_exchange_rate',
     description: 'Get cryptocurrency exchange rates from multiple exchanges (Binance, Coinbase, Kraken) with arbitrage detection. Shows real-time prices, 24h volumes, and price changes. Use this when users ask about crypto prices, exchange rates, or want to compare prices across exchanges.',
     schema: z.object({
-      fromCryptoCurrency: z.string().describe('Cryptocurrency symbol (e.g., BTC, ETH, SOL, XRP, DOGE, ADA, DOT)'),
-      toFiatCurrency: z.string().describe('Fiat currency code (e.g., USD, EUR, CHF, GBP)'),
+      fromCryptoCurrency: z
+        .string()
+        .min(1, 'Cryptocurrency symbol is required')
+        .describe('Cryptocurrency symbol (e.g., BTC, ETH, SOL, XRP, DOGE, ADA, DOT)'),
+      toFiatCurrency: z
+        .string()
+        .min(1, 'Fiat currency is required')
+        .describe('Fiat currency code (e.g., USD, EUR, CHF, GBP)'),
     }),
   }
 )

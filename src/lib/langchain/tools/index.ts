@@ -5,7 +5,8 @@
  */
 
 export { getExchangeRateTool } from './getExchangeRate'
+export { getNewsTool } from './getNews'
+export { compareCoinsTool } from './compareCoins'
 
 // Future tools will be added here:
-// export { getNewsTool } from './getNews'
-// export { educateCryptoTool } from './educateCrypto'
+// export { educateCryptoTool } from './educateCrypto' - Skipped (LLM already has general knowledge)
