@@ -19,7 +19,7 @@ export function FloatingChatWidget() {
     stop,
   } = useChat({
     transport: new DefaultChatTransport({
-      api: '/api/chat',
+      api: '/api/chat-langchain',
     }),
   });
 

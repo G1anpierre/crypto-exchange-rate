@@ -62,3 +62,12 @@ CHATBOT_UPDATE_COMPLETE.md
 CCXT_MIGRATION_CHECKLIST.md
 MIGRATION_SUMMARY.md
 TEST_RESULTS.md
+00-ai-sdk-v6-notes.md
+00-message-extraction-fix.md
+00-streaming-fix.md
+01-packages-explained.md
+02-project-structure.md
+02-tool-calling-success.md
+03-conversation-memory.md
+03-simple-chatbot.md
+DIAGNOSTICS.md
