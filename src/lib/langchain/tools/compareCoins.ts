@@ -91,7 +91,11 @@ export const compareCoinsTool = tool(
       )
 
       // Filter successful results
-      const successfulResults = results.filter((r) => r.success)
+      // Type guard: filter returns objects with all required properties
+      const successfulResults = results.filter(
+        (r): r is typeof r & { success: true; averagePrice: number; bestPrice: number; bestExchange: string } =>
+          r.success === true
+      )
       const failedResults = results.filter((r) => !r.success)
 
       if (successfulResults.length === 0) {
