@@ -162,13 +162,13 @@ export async function getRealtimeCandles(
   const ohlcv = await exchange.fetchOHLCV(pair, timeframe, undefined, limit)
 
   return ohlcv.map(([timestamp, open, high, low, close, volume]) => ({
-    timestamp,
-    date: new Date(timestamp).toISOString(),
-    open,
-    high,
-    low,
-    close,
-    volume,
+    timestamp: Number(timestamp),
+    date: new Date(Number(timestamp)).toISOString(),
+    open: Number(open),
+    high: Number(high),
+    low: Number(low),
+    close: Number(close),
+    volume: Number(volume),
   }))
 }
 
