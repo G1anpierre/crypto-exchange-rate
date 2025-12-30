@@ -15,7 +15,7 @@ import {
 import {GenerateCalculation} from './GenerateCalculation'
 import {cryptocurrencies, fiatCurrencies} from '@/static'
 import {useQuery} from '@tanstack/react-query'
-import {getExchangeRate} from '@/services/exchangeRate'
+import {getExchangeRate} from '@/services/ccxt/exchangeRate'
 import classNames from 'classnames'
 import {transform} from '@/utils'
 import {useQueryState, parseAsString} from 'nuqs'
@@ -36,8 +36,8 @@ export default function CryptoExchange() {
     // refetchInterval: 30000,
   })
 
-  const exchangeRate =
-    data?.['Realtime Currency Exchange Rate']?.['5. Exchange Rate']
+  // CCXT returns the price directly in the 'price' field
+  const exchangeRate = data?.price
 
   const handleCryptocurrencyChange = (
     event: React.ChangeEvent<HTMLSelectElement>,
@@ -60,7 +60,7 @@ export default function CryptoExchange() {
     },
   )
 
-  const transformedRate = transform(exchangeRate, toFiatCurrency)
+  const transformedRate = exchangeRate ? transform(exchangeRate, toFiatCurrency) : null
 
   return (
     <Card>

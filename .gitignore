@@ -37,6 +37,11 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 
+# Compiled test files (shouldn't be committed)
+src/**/*.js
+src/**/*.js.map
+!src/**/*.config.js
+
 # Playwright
 node_modules/
 /test-results/
@@ -51,3 +56,18 @@ CORS_FIX.md
 NEWSLETTER_SETUP.md
 NEXT_STEPS.md
 NODE_VERSION_FIX.md
+CASCADE_LABS_MASTER_BUSINESS_PLAN.md
+LANGCHAIN_LEARNING_PLAN.md
+CHATBOT_UPDATE_COMPLETE.md
+CCXT_MIGRATION_CHECKLIST.md
+MIGRATION_SUMMARY.md
+TEST_RESULTS.md
+00-ai-sdk-v6-notes.md
+00-message-extraction-fix.md
+00-streaming-fix.md
+01-packages-explained.md
+02-project-structure.md
+02-tool-calling-success.md
+03-conversation-memory.md
+03-simple-chatbot.md
+DIAGNOSTICS.md
