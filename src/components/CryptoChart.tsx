@@ -2,7 +2,7 @@
 
 import React from 'react'
 import {useQuery, useSuspenseQuery} from '@tanstack/react-query'
-import {cryptoStadistics} from '@/services/exchangeRate'
+import {cryptoStadistics} from '@/services/ccxt/historicalData'
 import {Charts} from './Charts'
 import {
   Card,
@@ -95,8 +95,7 @@ export const CryptoChart = ({
         <CardBody className="min-h-20">
           {isError ? (
             <p className="min-h-8 text-center text-sm text-red-700">
-              You have exceeded the rate limit per minute for your plan, BASIC,
-              by the API provider
+              {error?.message || 'Failed to fetch historical data. Please try again.'}
             </p>
           ) : isLoading ? (
             <div className="flex flex-col gap-4">

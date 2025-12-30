@@ -3,21 +3,34 @@ import {Icon} from "@iconify/react";
 export const cryptocurrencies = [
   {value: 'BTC', label: 'Bitcoin'},
   {value: 'ETH', label: 'Ethereum'},
-  {value: 'BCH', label: 'Bitcoin Cash'},
-  {value: 'XRP', label: 'Ripple'},
-  {value: 'SOL', label: 'Solana'},
-  {value: 'ADA', label: 'Cardano'},
   {value: 'BNB', label: 'Binance Coin'},
+  {value: 'SOL', label: 'Solana'},
+  {value: 'XRP', label: 'Ripple'},
+  {value: 'ADA', label: 'Cardano'},
+  {value: 'DOGE', label: 'Dogecoin'},
+  {value: 'MATIC', label: 'Polygon'},
+  {value: 'DOT', label: 'Polkadot'},
+  {value: 'AVAX', label: 'Avalanche'},
+  {value: 'LINK', label: 'Chainlink'},
+  {value: 'UNI', label: 'Uniswap'},
+  {value: 'LTC', label: 'Litecoin'},
+  {value: 'ATOM', label: 'Cosmos'},
+  {value: 'XLM', label: 'Stellar'},
+  {value: 'BCH', label: 'Bitcoin Cash'},
+  {value: 'TRX', label: 'Tron'},
 ]
 
 export const fiatCurrencies = [
   {value: 'USD', label: 'US Dollar'},
-  {value: 'GBP', label: 'British Pound'},
   {value: 'EUR', label: 'Euro'},
-  {value: 'NGN', label: 'Naira'},
-  {value: 'CNY', label: 'Chinese Yuan'},
-  {value: 'RUB', label: 'Russian Ruble'},
-  {value: 'SGD', label: 'Singaporean Dollar'},
+  {value: 'GBP', label: 'British Pound'},
+  {value: 'USDT', label: 'Tether (USDT)'},
+  {value: 'USDC', label: 'USD Coin (USDC)'},
+  {value: 'AUD', label: 'Australian Dollar'},
+  {value: 'BRL', label: 'Brazilian Real'},
+  {value: 'TRY', label: 'Turkish Lira'},
+  {value: 'JPY', label: 'Japanese Yen'},
+  {value: 'KRW', label: 'South Korean Won'},
 ]
 
 export const timePeriods = [
@@ -32,12 +45,15 @@ type FiatFormatType = {
 
 export const fiatFormat: FiatFormatType = {
   USD: 'en-US',
-  GBP: 'en-GB',
   EUR: 'en-DE',
-  NGN: 'en-NG',
-  CNY: 'zh-Hans',
-  RUB: 'ru-RU',
-  SGD: 'en-SG',
+  GBP: 'en-GB',
+  USDT: 'en-US',
+  USDC: 'en-US',
+  AUD: 'en-AU',
+  BRL: 'pt-BR',
+  TRY: 'tr-TR',
+  JPY: 'ja-JP',
+  KRW: 'ko-KR',
 }
 
 export const dataKeys = [
