@@ -44,10 +44,19 @@ export async function getCryptoHistoricalData(
     throw new Error(`Exchange '${exchangeName}' not supported`)
   }
 
-  const exchange = new (ExchangeClass as any)({
+  // Configuration with optional API keys for higher rate limits
+  const config: any = {
     enableRateLimit: true,
-    timeout: 8000, // 8 second timeout (historical data can be slower)
-  })
+    timeout: 8000, // 8 second timeout (fits within Vercel's 10s serverless limit)
+  }
+
+  // Add Binance API keys if available (increases rate limits significantly)
+  if (exchangeName.toLowerCase() === 'binance' && process.env.BINANCE_API_KEY && process.env.BINANCE_API_SECRET) {
+    config.apiKey = process.env.BINANCE_API_KEY
+    config.secret = process.env.BINANCE_API_SECRET
+  }
+
+  const exchange = new (ExchangeClass as any)(config)
 
   // Smart multi-tier fallback for currency pairs
   const symbolUpper = symbol.toUpperCase()
@@ -156,7 +165,16 @@ export async function getRealtimeCandles(
   timeframe: TimeframeType = '1m',
   limit: number = 60
 ) {
-  const exchange = new ccxt.binance({ enableRateLimit: true })
+  // Configuration with optional API keys for higher rate limits
+  const config: any = { enableRateLimit: true }
+
+  // Add Binance API keys if available
+  if (process.env.BINANCE_API_KEY && process.env.BINANCE_API_SECRET) {
+    config.apiKey = process.env.BINANCE_API_KEY
+    config.secret = process.env.BINANCE_API_SECRET
+  }
+
+  const exchange = new ccxt.binance(config)
   const pair = `${symbol.toUpperCase()}/${market.toUpperCase()}`
 
   const ohlcv = await exchange.fetchOHLCV(pair, timeframe, undefined, limit)
