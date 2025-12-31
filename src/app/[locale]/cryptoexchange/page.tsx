@@ -25,7 +25,7 @@ const CryptoNewsPage = async () => {
         {func: 'DIGITAL_CURRENCY_MONTHLY', market: 'EUR', symbol: 'BTC'},
       ],
       queryFn: async () =>
-        cryptoStadistics('EUR', 'BTC', 'DIGITAL_CURRENCY_MONTHLY'),
+        await cryptoStadistics('EUR', 'BTC', 'DIGITAL_CURRENCY_MONTHLY'),
     })
   } catch (error) {
     // Log error but don't crash the page
