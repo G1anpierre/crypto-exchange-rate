@@ -15,23 +15,23 @@ const CryptoNewsPage = async () => {
    redirect('/login')
   }
 
-  // const queryClient = new QueryClient()
+  const queryClient = new QueryClient()
 
-  // // Prefetch data for initial chart render (with error handling)
-  // try {
-  //   await queryClient.prefetchQuery({
-  //     queryKey: [
-  //       'cryptoStadistics',
-  //       {func: 'DIGITAL_CURRENCY_MONTHLY', market: 'EUR', symbol: 'BTC'},
-  //     ],
-  //     queryFn: async () =>
-  //       await cryptoStadistics('EUR', 'BTC', 'DIGITAL_CURRENCY_MONTHLY'),
-  //   })
-  // } catch (error) {
-  //   // Log error but don't crash the page
-  //   // Client-side useQuery will retry when component mounts
-  //   console.error('[Server Prefetch Error]', error instanceof Error ? error.message : error)
-  // }
+  // Prefetch data for initial chart render (with error handling)
+  try {
+    await queryClient.prefetchQuery({
+      queryKey: [
+        'cryptoStadistics',
+        {func: 'DIGITAL_CURRENCY_MONTHLY', market: 'EUR', symbol: 'BTC'},
+      ],
+      queryFn: async () =>
+        await cryptoStadistics('EUR', 'BTC', 'DIGITAL_CURRENCY_MONTHLY'),
+    })
+  } catch (error) {
+    // Log error but don't crash the page
+    // Client-side useQuery will retry when component mounts
+    console.error('[Server Prefetch Error]', error instanceof Error ? error.message : error)
+  }
 
  
 
@@ -39,11 +39,11 @@ const CryptoNewsPage = async () => {
   return (
     <main className="flex min-h-screen flex-col">
       <div>
-        {/* <HydrationBoundary state={dehydrate(queryClient)}> */}
+        <HydrationBoundary state={dehydrate(queryClient)}>
           <Hero />
           {/* <StadisticChart /> */}
           <CryptoChart title={t('title')} description={t('description')} />
-        {/* </HydrationBoundary> */}
+        </HydrationBoundary>
       </div>
     </main>
   )
