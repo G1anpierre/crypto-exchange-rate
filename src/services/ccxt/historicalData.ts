@@ -127,7 +127,8 @@ export async function getCryptoHistoricalData(
 export async function cryptoStadistics(
   market: string = 'USD',
   symbol: string = 'BTC',
-  func: string = 'DIGITAL_CURRENCY_WEEKLY'
+  func: string = 'DIGITAL_CURRENCY_WEEKLY',
+  exchangeName: string = 'binance'
 ): Promise<PriceType[]> {
   // Map Alpha Vantage function name to CCXT timeframe
   const timeframe = TIMEFRAME_MAP[func] || '1w'
@@ -147,7 +148,7 @@ export async function cryptoStadistics(
 
   const limit = limitMap[timeframe] || 100
 
-  return getCryptoHistoricalData(symbol, market, timeframe, limit, 'binance')
+  return getCryptoHistoricalData(symbol, market, timeframe, limit, exchangeName)
 }
 
 /**
