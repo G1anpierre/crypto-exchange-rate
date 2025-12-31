@@ -23,11 +23,11 @@ import {useQueryState, parseAsString} from 'nuqs'
 export default function CryptoExchange() {
   const [fromCryptoCurrency, setFromCryptoCurrency] = useQueryState(
     'crypto',
-    parseAsString.withDefault('BTC'),
+    parseAsString.withDefault('BTC').withOptions({ shallow: true }),
   )
   const [toFiatCurrency, setToFiatCurrency] = useQueryState(
     'currency',
-    parseAsString.withDefault('USD'),
+    parseAsString.withDefault('USD').withOptions({ shallow: true }),
   )
 
   const {data, error, isLoading, isError} = useQuery({

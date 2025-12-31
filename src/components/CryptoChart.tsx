@@ -24,15 +24,15 @@ export const CryptoChart = ({
 }) => {
   const [market, setMarket] = useQueryState(
     'market',
-    parseAsString.withDefault('EUR'),
+    parseAsString.withDefault('EUR').withOptions({ shallow: true }),
   )
   const [symbol, setSymbol] = useQueryState(
     'symbol',
-    parseAsString.withDefault('BTC'),
+    parseAsString.withDefault('BTC').withOptions({ shallow: true }),
   )
   const [func, setFunct] = useQueryState(
     'func',
-    parseAsString.withDefault('DIGITAL_CURRENCY_MONTHLY'),
+    parseAsString.withDefault('DIGITAL_CURRENCY_MONTHLY').withOptions({ shallow: true }),
   )
 
   const {data, error, isLoading, isError} = useQuery({
