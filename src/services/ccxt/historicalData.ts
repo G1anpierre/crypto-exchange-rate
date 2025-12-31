@@ -46,7 +46,7 @@ export async function getCryptoHistoricalData(
 
   const exchange = new (ExchangeClass as any)({
     enableRateLimit: true,
-    timeout: 15000, // 15 second timeout (historical data can be slower)
+    timeout: 8000, // 8 second timeout (historical data can be slower)
   })
 
   // Smart multi-tier fallback for currency pairs

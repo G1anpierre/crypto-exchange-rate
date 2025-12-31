@@ -11,6 +11,7 @@ import {getConfig} from '@/config'
 import {NextIntlClientProvider} from 'next-intl'
 import { Messages } from 'next-intl'
 import { FloatingChatWidget } from '@/components/chat/FloatingChatWidget'
+import { NuqsAdapter } from 'nuqs/adapters/next/app'
 export function Providers({
   children,
   initialState,
@@ -41,12 +42,14 @@ export function Providers({
       <QueryClientProvider client={queryClient}>
         <SessionProvider>
           <NextIntlClientProvider locale={locale} messages={messages}>
-            <HeroUIProvider>
-              <NextThemesProvider attribute="class" defaultTheme="dark">
-                {children}
-                <FloatingChatWidget />
-              </NextThemesProvider>
-            </HeroUIProvider>
+            <NuqsAdapter>
+              <HeroUIProvider>
+                <NextThemesProvider attribute="class" defaultTheme="dark">
+                  {children}
+                  <FloatingChatWidget />
+                </NextThemesProvider>
+              </HeroUIProvider>
+            </NuqsAdapter>
           </NextIntlClientProvider>
         </SessionProvider>
         <ReactQueryDevtools initialIsOpen={false} position="left"  />

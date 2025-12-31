@@ -17,14 +17,21 @@ const CryptoNewsPage = async () => {
 
   const queryClient = new QueryClient()
 
-  await queryClient.prefetchQuery({
-    queryKey: [
-      'cryptoStadistics',
-      {func: 'DIGITAL_CURRENCY_MONTHLY', market: 'EUR', symbol: 'BTC'},
-    ],
-    queryFn: async () =>
-      cryptoStadistics('EUR', 'BTC', 'DIGITAL_CURRENCY_MONTHLY'),
-  })
+  // Prefetch data for initial chart render (with error handling)
+  try {
+    await queryClient.prefetchQuery({
+      queryKey: [
+        'cryptoStadistics',
+        {func: 'DIGITAL_CURRENCY_MONTHLY', market: 'EUR', symbol: 'BTC'},
+      ],
+      queryFn: async () =>
+        cryptoStadistics('EUR', 'BTC', 'DIGITAL_CURRENCY_MONTHLY'),
+    })
+  } catch (error) {
+    // Log error but don't crash the page
+    // Client-side useQuery will retry when component mounts
+    console.error('[Server Prefetch Error]', error instanceof Error ? error.message : error)
+  }
 
  
 
