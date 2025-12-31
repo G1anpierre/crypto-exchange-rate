@@ -67,6 +67,10 @@ const nextConfig = {
       {
         protocol: 'https',
         hostname: 'app.playnewswire.com'
+      },
+      {
+        protocol: 'https',
+        hostname: 's.w.org'
       }
     ],
   },

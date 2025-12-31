@@ -1,6 +1,4 @@
-'use server'
 
-import React from 'react'
 import {dehydrate, HydrationBoundary, QueryClient} from '@tanstack/react-query'
 import {CryptoChart} from '@/components/CryptoChart'
 import {Hero} from '@/components/Hero'
