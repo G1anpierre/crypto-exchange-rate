@@ -73,10 +73,19 @@ export async function getExchangeRate(
     throw new Error(`Exchange '${exchangeName}' not supported by CCXT`)
   }
 
-  const exchangeInstance = new (ExchangeClass as any)({
+  // Configuration with optional API keys for higher rate limits
+  const config: any = {
     enableRateLimit: true, // Respect exchange rate limits
     timeout: 10000, // 10 second timeout
-  })
+  }
+
+  // Add Binance API keys if available (increases rate limits)
+  if (exchange === 'binance' && process.env.BINANCE_API_KEY && process.env.BINANCE_API_SECRET) {
+    config.apiKey = process.env.BINANCE_API_KEY
+    config.secret = process.env.BINANCE_API_SECRET
+  }
+
+  const exchangeInstance = new (ExchangeClass as any)(config)
 
   // Smart multi-tier fallback for currency pairs
   const fallbackCurrencies = [requestedFiat]
