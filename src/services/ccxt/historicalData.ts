@@ -68,7 +68,7 @@ export async function getCryptoHistoricalData(
   market: string = 'USD',
   timeframe: TimeframeType = '1d',
   limit: number = 100,
-  exchangeName: string = 'kraken'  // Always use Kraken
+  _exchangeName: string = 'kraken'  // Kept for backward compatibility (unused - always uses Kraken)
 ): Promise<PriceType[]> {
   // Always use Kraken - no geo-restrictions, reliable, no API key needed
   const exchange = new ccxt.kraken({
@@ -152,7 +152,7 @@ export async function cryptoStadistics(
   market: string = 'USD',
   symbol: string = 'BTC',
   func: string = 'DIGITAL_CURRENCY_WEEKLY',
-  exchangeName: string = 'kraken'  // Always use Kraken
+  _exchangeName: string = 'kraken'  // Kept for backward compatibility (unused - always uses Kraken)
 ): Promise<PriceType[]> {
   // Map Alpha Vantage function name to CCXT timeframe
   const timeframe = TIMEFRAME_MAP[func] || '1w'
