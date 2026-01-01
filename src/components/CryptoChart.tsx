@@ -37,20 +37,8 @@ export const CryptoChart = ({
 
   const {data, error, isLoading, isError} = useQuery({
     queryKey: ['cryptoStadistics', {symbol, market, func}],
-    queryFn: async () => {
-      try {
-        // Try Binance first (most liquid exchange)
-        return await cryptoStadistics(market, symbol, func, 'binance')
-      } catch (binanceError) {
-        // Fallback to Kraken if Binance fails (e.g., geo-restrictions)
-        try {
-          return await cryptoStadistics(market, symbol, func, 'kraken')
-        } catch (krakenError) {
-          // Last resort: Try Coinbase
-          return await cryptoStadistics(market, symbol, func, 'coinbase')
-        }
-      }
-    },
+    queryFn: () => cryptoStadistics(market, symbol, func, 'kraken'),
+    retry: 1,  // Retry once if it fails
   })
 
   return (

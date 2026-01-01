@@ -51,50 +51,35 @@ const DEFAULT_EXCHANGES = ['binance', 'coinbase', 'kraken']
 
 /**
  * Get exchange rate from a single exchange
+ * Always uses Kraken for reliability and no geo-restrictions
  *
  * @param fromCryptoCurrency - Crypto symbol (e.g., 'BTC', 'ETH', 'SOL')
- * @param toFiatCurrency - Fiat currency (e.g., 'USD', 'EUR', 'CHF')
- * @param exchangeName - Exchange to query (default: 'binance')
+ * @param toFiatCurrency - Fiat currency (e.g., 'USD', 'EUR', 'GBP')
+ * @param exchangeName - Kept for backward compatibility (always uses Kraken)
  * @returns Exchange rate data
  */
 export async function getExchangeRate(
   fromCryptoCurrency: string = 'BTC',
   toFiatCurrency: string = 'USD',
-  exchangeName: string = 'binance'
+  _exchangeName: string = 'kraken'  // Kept for backward compatibility (unused - always uses Kraken)
 ): Promise<ExchangeRateResult> {
   // Normalize inputs
   const crypto = fromCryptoCurrency.toUpperCase()
   const requestedFiat = toFiatCurrency.toUpperCase()
-  const exchange = exchangeName.toLowerCase()
 
-  // Create exchange instance
-  const ExchangeClass = ccxt[exchange as keyof typeof ccxt]
-  if (!ExchangeClass || typeof ExchangeClass !== 'function') {
-    throw new Error(`Exchange '${exchangeName}' not supported by CCXT`)
-  }
+  // Always use Kraken - no geo-restrictions, reliable, no API key needed
+  const exchangeInstance = new ccxt.kraken({
+    enableRateLimit: true,
+    timeout: 10000,
+  })
 
-  // Configuration with optional API keys for higher rate limits
-  const config: any = {
-    enableRateLimit: true, // Respect exchange rate limits
-    timeout: 10000, // 10 second timeout
-  }
-
-  // Add Binance API keys if available (increases rate limits)
-  if (exchange === 'binance' && process.env.BINANCE_API_KEY && process.env.BINANCE_API_SECRET) {
-    config.apiKey = process.env.BINANCE_API_KEY
-    config.secret = process.env.BINANCE_API_SECRET
-  }
-
-  const exchangeInstance = new (ExchangeClass as any)(config)
-
-  // Smart multi-tier fallback for currency pairs
+  // Kraken supports real fiat currencies (USD, EUR, GBP, etc.)
+  // Define fallback order based on requested currency
   const fallbackCurrencies = [requestedFiat]
 
   // Add fallbacks if original currency likely won't work
-  if (!['USD', 'USDT', 'USDC', 'EUR', 'GBP', 'BTC', 'ETH'].includes(requestedFiat)) {
-    fallbackCurrencies.push('USDT', 'USD', 'EUR')
-  } else if (requestedFiat === 'USD') {
-    fallbackCurrencies.push('USDT')
+  if (!['USD', 'EUR', 'GBP', 'CAD', 'JPY', 'CHF', 'AUD'].includes(requestedFiat)) {
+    fallbackCurrencies.push('USD', 'EUR')
   }
 
   let ticker
@@ -116,7 +101,7 @@ export async function getExchangeRate(
         const triedPairs = attemptedPairs.join(', ')
         if (error instanceof Error) {
           throw new Error(
-            `Failed to fetch ${fromCryptoCurrency}/${toFiatCurrency} from ${exchangeName}. ` +
+            `Failed to fetch ${fromCryptoCurrency}/${toFiatCurrency} from Kraken. ` +
             `Tried: ${triedPairs}. Error: ${error.message}`
           )
         }
@@ -127,20 +112,20 @@ export async function getExchangeRate(
   }
 
   if (!ticker) {
-    throw new Error(`Failed to fetch ${fromCryptoCurrency}/${toFiatCurrency} from ${exchangeName}`)
+    throw new Error(`Failed to fetch ${fromCryptoCurrency}/${toFiatCurrency} from Kraken`)
   }
 
   // Calculate 24h change
-  const change24h = ticker.last - ticker.open
-  const changePercent24h = ((change24h / ticker.open) * 100)
+  const change24h = (ticker.last || 0) - (ticker.open || 0)
+  const changePercent24h = ticker.open ? ((change24h / ticker.open) * 100) : 0
 
   return {
-    exchange: exchangeName,
+    exchange: 'kraken',  // Always Kraken
     pair: successfulPair,
-    price: ticker.last,
+    price: ticker.last || 0,
     volume24h: ticker.baseVolume || 0,
-    high24h: ticker.high || ticker.last,
-    low24h: ticker.low || ticker.last,
+    high24h: ticker.high || ticker.last || 0,
+    low24h: ticker.low || ticker.last || 0,
     change24h,
     changePercent24h,
     timestamp: ticker.timestamp || Date.now(),
@@ -150,70 +135,39 @@ export async function getExchangeRate(
 
 /**
  * Get exchange rate from multiple exchanges simultaneously
- * This is a PREMIUM feature - shows arbitrage opportunities!
+ * NOTE: Currently only uses Kraken (single source) for reliability
+ * Multi-exchange comparison has been simplified to avoid geo-restrictions
  *
  * @param fromCryptoCurrency - Crypto symbol
  * @param toFiatCurrency - Fiat currency
- * @param exchanges - Array of exchange names (default: binance, coinbase, kraken)
- * @returns Multi-exchange comparison data
+ * @param _exchanges - Kept for backward compatibility (unused - always uses Kraken only)
+ * @returns Exchange rate data (single result from Kraken)
  */
 export async function getMultiExchangeRate(
   fromCryptoCurrency: string = 'BTC',
   toFiatCurrency: string = 'USD',
-  exchanges: string[] = DEFAULT_EXCHANGES
+  _exchanges: string[] = DEFAULT_EXCHANGES
 ): Promise<MultiExchangeResult> {
   const pair = `${fromCryptoCurrency.toUpperCase()}/${toFiatCurrency.toUpperCase()}`
 
-  // Fetch from all exchanges in parallel
-  const results = await Promise.allSettled(
-    exchanges.map(exchange =>
-      getExchangeRate(fromCryptoCurrency, toFiatCurrency, exchange)
-    )
-  )
+  // Simplified: Only use Kraken to avoid geo-restrictions and API complexity
+  const krakenResult = await getExchangeRate(fromCryptoCurrency, toFiatCurrency, 'kraken')
 
-  // Filter successful results
-  const successfulResults = results
-    .filter((result): result is PromiseFulfilledResult<ExchangeRateResult> =>
-      result.status === 'fulfilled'
-    )
-    .map(result => result.value)
-
-  if (successfulResults.length === 0) {
-    throw new Error(`Failed to fetch ${pair} from any exchange`)
-  }
-
-  // Find best and worst prices
-  const bestPrice = successfulResults.reduce((min, result) =>
-    result.price < min.price ? result : min
-  )
-
-  const worstPrice = successfulResults.reduce((max, result) =>
-    result.price > max.price ? result : max
-  )
-
-  // Calculate average price
-  const averagePrice = successfulResults.reduce((sum, result) =>
-    sum + result.price, 0
-  ) / successfulResults.length
-
-  // Calculate price spread (arbitrage opportunity)
-  const priceSpread = worstPrice.price - bestPrice.price
-  const priceSpreadPercent = (priceSpread / bestPrice.price) * 100
-
+  // Return single result in multi-exchange format for backward compatibility
   return {
     pair,
-    results: successfulResults,
+    results: [krakenResult],
     bestPrice: {
-      exchange: bestPrice.exchange,
-      price: bestPrice.price,
+      exchange: krakenResult.exchange,
+      price: krakenResult.price,
     },
     worstPrice: {
-      exchange: worstPrice.exchange,
-      price: worstPrice.price,
+      exchange: krakenResult.exchange,
+      price: krakenResult.price,
     },
-    averagePrice,
-    priceSpread,
-    priceSpreadPercent,
+    averagePrice: krakenResult.price,
+    priceSpread: 0,  // No spread with single exchange
+    priceSpreadPercent: 0,
   }
 }
 

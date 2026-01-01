@@ -22,13 +22,45 @@ const TIMEFRAME_MAP: Record<string, TimeframeType> = {
 }
 
 /**
+ * Convert standard timeframe to Kraken-specific format
+ * Kraken uses minutes as numbers instead of standard string format
+ */
+function getKrakenTimeframe(timeframe: TimeframeType): number {
+  const krakenTimeframes: Record<TimeframeType, number> = {
+    '1m': 1,
+    '5m': 5,
+    '15m': 15,
+    '30m': 30,
+    '1h': 60,
+    '4h': 240,
+    '1d': 1440,
+    '1w': 10080,
+    '1M': 10080,  // Use weekly for monthly (Kraken doesn't support monthly)
+  }
+  return krakenTimeframes[timeframe] || 1440
+}
+
+/**
+ * Adjust data point limit when using fallback timeframes
+ * When monthly is requested but we use weekly, we need more data points
+ */
+function getKrakenLimit(requestedTimeframe: TimeframeType, baseLimit: number): number {
+  // If user requested monthly but we're using weekly, fetch 4x more data
+  if (requestedTimeframe === '1M') {
+    return Math.min(baseLimit * 4, 720) // Kraken max is 720
+  }
+  return baseLimit
+}
+
+/**
  * Get historical cryptocurrency price data (OHLCV)
+ * Always uses Kraken exchange for reliability and no geo-restrictions
  *
  * @param symbol - Cryptocurrency symbol (e.g., 'BTC', 'ETH')
- * @param market - Market currency (e.g., 'USD', 'EUR', 'CNY')
+ * @param market - Market currency (e.g., 'USD', 'EUR', 'GBP')
  * @param timeframe - Timeframe for candles ('1d', '1w', '1M', etc.)
  * @param limit - Number of data points to fetch (default: 100)
- * @param exchangeName - Exchange to query (default: 'binance')
+ * @param exchangeName - Kept for backward compatibility (always uses Kraken)
  * @returns Array of price data compatible with your Charts component
  */
 export async function getCryptoHistoricalData(
@@ -36,40 +68,28 @@ export async function getCryptoHistoricalData(
   market: string = 'USD',
   timeframe: TimeframeType = '1d',
   limit: number = 100,
-  exchangeName: string = 'binance'
+  _exchangeName: string = 'kraken'  // Kept for backward compatibility (unused - always uses Kraken)
 ): Promise<PriceType[]> {
-  // Create exchange instance
-  const ExchangeClass = ccxt[exchangeName.toLowerCase() as keyof typeof ccxt]
-  if (!ExchangeClass || typeof ExchangeClass !== 'function') {
-    throw new Error(`Exchange '${exchangeName}' not supported`)
-  }
-
-  // Configuration with optional API keys for higher rate limits
-  const config: any = {
+  // Always use Kraken - no geo-restrictions, reliable, no API key needed
+  const exchange = new ccxt.kraken({
     enableRateLimit: true,
-    timeout: 8000, // 8 second timeout (fits within Vercel's 10s serverless limit)
-  }
+    timeout: 8000,
+  })
 
-  // Add Binance API keys if available (increases rate limits significantly)
-  if (exchangeName.toLowerCase() === 'binance' && process.env.BINANCE_API_KEY && process.env.BINANCE_API_SECRET) {
-    config.apiKey = process.env.BINANCE_API_KEY
-    config.secret = process.env.BINANCE_API_SECRET
-  }
+  // Convert to Kraken timeframe format and adjust limit if needed
+  const krakenTimeframe = getKrakenTimeframe(timeframe)
+  const adjustedLimit = getKrakenLimit(timeframe, limit)
 
-  const exchange = new (ExchangeClass as any)(config)
-
-  // Smart multi-tier fallback for currency pairs
   const symbolUpper = symbol.toUpperCase()
   const requestedMarket = market.toUpperCase()
 
+  // Kraken supports real fiat currencies (USD, EUR, GBP, etc.)
   // Define fallback order based on requested currency
   const fallbackCurrencies = [requestedMarket]
 
   // Add fallbacks if original currency likely won't work
-  if (!['USD', 'USDT', 'USDC', 'EUR', 'GBP', 'BTC', 'ETH'].includes(requestedMarket)) {
-    fallbackCurrencies.push('USDT', 'USD', 'EUR')
-  } else if (requestedMarket === 'USD') {
-    fallbackCurrencies.push('USDT')
+  if (!['USD', 'EUR', 'GBP', 'CAD', 'JPY', 'CHF', 'AUD'].includes(requestedMarket)) {
+    fallbackCurrencies.push('USD', 'EUR')
   }
 
   let ohlcv
@@ -81,8 +101,10 @@ export async function getCryptoHistoricalData(
     attemptedPairs.push(pair)
 
     try {
-      ohlcv = await exchange.fetchOHLCV(pair, timeframe, undefined, limit)
-      break // Success! Exit the loop
+      ohlcv = await exchange.fetchOHLCV(pair, krakenTimeframe as any, undefined, adjustedLimit)
+      if (ohlcv && ohlcv.length > 0) {
+        break // Success! Exit the loop
+      }
     } catch (error) {
       // If this is the last fallback, throw error
       if (currency === fallbackCurrencies[fallbackCurrencies.length - 1]) {
@@ -99,17 +121,17 @@ export async function getCryptoHistoricalData(
     }
   }
 
-  if (!ohlcv) {
+  if (!ohlcv || ohlcv.length === 0) {
     throw new Error(`Failed to fetch historical data for ${symbol}/${market}`)
   }
 
   // Transform to PriceType format (compatible with your existing Charts)
-  const prices: PriceType[] = ohlcv.map(([timestamp, open, high, low, close]: [number, number, number, number, number, number]) => ({
-    date: new Date(timestamp).toISOString().split('T')[0], // Format: YYYY-MM-DD
-    open: Number(open),
-    high: Number(high),
-    low: Number(low),
-    close: Number(close),
+  const prices: PriceType[] = ohlcv.map((candle) => ({
+    date: new Date(Number(candle[0])).toISOString().split('T')[0], // Format: YYYY-MM-DD
+    open: Number(candle[1]),
+    high: Number(candle[2]),
+    low: Number(candle[3]),
+    close: Number(candle[4]),
   }))
 
   return prices
@@ -118,22 +140,25 @@ export async function getCryptoHistoricalData(
 /**
  * Wrapper function compatible with existing cryptoStadistics signature
  * This makes migration easier - same function signature as Alpha Vantage version
+ * Always uses Kraken exchange
  *
- * @param market - Market currency (e.g., 'USD', 'EUR', 'CNY')
+ * @param market - Market currency (e.g., 'USD', 'EUR', 'GBP')
  * @param symbol - Cryptocurrency symbol (e.g., 'BTC', 'ETH')
  * @param func - Function type (maps to timeframe)
+ * @param exchangeName - Kept for backward compatibility (always uses Kraken)
  * @returns Array of price data
  */
 export async function cryptoStadistics(
   market: string = 'USD',
   symbol: string = 'BTC',
   func: string = 'DIGITAL_CURRENCY_WEEKLY',
-  exchangeName: string = 'binance'
+  _exchangeName: string = 'kraken'  // Kept for backward compatibility (unused - always uses Kraken)
 ): Promise<PriceType[]> {
   // Map Alpha Vantage function name to CCXT timeframe
   const timeframe = TIMEFRAME_MAP[func] || '1w'
 
   // Determine limit based on timeframe
+  // For monthly, we use weekly on Kraken (handled by getKrakenLimit)
   const limitMap: Record<TimeframeType, number> = {
     '1m': 60,   // Last hour
     '5m': 288,  // Last day
@@ -143,12 +168,13 @@ export async function cryptoStadistics(
     '4h': 180,  // Last month
     '1d': 90,   // Last 3 months
     '1w': 52,   // Last year
-    '1M': 24,   // Last 2 years
+    '1M': 48,   // Last ~1 year (uses weekly data, adjusted by getKrakenLimit)
   }
 
   const limit = limitMap[timeframe] || 100
 
-  return getCryptoHistoricalData(symbol, market, timeframe, limit, exchangeName)
+  // Always use Kraken
+  return getCryptoHistoricalData(symbol, market, timeframe, limit, 'kraken')
 }
 
 /**
