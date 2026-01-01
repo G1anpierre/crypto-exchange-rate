@@ -51,50 +51,35 @@ const DEFAULT_EXCHANGES = ['binance', 'coinbase', 'kraken']
 
 /**
  * Get exchange rate from a single exchange
+ * Always uses Kraken for reliability and no geo-restrictions
  *
  * @param fromCryptoCurrency - Crypto symbol (e.g., 'BTC', 'ETH', 'SOL')
- * @param toFiatCurrency - Fiat currency (e.g., 'USD', 'EUR', 'CHF')
- * @param exchangeName - Exchange to query (default: 'binance')
+ * @param toFiatCurrency - Fiat currency (e.g., 'USD', 'EUR', 'GBP')
+ * @param exchangeName - Kept for backward compatibility (always uses Kraken)
  * @returns Exchange rate data
  */
 export async function getExchangeRate(
   fromCryptoCurrency: string = 'BTC',
   toFiatCurrency: string = 'USD',
-  exchangeName: string = 'binance'
+  exchangeName: string = 'kraken'  // Always use Kraken
 ): Promise<ExchangeRateResult> {
   // Normalize inputs
   const crypto = fromCryptoCurrency.toUpperCase()
   const requestedFiat = toFiatCurrency.toUpperCase()
-  const exchange = exchangeName.toLowerCase()
 
-  // Create exchange instance
-  const ExchangeClass = ccxt[exchange as keyof typeof ccxt]
-  if (!ExchangeClass || typeof ExchangeClass !== 'function') {
-    throw new Error(`Exchange '${exchangeName}' not supported by CCXT`)
-  }
+  // Always use Kraken - no geo-restrictions, reliable, no API key needed
+  const exchangeInstance = new ccxt.kraken({
+    enableRateLimit: true,
+    timeout: 10000,
+  })
 
-  // Configuration with optional API keys for higher rate limits
-  const config: any = {
-    enableRateLimit: true, // Respect exchange rate limits
-    timeout: 10000, // 10 second timeout
-  }
-
-  // Add Binance API keys if available (increases rate limits)
-  if (exchange === 'binance' && process.env.BINANCE_API_KEY && process.env.BINANCE_API_SECRET) {
-    config.apiKey = process.env.BINANCE_API_KEY
-    config.secret = process.env.BINANCE_API_SECRET
-  }
-
-  const exchangeInstance = new (ExchangeClass as any)(config)
-
-  // Smart multi-tier fallback for currency pairs
+  // Kraken supports real fiat currencies (USD, EUR, GBP, etc.)
+  // Define fallback order based on requested currency
   const fallbackCurrencies = [requestedFiat]
 
   // Add fallbacks if original currency likely won't work
-  if (!['USD', 'USDT', 'USDC', 'EUR', 'GBP', 'BTC', 'ETH'].includes(requestedFiat)) {
-    fallbackCurrencies.push('USDT', 'USD', 'EUR')
-  } else if (requestedFiat === 'USD') {
-    fallbackCurrencies.push('USDT')
+  if (!['USD', 'EUR', 'GBP', 'CAD', 'JPY', 'CHF', 'AUD'].includes(requestedFiat)) {
+    fallbackCurrencies.push('USD', 'EUR')
   }
 
   let ticker
@@ -135,7 +120,7 @@ export async function getExchangeRate(
   const changePercent24h = ((change24h / ticker.open) * 100)
 
   return {
-    exchange: exchangeName,
+    exchange: 'kraken',  // Always Kraken
     pair: successfulPair,
     price: ticker.last,
     volume24h: ticker.baseVolume || 0,

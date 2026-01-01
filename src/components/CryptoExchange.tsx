@@ -32,20 +32,8 @@ export default function CryptoExchange() {
 
   const {data, error, isLoading, isError} = useQuery({
     queryKey: ['exchangeRate', {fromCryptoCurrency, toFiatCurrency}],
-    queryFn: async () => {
-      try {
-        // Try Binance first (most liquid exchange)
-        return await getExchangeRate(fromCryptoCurrency, toFiatCurrency, 'binance')
-      } catch (binanceError) {
-        // Fallback to Kraken if Binance fails (e.g., geo-restrictions)
-        try {
-          return await getExchangeRate(fromCryptoCurrency, toFiatCurrency, 'kraken')
-        } catch (krakenError) {
-          // Last resort: Try Coinbase
-          return await getExchangeRate(fromCryptoCurrency, toFiatCurrency, 'coinbase')
-        }
-      }
-    },
+    queryFn: () => getExchangeRate(fromCryptoCurrency, toFiatCurrency, 'kraken'),
+    retry: 1,  // Retry once if it fails
     // refetchInterval: 30000,
   })
 
