@@ -1,6 +1,7 @@
 'use client'
 
 import React from 'react'
+import Image from 'next/image'
 import classNames from 'classnames'
 import {newsSources} from '@/static'
 import {useTranslations} from 'next-intl'
@@ -69,7 +70,7 @@ export const SelectNews = ({
                   placement="top"
                   className="bg-primary text-white"
                 >
-                  <img
+                  <Image
                     className={`${
                       newsSource.name === 'Decrypt' ? 'max-h-14' : 'max-h-14'
                     } h-full w-full object-contain align-middle`}

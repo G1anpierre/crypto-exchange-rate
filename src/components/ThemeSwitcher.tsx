@@ -6,11 +6,12 @@ import {SunIcon} from './SunIcon'
 import {MoonIcon} from './MoonIcon'
 
 export const ThemeSwitcher = () => {
-  const [mounted, setMounted] = useState(false)
-  const {theme, setTheme} = useTheme()
+  const {setTheme} = useTheme()
   const [isSelected, setIsSelected] = useState(false)
+  const [mounted, setMounted] = useState(false)
 
   useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setMounted(true)
   }, [])
 

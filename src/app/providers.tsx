@@ -44,7 +44,12 @@ export function Providers({
           <NextIntlClientProvider locale={locale} messages={messages}>
             <NuqsAdapter>
               <HeroUIProvider>
-                <NextThemesProvider attribute="class" defaultTheme="dark">
+                <NextThemesProvider
+                  attribute="class"
+                  defaultTheme="dark"
+                  enableSystem={false}
+                  disableTransitionOnChange
+                >
                   {children}
                   <FloatingChatWidget />
                 </NextThemesProvider>

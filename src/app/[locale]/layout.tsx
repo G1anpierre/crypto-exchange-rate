@@ -42,8 +42,8 @@ export default async function RootLayout(props: {
   const messages = await getMessages()
 
   return (
-    <html lang={locale} className="scroll-smooth">
-      <body className={`${inter.className} `}>
+    <html lang={locale} className="scroll-smooth" suppressHydrationWarning>
+      <body className={`${inter.className} `} suppressHydrationWarning>
         <Providers
           initialState={initialState}
           locale={locale}
