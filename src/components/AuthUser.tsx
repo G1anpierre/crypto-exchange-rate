@@ -9,7 +9,7 @@ import {
   DropdownItem,
   User,
   Link as NextUILink,
-} from "@heroui/react"
+} from '@heroui/react'
 import React from 'react'
 import {serverSignOut} from '@/actions/signOut'
 import {signOut as clientSignOut} from 'next-auth/react'
@@ -23,7 +23,7 @@ type AuthUserProps = {
 export const AuthUser = ({isDropDownDisabled, user}: AuthUserProps) => {
   const handleSignOut = async () => {
     await serverSignOut()
-    await clientSignOut({ redirectTo: '/' })
+    await clientSignOut({redirectTo: '/'})
   }
   return (
     <>

@@ -11,7 +11,7 @@ import {
   Select,
   SelectItem,
   Spinner,
-} from "@heroui/react"
+} from '@heroui/react'
 import {GenerateCalculation} from './GenerateCalculation'
 import {cryptocurrencies, fiatCurrencies} from '@/static'
 import {useQuery} from '@tanstack/react-query'
@@ -23,17 +23,18 @@ import {useQueryState, parseAsString} from 'nuqs'
 export default function CryptoExchange() {
   const [fromCryptoCurrency, setFromCryptoCurrency] = useQueryState(
     'crypto',
-    parseAsString.withDefault('BTC').withOptions({ shallow: true }),
+    parseAsString.withDefault('BTC').withOptions({shallow: true}),
   )
   const [toFiatCurrency, setToFiatCurrency] = useQueryState(
     'currency',
-    parseAsString.withDefault('USD').withOptions({ shallow: true }),
+    parseAsString.withDefault('USD').withOptions({shallow: true}),
   )
 
   const {data, error, isLoading, isError} = useQuery({
     queryKey: ['exchangeRate', {fromCryptoCurrency, toFiatCurrency}],
-    queryFn: () => getExchangeRate(fromCryptoCurrency, toFiatCurrency, 'kraken'),
-    retry: 1,  // Retry once if it fails
+    queryFn: () =>
+      getExchangeRate(fromCryptoCurrency, toFiatCurrency, 'kraken'),
+    retry: 1, // Retry once if it fails
     // refetchInterval: 30000,
   })
 
@@ -61,7 +62,9 @@ export default function CryptoExchange() {
     },
   )
 
-  const transformedRate = exchangeRate ? transform(exchangeRate, toFiatCurrency) : null
+  const transformedRate = exchangeRate
+    ? transform(exchangeRate, toFiatCurrency)
+    : null
 
   return (
     <Card>
@@ -78,9 +81,7 @@ export default function CryptoExchange() {
             onChange={handleCryptocurrencyChange}
           >
             {cryptocurrencies.map(cryptocurrency => (
-              <SelectItem
-                key={cryptocurrency.value}
-              >
+              <SelectItem key={cryptocurrency.value}>
                 {cryptocurrency.label}
               </SelectItem>
             ))}

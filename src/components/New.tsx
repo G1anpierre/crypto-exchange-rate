@@ -26,9 +26,8 @@ export const New = ({singleNew, sourceSearchParam}: SingleNewTypeProps) => {
     return placeholderImage[sourceSearchParam]
   }
 
-  const description = typeof singleNew.description === 'string'
-    ? singleNew.description
-    : ""
+  const description =
+    typeof singleNew.description === 'string' ? singleNew.description : ''
 
   return (
     <article className="flex flex-col">
@@ -37,12 +36,13 @@ export const New = ({singleNew, sourceSearchParam}: SingleNewTypeProps) => {
           <Image
             src={singleNew.thumbnail ?? ''}
             alt={singleNew.title}
-            className="aspect-[16/9] w-full rounded-2xl bg-gray-100 object-cover sm:aspect-[2/1] lg:aspect-[3/2] hover:scale-105 transition-all duration-300 ease-in-out"
+            className="aspect-[16/9] w-full rounded-2xl bg-gray-100 object-cover transition-all duration-300 ease-in-out hover:scale-105 sm:aspect-[2/1] lg:aspect-[3/2]"
             width={800}
             height={600}
             onError={event => {
               event.currentTarget.src = getPlaceholderImage(sourceSearchParam)
-              event.currentTarget.srcset = getPlaceholderImage(sourceSearchParam)
+              event.currentTarget.srcset =
+                getPlaceholderImage(sourceSearchParam)
             }}
             loading="lazy"
           />

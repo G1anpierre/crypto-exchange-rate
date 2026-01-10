@@ -1,7 +1,7 @@
 'use server'
 
 import ccxt from 'ccxt'
-import { PriceType } from '@/components/Charts'
+import {PriceType} from '@/components/Charts'
 
 /**
  * CCXT Historical Data Service
@@ -10,15 +10,24 @@ import { PriceType } from '@/components/Charts'
  * Provides OHLCV (Open, High, Low, Close, Volume) historical data
  */
 
-export type TimeframeType = '1m' | '5m' | '15m' | '30m' | '1h' | '4h' | '1d' | '1w' | '1M'
+export type TimeframeType =
+  | '1m'
+  | '5m'
+  | '15m'
+  | '30m'
+  | '1h'
+  | '4h'
+  | '1d'
+  | '1w'
+  | '1M'
 
 /**
  * Mapping from Alpha Vantage function names to CCXT timeframes
  */
 const TIMEFRAME_MAP: Record<string, TimeframeType> = {
-  'DIGITAL_CURRENCY_DAILY': '1d',
-  'DIGITAL_CURRENCY_WEEKLY': '1w',
-  'DIGITAL_CURRENCY_MONTHLY': '1M',
+  DIGITAL_CURRENCY_DAILY: '1d',
+  DIGITAL_CURRENCY_WEEKLY: '1w',
+  DIGITAL_CURRENCY_MONTHLY: '1M',
 }
 
 /**
@@ -35,7 +44,7 @@ function getKrakenTimeframe(timeframe: TimeframeType): number {
     '4h': 240,
     '1d': 1440,
     '1w': 10080,
-    '1M': 10080,  // Use weekly for monthly (Kraken doesn't support monthly)
+    '1M': 10080, // Use weekly for monthly (Kraken doesn't support monthly)
   }
   return krakenTimeframes[timeframe] || 1440
 }
@@ -44,7 +53,10 @@ function getKrakenTimeframe(timeframe: TimeframeType): number {
  * Adjust data point limit when using fallback timeframes
  * When monthly is requested but we use weekly, we need more data points
  */
-function getKrakenLimit(requestedTimeframe: TimeframeType, baseLimit: number): number {
+function getKrakenLimit(
+  requestedTimeframe: TimeframeType,
+  baseLimit: number,
+): number {
   // If user requested monthly but we're using weekly, fetch 4x more data
   if (requestedTimeframe === '1M') {
     return Math.min(baseLimit * 4, 720) // Kraken max is 720
@@ -68,7 +80,7 @@ export async function getCryptoHistoricalData(
   market: string = 'USD',
   timeframe: TimeframeType = '1d',
   limit: number = 100,
-  _exchangeName: string = 'kraken'  // Kept for backward compatibility (unused - always uses Kraken)
+  _exchangeName: string = 'kraken', // Kept for backward compatibility (unused - always uses Kraken)
 ): Promise<PriceType[]> {
   // Always use Kraken - no geo-restrictions, reliable, no API key needed
   const exchange = new ccxt.kraken({
@@ -88,7 +100,9 @@ export async function getCryptoHistoricalData(
   const fallbackCurrencies = [requestedMarket]
 
   // Add fallbacks if original currency likely won't work
-  if (!['USD', 'EUR', 'GBP', 'CAD', 'JPY', 'CHF', 'AUD'].includes(requestedMarket)) {
+  if (
+    !['USD', 'EUR', 'GBP', 'CAD', 'JPY', 'CHF', 'AUD'].includes(requestedMarket)
+  ) {
     fallbackCurrencies.push('USD', 'EUR')
   }
 
@@ -101,7 +115,12 @@ export async function getCryptoHistoricalData(
     attemptedPairs.push(pair)
 
     try {
-      ohlcv = await exchange.fetchOHLCV(pair, krakenTimeframe as any, undefined, adjustedLimit)
+      ohlcv = await exchange.fetchOHLCV(
+        pair,
+        krakenTimeframe as any,
+        undefined,
+        adjustedLimit,
+      )
       if (ohlcv && ohlcv.length > 0) {
         break // Success! Exit the loop
       }
@@ -112,7 +131,7 @@ export async function getCryptoHistoricalData(
         if (error instanceof Error) {
           throw new Error(
             `Failed to fetch historical data for ${symbol}/${market}. ` +
-            `Tried: ${triedPairs}. Error: ${error.message}`
+              `Tried: ${triedPairs}. Error: ${error.message}`,
           )
         }
         throw new Error(`Failed to fetch historical data. Tried: ${triedPairs}`)
@@ -126,7 +145,7 @@ export async function getCryptoHistoricalData(
   }
 
   // Transform to PriceType format (compatible with your existing Charts)
-  const prices: PriceType[] = ohlcv.map((candle) => ({
+  const prices: PriceType[] = ohlcv.map(candle => ({
     date: new Date(Number(candle[0])).toISOString().split('T')[0], // Format: YYYY-MM-DD
     open: Number(candle[1]),
     high: Number(candle[2]),
@@ -152,7 +171,7 @@ export async function cryptoStadistics(
   market: string = 'USD',
   symbol: string = 'BTC',
   func: string = 'DIGITAL_CURRENCY_WEEKLY',
-  _exchangeName: string = 'kraken'  // Kept for backward compatibility (unused - always uses Kraken)
+  _exchangeName: string = 'kraken', // Kept for backward compatibility (unused - always uses Kraken)
 ): Promise<PriceType[]> {
   // Map Alpha Vantage function name to CCXT timeframe
   const timeframe = TIMEFRAME_MAP[func] || '1w'
@@ -160,15 +179,15 @@ export async function cryptoStadistics(
   // Determine limit based on timeframe
   // For monthly, we use weekly on Kraken (handled by getKrakenLimit)
   const limitMap: Record<TimeframeType, number> = {
-    '1m': 60,   // Last hour
-    '5m': 288,  // Last day
+    '1m': 60, // Last hour
+    '5m': 288, // Last day
     '15m': 672, // Last week
     '30m': 336, // Last week
-    '1h': 168,  // Last week
-    '4h': 180,  // Last month
-    '1d': 90,   // Last 3 months
-    '1w': 52,   // Last year
-    '1M': 48,   // Last ~1 year (uses weekly data, adjusted by getKrakenLimit)
+    '1h': 168, // Last week
+    '4h': 180, // Last month
+    '1d': 90, // Last 3 months
+    '1w': 52, // Last year
+    '1M': 48, // Last ~1 year (uses weekly data, adjusted by getKrakenLimit)
   }
 
   const limit = limitMap[timeframe] || 100
@@ -190,10 +209,10 @@ export async function getRealtimeCandles(
   symbol: string,
   market: string,
   timeframe: TimeframeType = '1m',
-  limit: number = 60
+  limit: number = 60,
 ) {
   // Configuration with optional API keys for higher rate limits
-  const config: any = { enableRateLimit: true }
+  const config: any = {enableRateLimit: true}
 
   // Add Binance API keys if available
   if (process.env.BINANCE_API_KEY && process.env.BINANCE_API_SECRET) {
@@ -220,7 +239,9 @@ export async function getRealtimeCandles(
 /**
  * Get supported timeframes for a specific exchange
  */
-export async function getSupportedTimeframes(exchangeName: string = 'binance'): Promise<string[]> {
+export async function getSupportedTimeframes(
+  exchangeName: string = 'binance',
+): Promise<string[]> {
   try {
     const ExchangeClass = ccxt[exchangeName.toLowerCase() as keyof typeof ccxt]
     if (!ExchangeClass || typeof ExchangeClass !== 'function') {

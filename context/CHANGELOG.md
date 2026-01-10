@@ -1,13 +1,16 @@
 # Changelog
 
-All notable changes to the CryptoCurrent Exchange App will be documented in this file.
+All notable changes to the CryptoCurrent Exchange App will be documented in this
+file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
-and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
+and this project adheres to
+[Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
 
 ### Added
+
 - Playwright E2E testing setup with comprehensive test suite
 - CLAUDE.local.md file for AI assistant context
 - CHANGELOG.md for tracking implementations
@@ -18,6 +21,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Comprehensive test coverage for homepage, navigation, themes, and locales
 
 ### Changed
+
 - Updated Providers component with better type safety for messages prop
 - Renamed AIchatbot component to AIChatbot for consistency
 - Enhanced image performance with lazy loading and proper alt attributes
@@ -28,16 +32,20 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Footer social icons: Improved hover state contrast
 
 ### Fixed
+
 - Type safety improvements in Providers component
 - Image optimization and accessibility improvements
-- **Accessibility contrast issues** - Fixed 8 text elements with low contrast ratios
-- **WCAG AA Compliance** - Text contrast ratios now meet or approach 4.5:1 standard
+- **Accessibility contrast issues** - Fixed 8 text elements with low contrast
+  ratios
+- **WCAG AA Compliance** - Text contrast ratios now meet or approach 4.5:1
+  standard
 
 ## [0.1.0] - 2024-12-23
 
 ### Initial Release
 
 #### Core Features
+
 - **Cryptocurrency Exchange Calculator**
   - Real-time exchange rate calculations
   - Support for multiple cryptocurrencies
@@ -81,6 +89,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Localized routing with next-intl
 
 #### Technical Stack
+
 - Next.js 15.1.2 with App Router
 - React 19.0.0
 - TypeScript 5
@@ -92,18 +101,21 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Framer Motion for animations
 
 #### Infrastructure
+
 - Turbopack for development
 - ESLint and Prettier for code quality
 - pnpm package manager
 - Supabase for database hosting
 
 ### Database Schema
+
 - User model with authentication
 - Account model for OAuth providers
 - Session management
 - Verification tokens
 
 ### Development Setup
+
 - Environment configuration
 - Database migrations
 - Development scripts

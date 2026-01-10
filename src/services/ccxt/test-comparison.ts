@@ -27,13 +27,18 @@ async function testSingleExchange() {
     console.log('  Volume 24h:', ccxtResult.volume24h.toLocaleString(), 'BTC')
     console.log('  High 24h: $' + ccxtResult.high24h.toLocaleString())
     console.log('  Low 24h: $' + ccxtResult.low24h.toLocaleString())
-    console.log('  Change 24h: $' + ccxtResult.change24h.toFixed(2), `(${ccxtResult.changePercent24h.toFixed(2)}%)`)
+    console.log(
+      '  Change 24h: $' + ccxtResult.change24h.toFixed(2),
+      `(${ccxtResult.changePercent24h.toFixed(2)}%)`,
+    )
     console.log('  Last Updated:', ccxtResult.lastUpdated)
     console.log(`  Latency: ${ccxtTime}ms`)
 
     console.log('\n✅ CCXT is working perfectly!')
     console.log('💡 Note: Most exchanges use USDT (Tether) instead of USD')
-    console.log('   For fiat conversions, use Kraken or Coinbase which support real USD\n')
+    console.log(
+      '   For fiat conversions, use Kraken or Coinbase which support real USD\n',
+    )
   } catch (error) {
     console.error('❌ Error:', error)
   }
@@ -54,19 +59,33 @@ async function testMultiExchange() {
 
     console.log('📊 Results:')
     multiResult.results.forEach(result => {
-      console.log(`  ${result.exchange.padEnd(10)}: $${result.price.toLocaleString()}`)
+      console.log(
+        `  ${result.exchange.padEnd(10)}: $${result.price.toLocaleString()}`,
+      )
     })
 
     console.log('\n💰 Price Analysis:')
-    console.log(`  Best Price:    $${multiResult.bestPrice.price.toLocaleString()} on ${multiResult.bestPrice.exchange}`)
-    console.log(`  Worst Price:   $${multiResult.worstPrice.price.toLocaleString()} on ${multiResult.worstPrice.exchange}`)
-    console.log(`  Average Price: $${multiResult.averagePrice.toLocaleString()}`)
-    console.log(`  Price Spread:  $${multiResult.priceSpread.toFixed(2)} (${multiResult.priceSpreadPercent.toFixed(3)}%)`)
+    console.log(
+      `  Best Price:    $${multiResult.bestPrice.price.toLocaleString()} on ${multiResult.bestPrice.exchange}`,
+    )
+    console.log(
+      `  Worst Price:   $${multiResult.worstPrice.price.toLocaleString()} on ${multiResult.worstPrice.exchange}`,
+    )
+    console.log(
+      `  Average Price: $${multiResult.averagePrice.toLocaleString()}`,
+    )
+    console.log(
+      `  Price Spread:  $${multiResult.priceSpread.toFixed(2)} (${multiResult.priceSpreadPercent.toFixed(3)}%)`,
+    )
 
     if (multiResult.priceSpreadPercent > 0.5) {
       console.log('\n🎯 ARBITRAGE OPPORTUNITY DETECTED!')
-      console.log(`   Buy on ${multiResult.bestPrice.exchange}, sell on ${multiResult.worstPrice.exchange}`)
-      console.log(`   Potential profit: ${multiResult.priceSpreadPercent.toFixed(2)}% per trade`)
+      console.log(
+        `   Buy on ${multiResult.bestPrice.exchange}, sell on ${multiResult.worstPrice.exchange}`,
+      )
+      console.log(
+        `   Potential profit: ${multiResult.priceSpreadPercent.toFixed(2)}% per trade`,
+      )
     }
 
     console.log()
@@ -81,18 +100,20 @@ async function testDifferentPairs() {
   console.log('🧪 Test 3: Different Trading Pairs\n')
 
   const testPairs = [
-    { crypto: 'ETH', fiat: 'USDT', exchange: 'binance' },
-    { crypto: 'SOL', fiat: 'USDT', exchange: 'binance' },
-    { crypto: 'BTC', fiat: 'EUR', exchange: 'kraken' }, // Kraken supports EUR
-    { crypto: 'BTC', fiat: 'CHF', exchange: 'kraken' }, // Swiss Francs (for SwissFix customers!)
-    { crypto: 'XRP', fiat: 'USDT', exchange: 'binance' },
-    { crypto: 'ADA', fiat: 'USDT', exchange: 'binance' },
+    {crypto: 'ETH', fiat: 'USDT', exchange: 'binance'},
+    {crypto: 'SOL', fiat: 'USDT', exchange: 'binance'},
+    {crypto: 'BTC', fiat: 'EUR', exchange: 'kraken'}, // Kraken supports EUR
+    {crypto: 'BTC', fiat: 'CHF', exchange: 'kraken'}, // Swiss Francs (for SwissFix customers!)
+    {crypto: 'XRP', fiat: 'USDT', exchange: 'binance'},
+    {crypto: 'ADA', fiat: 'USDT', exchange: 'binance'},
   ]
 
-  for (const { crypto, fiat, exchange } of testPairs) {
+  for (const {crypto, fiat, exchange} of testPairs) {
     try {
       const result = await getCCXTRate(crypto, fiat, exchange)
-      console.log(`${result.pair} (${exchange}): $${result.price.toLocaleString()} (${result.changePercent24h > 0 ? '+' : ''}${result.changePercent24h.toFixed(2)}%)`)
+      console.log(
+        `${result.pair} (${exchange}): $${result.price.toLocaleString()} (${result.changePercent24h > 0 ? '+' : ''}${result.changePercent24h.toFixed(2)}%)`,
+      )
     } catch (error) {
       console.log(`${crypto}/${fiat} (${exchange}): ❌ Not available`)
     }
@@ -130,22 +151,24 @@ async function showSupportedExchanges() {
 }
 
 async function runAllTests() {
-  console.log('=' .repeat(60))
+  console.log('='.repeat(60))
   console.log('    CCXT vs Alpha Vantage Comparison Test')
-  console.log('=' .repeat(60) + '\n')
+  console.log('='.repeat(60) + '\n')
 
   await testSingleExchange()
   await testMultiExchange()
   await testDifferentPairs()
   await showSupportedExchanges()
 
-  console.log('=' .repeat(60))
+  console.log('='.repeat(60))
   console.log('    ✅ All Tests Complete!')
-  console.log('=' .repeat(60) + '\n')
+  console.log('='.repeat(60) + '\n')
 
   console.log('📌 Next Steps:')
   console.log('  1. Review the results above')
-  console.log('  2. Verify CCXT prices match Alpha Vantage (should be very close)')
+  console.log(
+    '  2. Verify CCXT prices match Alpha Vantage (should be very close)',
+  )
   console.log('  3. If everything looks good, update chatbot to use CCXT')
   console.log('  4. Remove Alpha Vantage/RapidAPI dependency\n')
 }

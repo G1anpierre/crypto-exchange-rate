@@ -50,7 +50,17 @@ async function selectTop5ArticlesWithDiversity() {
   })
 
   // Select the most recent article from each source
-  const selectedArticles: { id: string; title: string; url: string; description: string | null; imageUrl: string | null; source: string; publishedAt: Date; category: string | null; createdAt: Date }[] = []
+  const selectedArticles: {
+    id: string
+    title: string
+    url: string
+    description: string | null
+    imageUrl: string | null
+    source: string
+    publishedAt: Date
+    category: string | null
+    createdAt: Date
+  }[] = []
   const sources = Array.from(articlesBySource.keys())
 
   for (const source of sources) {
@@ -154,7 +164,10 @@ export async function GET(request: NextRequest) {
 
         return {success: true, email: subscriber.user.email}
       } catch (error) {
-        console.error(`Failed to send email to ${subscriber.user.email}:`, error)
+        console.error(
+          `Failed to send email to ${subscriber.user.email}:`,
+          error,
+        )
         return {success: false, email: subscriber.user.email, error}
       }
     })

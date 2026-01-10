@@ -21,8 +21,8 @@ import {signOut as clientSignOut} from 'next-auth/react'
 import {Session} from 'next-auth'
 // import {MetaMaskProvider} from '@metamask/sdk-react'
 import {ConnectWalletButton} from './ConnectWalletButton'
-import { useRouter } from 'next/navigation'
-import { HandCoins } from 'lucide-react'
+import {useRouter} from 'next/navigation'
+import {HandCoins} from 'lucide-react'
 
 export const Nav = ({user}: {user: Session | null}) => {
   const router = useRouter()
@@ -60,9 +60,8 @@ export const Nav = ({user}: {user: Session | null}) => {
 
   const handleSignOut = async () => {
     await serverSignOut()
-    await clientSignOut({ redirectTo: '/' })
+    await clientSignOut({redirectTo: '/'})
   }
-
 
   return (
     <Navbar onMenuOpenChange={setIsMenuOpen}>
@@ -80,7 +79,9 @@ export const Nav = ({user}: {user: Session | null}) => {
       {user && user.user && (
         <NavbarContent className="hidden gap-4 sm:flex" justify="center">
           <NavbarItem isActive={isActive('cryptonews')}>
-            <NextUILink href="/cryptoexchange">Watch Crypto Exchange!</NextUILink>
+            <NextUILink href="/cryptoexchange">
+              Watch Crypto Exchange!
+            </NextUILink>
           </NavbarItem>
         </NavbarContent>
       )}
@@ -99,7 +100,13 @@ export const Nav = ({user}: {user: Session | null}) => {
           {/* <ConnectWalletButton /> */}
           {/* TODO: Locate it in Logins */}
           {/* </MetaMaskProvider> */}
-          <Button endContent={<HandCoins />} color="primary" onPress={handleDonationRedirect}>Donate</Button>
+          <Button
+            endContent={<HandCoins />}
+            color="primary"
+            onPress={handleDonationRedirect}
+          >
+            Donate
+          </Button>
         </NavbarItem>
       </NavbarContent>
       {/* Mobile */}
@@ -114,7 +121,13 @@ export const Nav = ({user}: {user: Session | null}) => {
           <AuthUser user={user} isDropDownDisabled />
         </NavbarMenuItem>
         <NavbarMenuItem>
-          <Button endContent={<HandCoins />} color="primary" onPress={handleDonationRedirect}>Donate</Button>
+          <Button
+            endContent={<HandCoins />}
+            color="primary"
+            onPress={handleDonationRedirect}
+          >
+            Donate
+          </Button>
         </NavbarMenuItem>
         {menuItems.map((item, index) => (
           <NavbarMenuItem key={`${item}-${index}`}>
@@ -124,7 +137,12 @@ export const Nav = ({user}: {user: Session | null}) => {
           </NavbarMenuItem>
         ))}
         <NavbarMenuItem>
-          <Button color="danger" variant="ghost" size="md" onPress={handleSignOut}>
+          <Button
+            color="danger"
+            variant="ghost"
+            size="md"
+            onPress={handleSignOut}
+          >
             Logout
           </Button>
         </NavbarMenuItem>

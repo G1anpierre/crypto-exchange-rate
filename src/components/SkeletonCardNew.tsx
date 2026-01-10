@@ -1,4 +1,4 @@
-import { Card, Skeleton } from "@heroui/react"
+import {Card, Skeleton} from '@heroui/react'
 import React from 'react'
 
 export const SkeletonCardNew = () => {
@@ -6,7 +6,7 @@ export const SkeletonCardNew = () => {
     <div className="flex flex-col gap-3">
       <Card className="space-y-5 p-4" radius="lg">
         <Skeleton className="rounded-lg">
-          <div className="lg:aspect-[3/2] rounded-lg bg-secondary"></div>
+          <div className="rounded-lg bg-secondary lg:aspect-[3/2]"></div>
         </Skeleton>
         <div className="space-y-3">
           <Skeleton className="w-3/5 rounded-lg">

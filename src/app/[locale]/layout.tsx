@@ -1,4 +1,3 @@
-
 import {Inter} from 'next/font/google'
 import './globals.css'
 import {Providers} from '../providers'
@@ -45,7 +44,11 @@ export default async function RootLayout(props: {
   return (
     <html lang={locale} className="scroll-smooth">
       <body className={`${inter.className} `}>
-        <Providers initialState={initialState} locale={locale} messages={messages}>
+        <Providers
+          initialState={initialState}
+          locale={locale}
+          messages={messages}
+        >
           <Nav user={user} />
           {children}
           <Footer />

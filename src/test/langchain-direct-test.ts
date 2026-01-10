@@ -7,8 +7,8 @@
  * Run with: npx tsx src/test/langchain-direct-test.ts
  */
 
-import { ChatOpenAI } from '@langchain/openai'
-import { ChatPromptTemplate } from '@langchain/core/prompts'
+import {ChatOpenAI} from '@langchain/openai'
+import {ChatPromptTemplate} from '@langchain/core/prompts'
 
 async function testLangChainDirect() {
   console.log('🧪 === LangChain Direct Test ===\n')

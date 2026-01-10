@@ -1,45 +1,41 @@
-'use client';
+'use client'
 
-import { FormEvent, useRef, useEffect, useState } from 'react';
-import { Send, Square } from 'lucide-react';
+import {FormEvent, useRef, useEffect, useState} from 'react'
+import {Send, Square} from 'lucide-react'
 
 interface ChatInputProps {
-  sendMessage: (message: any) => void;
-  isLoading: boolean;
-  stop: () => void;
+  sendMessage: (message: any) => void
+  isLoading: boolean
+  stop: () => void
 }
 
-export function ChatInput({
-  sendMessage,
-  isLoading,
-  stop,
-}: ChatInputProps) {
-  const [input, setInput] = useState('');
-  const textareaRef = useRef<HTMLTextAreaElement>(null);
+export function ChatInput({sendMessage, isLoading, stop}: ChatInputProps) {
+  const [input, setInput] = useState('')
+  const textareaRef = useRef<HTMLTextAreaElement>(null)
 
   // Auto-resize textarea
   useEffect(() => {
     if (textareaRef.current) {
-      textareaRef.current.style.height = 'auto';
-      textareaRef.current.style.height = `${textareaRef.current.scrollHeight}px`;
+      textareaRef.current.style.height = 'auto'
+      textareaRef.current.style.height = `${textareaRef.current.scrollHeight}px`
     }
-  }, [input]);
+  }, [input])
 
   const onSubmit = (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    if (!input.trim() || isLoading) return;
-    sendMessage({ text: input });
-    setInput('');
-  };
+    e.preventDefault()
+    if (!input.trim() || isLoading) return
+    sendMessage({text: input})
+    setInput('')
+  }
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
     if (e.key === 'Enter' && !e.shiftKey) {
-      e.preventDefault();
-      if (!input.trim() || isLoading) return;
-      sendMessage({ text: input });
-      setInput('');
+      e.preventDefault()
+      if (!input.trim() || isLoading) return
+      sendMessage({text: input})
+      setInput('')
     }
-  };
+  }
 
   return (
     <form onSubmit={onSubmit} className="flex items-end gap-2">
@@ -47,7 +43,7 @@ export function ChatInput({
         <textarea
           ref={textareaRef}
           value={input}
-          onChange={(e) => setInput(e.target.value)}
+          onChange={e => setInput(e.target.value)}
           onKeyDown={handleKeyDown}
           placeholder="Ask about crypto rates, news, or education..."
           rows={1}
@@ -72,12 +68,12 @@ export function ChatInput({
         <button
           type="submit"
           disabled={!input.trim() || isLoading}
-          className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-lg bg-gradient-to-r from-blue-600 to-purple-600 text-white transition-opacity hover:opacity-90 disabled:opacity-50 disabled:cursor-not-allowed"
+          className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-lg bg-gradient-to-r from-blue-600 to-purple-600 text-white transition-opacity hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-50"
           aria-label="Send message"
         >
           <Send className="h-4 w-4" />
         </button>
       )}
     </form>
-  );
+  )
 }

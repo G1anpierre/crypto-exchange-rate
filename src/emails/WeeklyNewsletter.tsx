@@ -99,8 +99,7 @@ export default function WeeklyNewsletter({
               .
             </Text>
             <Text style={copyright}>
-              © {new Date().getFullYear()} Crypto Exchange. All rights
-              reserved.
+              © {new Date().getFullYear()} Crypto Exchange. All rights reserved.
             </Text>
           </Section>
         </Container>

@@ -11,7 +11,7 @@ import {
   SelectItem,
   CardHeader,
   Skeleton,
-} from "@heroui/react"
+} from '@heroui/react'
 import {cryptocurrencies, dataKeys, fiatCurrencies, timePeriods} from '@/static'
 import {useQueryState, parseAsString} from 'nuqs'
 
@@ -24,21 +24,23 @@ export const CryptoChart = ({
 }) => {
   const [market, setMarket] = useQueryState(
     'market',
-    parseAsString.withDefault('EUR').withOptions({ shallow: true }),
+    parseAsString.withDefault('EUR').withOptions({shallow: true}),
   )
   const [symbol, setSymbol] = useQueryState(
     'symbol',
-    parseAsString.withDefault('BTC').withOptions({ shallow: true }),
+    parseAsString.withDefault('BTC').withOptions({shallow: true}),
   )
   const [func, setFunct] = useQueryState(
     'func',
-    parseAsString.withDefault('DIGITAL_CURRENCY_MONTHLY').withOptions({ shallow: true }),
+    parseAsString
+      .withDefault('DIGITAL_CURRENCY_MONTHLY')
+      .withOptions({shallow: true}),
   )
 
   const {data, error, isLoading, isError} = useQuery({
     queryKey: ['cryptoStadistics', {symbol, market, func}],
     queryFn: () => cryptoStadistics(market, symbol, func, 'kraken'),
-    retry: 1,  // Retry once if it fails
+    retry: 1, // Retry once if it fails
   })
 
   return (
@@ -72,9 +74,7 @@ export const CryptoChart = ({
             onChange={e => setSymbol(e.target.value)}
           >
             {cryptocurrencies.map(cryptoCurrency => (
-              <SelectItem
-                key={cryptoCurrency.value}
-              >
+              <SelectItem key={cryptoCurrency.value}>
                 {cryptoCurrency.label}
               </SelectItem>
             ))}
@@ -87,16 +87,15 @@ export const CryptoChart = ({
             onChange={e => setFunct(e.target.value)}
           >
             {timePeriods.map(timePeriod => (
-              <SelectItem key={timePeriod.value}>
-                {timePeriod.label}
-              </SelectItem>
+              <SelectItem key={timePeriod.value}>{timePeriod.label}</SelectItem>
             ))}
           </Select>
         </CardHeader>
         <CardBody className="min-h-20">
           {isError ? (
             <p className="min-h-8 text-center text-sm text-red-700">
-              {error?.message || 'Failed to fetch historical data. Please try again.'}
+              {error?.message ||
+                'Failed to fetch historical data. Please try again.'}
             </p>
           ) : isLoading ? (
             <div className="flex flex-col gap-4">

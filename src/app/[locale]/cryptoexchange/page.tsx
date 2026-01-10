@@ -1,18 +1,16 @@
-
 import {dehydrate, HydrationBoundary, QueryClient} from '@tanstack/react-query'
 import {CryptoChart} from '@/components/CryptoChart'
 import {Hero} from '@/components/Hero'
 import {getTranslations} from 'next-intl/server'
 import {cryptoStadistics} from '@/services/ccxt/historicalData'
 import {auth} from '@/auth'
-import { redirect } from 'next/navigation'
-
+import {redirect} from 'next/navigation'
 
 const CryptoNewsPage = async () => {
   const user = await auth()
 
-  if(!user || !user.user) {
-   redirect('/login')
+  if (!user || !user.user) {
+    redirect('/login')
   }
 
   const queryClient = new QueryClient()
@@ -30,10 +28,11 @@ const CryptoNewsPage = async () => {
   } catch (error) {
     // Log error but don't crash the page
     // Client-side useQuery will retry when component mounts
-    console.error('[Server Prefetch Error]', error instanceof Error ? error.message : error)
+    console.error(
+      '[Server Prefetch Error]',
+      error instanceof Error ? error.message : error,
+    )
   }
-
- 
 
   const t = await getTranslations('Stadistics')
   return (

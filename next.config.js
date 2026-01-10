@@ -1,7 +1,7 @@
 /** @type {import('next').NextConfig} */
 const withNextIntl = require('next-intl/plugin')(
   // Specify the path to your i18n request configuration
-  './src/i18n/request.ts'
+  './src/i18n/request.ts',
 )
 const nextConfig = {
   images: {
@@ -50,28 +50,28 @@ const nextConfig = {
       },
       {
         protocol: 'https',
-        hostname: 'images.cryptodaily.co.uk'
+        hostname: 'images.cryptodaily.co.uk',
       },
       {
         protocol: 'https',
-        hostname: 'app.chainwire.org'
+        hostname: 'app.chainwire.org',
       },
       {
         protocol: 'https',
-        hostname: 'heroui.com'
+        hostname: 'heroui.com',
       },
       {
         protocol: 'https',
-        hostname: 'cdn.sanity.io'
+        hostname: 'cdn.sanity.io',
       },
       {
         protocol: 'https',
-        hostname: 'app.playnewswire.com'
+        hostname: 'app.playnewswire.com',
       },
       {
         protocol: 'https',
-        hostname: 's.w.org'
-      }
+        hostname: 's.w.org',
+      },
     ],
   },
 }

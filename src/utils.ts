@@ -6,9 +6,9 @@ export const transform = (value: number, fiatCurrency: string) => {
   // Map stablecoins to their fiat equivalents for Intl.NumberFormat
   // USDT, USDC, DAI are all USD-pegged stablecoins
   const currencyMap: Record<string, string> = {
-    'USDT': 'USD',
-    'USDC': 'USD',
-    'DAI': 'USD',
+    USDT: 'USD',
+    USDC: 'USD',
+    DAI: 'USD',
   }
 
   const formattingCurrency = currencyMap[fiatCurrency] || fiatCurrency

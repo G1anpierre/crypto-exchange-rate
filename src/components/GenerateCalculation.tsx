@@ -1,6 +1,6 @@
 'use client'
 import React from 'react'
-import {Button} from "@heroui/react"
+import {Button} from '@heroui/react'
 import {useQueryClient} from '@tanstack/react-query'
 
 type GenerateCalculationProps = {
@@ -27,7 +27,7 @@ export const GenerateCalculation = ({
       className="col-span-2"
       onClick={recalculate}
     >
-      <div className="flex align-center gap-3">
+      <div className="align-center flex gap-3">
         <span className="relative inline-block ">Refresh !</span>
       </div>
     </Button>

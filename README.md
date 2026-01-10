@@ -2,7 +2,8 @@
 
 ![Crypto Exchange Rate](https://github.com/G1anpierre/crypto-exchange-rate/raw/main/public/crypto-preview.png)
 
-A modern web application for live cryptocurrency exchange rate tracking, crypto news aggregation, and weekly newsletter subscription, built with Next.js.
+A modern web application for live cryptocurrency exchange rate tracking, crypto
+news aggregation, and weekly newsletter subscription, built with Next.js.
 
 ## Features
 
@@ -52,7 +53,8 @@ pnpm dev
 bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000) with your browser to see the
+result.
 
 ## Environment Variables
 
@@ -79,7 +81,8 @@ CRON_SECRET=your_cron_secret
 NEXT_PUBLIC_APP_URL=http://localhost:3000
 ```
 
-See [NEWSLETTER_SETUP.md](./NEWSLETTER_SETUP.md) for detailed setup instructions.
+See [NEWSLETTER_SETUP.md](./NEWSLETTER_SETUP.md) for detailed setup
+instructions.
 
 ## Project Structure
 

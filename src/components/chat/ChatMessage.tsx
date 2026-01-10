@@ -1,40 +1,52 @@
-'use client';
+'use client'
 
-import { UIMessage } from '@ai-sdk/react';
-import { User, Bot, TrendingUp, Newspaper, GraduationCap, Loader2 } from 'lucide-react';
-import ReactMarkdown from 'react-markdown';
+import {UIMessage} from '@ai-sdk/react'
+import {
+  User,
+  Bot,
+  TrendingUp,
+  Newspaper,
+  GraduationCap,
+  Loader2,
+} from 'lucide-react'
+import ReactMarkdown from 'react-markdown'
 
 interface ChatMessageProps {
-  message: UIMessage;
+  message: UIMessage
 }
 
-export function ChatMessage({ message }: ChatMessageProps) {
-  const isUser = message.role === 'user';
+export function ChatMessage({message}: ChatMessageProps) {
+  const isUser = message.role === 'user'
 
   // Render message parts
   const renderMessageContent = () => {
-
     return message.parts.map((part: any, index: number) => {
-
       // Text content
       if (part.type === 'text' || typeof part === 'string') {
-        const text = typeof part === 'string' ? part : part.text;
+        const text = typeof part === 'string' ? part : part.text
 
         // Skip empty text parts
         if (!text || text.trim() === '') {
-          console.warn(`Skipping empty text part at index ${index}`);
-          return null;
+          console.warn(`Skipping empty text part at index ${index}`)
+          return null
         }
 
         return (
-          <div key={index} className="prose prose-sm max-w-none dark:prose-invert">
+          <div
+            key={index}
+            className="prose prose-sm dark:prose-invert max-w-none"
+          >
             <ReactMarkdown
               components={{
-                p: ({ children }) => <p className="mb-2 last:mb-0">{children}</p>,
-                ul: ({ children }) => <ul className="mb-2 ml-4 list-disc">{children}</ul>,
-                ol: ({ children }) => <ol className="mb-2 ml-4 list-decimal">{children}</ol>,
-                li: ({ children }) => <li className="mb-1">{children}</li>,
-                a: ({ href, children }) => (
+                p: ({children}) => <p className="mb-2 last:mb-0">{children}</p>,
+                ul: ({children}) => (
+                  <ul className="mb-2 ml-4 list-disc">{children}</ul>
+                ),
+                ol: ({children}) => (
+                  <ol className="mb-2 ml-4 list-decimal">{children}</ol>
+                ),
+                li: ({children}) => <li className="mb-1">{children}</li>,
+                a: ({href, children}) => (
                   <a
                     href={href}
                     target="_blank"
@@ -44,7 +56,7 @@ export function ChatMessage({ message }: ChatMessageProps) {
                     {children}
                   </a>
                 ),
-                code: ({ children }) => (
+                code: ({children}) => (
                   <code className="rounded bg-black/10 px-1 py-0.5 font-mono text-sm dark:bg-white/10">
                     {children}
                   </code>
@@ -54,12 +66,12 @@ export function ChatMessage({ message }: ChatMessageProps) {
               {text}
             </ReactMarkdown>
           </div>
-        );
+        )
       }
 
       // Tool call
       if (part.type === 'tool-call') {
-        const toolName = part.toolName;
+        const toolName = part.toolName
         return (
           <div
             key={index}
@@ -72,13 +84,13 @@ export function ChatMessage({ message }: ChatMessageProps) {
               {toolName === 'educateCrypto' && 'Preparing explanation...'}
             </span>
           </div>
-        );
+        )
       }
 
       // Tool result
       if (part.type === 'tool-result') {
-        const toolName = part.toolName;
-        const result = part.result;
+        const toolName = part.toolName
+        const result = part.result
 
         if (toolName === 'getExchangeRate' && result.success) {
           return (
@@ -86,7 +98,7 @@ export function ChatMessage({ message }: ChatMessageProps) {
               key={index}
               className="mt-2 rounded-lg border border-green-200 bg-green-50 p-3 dark:border-green-800 dark:bg-green-900/20"
             >
-              <div className="flex items-center gap-2 mb-2">
+              <div className="mb-2 flex items-center gap-2">
                 <TrendingUp className="h-4 w-4 text-green-600 dark:text-green-400" />
                 <span className="font-semibold text-green-700 dark:text-green-300">
                   Exchange Rate
@@ -94,14 +106,16 @@ export function ChatMessage({ message }: ChatMessageProps) {
               </div>
               <div className="space-y-1 text-sm">
                 <p className="font-mono text-lg font-bold text-green-800 dark:text-green-200">
-                  1 {result.from} = {parseFloat(result.rate).toFixed(2)} {result.to}
+                  1 {result.from} = {parseFloat(result.rate).toFixed(2)}{' '}
+                  {result.to}
                 </p>
                 <p className="text-xs text-green-600 dark:text-green-400">
-                  Last updated: {new Date(result.lastRefreshed).toLocaleString()}
+                  Last updated:{' '}
+                  {new Date(result.lastRefreshed).toLocaleString()}
                 </p>
               </div>
             </div>
-          );
+          )
         }
 
         if (toolName === 'getNews' && result.success) {
@@ -110,17 +124,17 @@ export function ChatMessage({ message }: ChatMessageProps) {
               key={index}
               className="mt-2 rounded-lg border border-purple-200 bg-purple-50 p-3 dark:border-purple-800 dark:bg-purple-900/20"
             >
-              <div className="flex items-center gap-2 mb-2">
+              <div className="mb-2 flex items-center gap-2">
                 <Newspaper className="h-4 w-4 text-purple-600 dark:text-purple-400" />
                 <span className="font-semibold text-purple-700 dark:text-purple-300">
                   Latest News from {result.source}
                 </span>
               </div>
-              <p className="text-xs text-purple-600 dark:text-purple-400 mb-2">
+              <p className="mb-2 text-xs text-purple-600 dark:text-purple-400">
                 Found {result.articleCount} articles
               </p>
             </div>
-          );
+          )
         }
 
         if (toolName === 'educateCrypto' && result.success) {
@@ -136,7 +150,7 @@ export function ChatMessage({ message }: ChatMessageProps) {
                 </span>
               </div>
             </div>
-          );
+          )
         }
 
         // Error state
@@ -148,13 +162,13 @@ export function ChatMessage({ message }: ChatMessageProps) {
             >
               Error: {result.error}
             </div>
-          );
+          )
         }
       }
 
-      return null;
-    });
-  };
+      return null
+    })
+  }
 
   return (
     <div className={`flex gap-3 ${isUser ? 'justify-end' : 'justify-start'}`}>
@@ -164,7 +178,9 @@ export function ChatMessage({ message }: ChatMessageProps) {
         </div>
       )}
 
-      <div className={`flex max-w-[80%] flex-col ${isUser ? 'items-end' : 'items-start'}`}>
+      <div
+        className={`flex max-w-[80%] flex-col ${isUser ? 'items-end' : 'items-start'}`}
+      >
         <div
           className={`rounded-2xl px-4 py-2 ${
             isUser
@@ -182,5 +198,5 @@ export function ChatMessage({ message }: ChatMessageProps) {
         </div>
       )}
     </div>
-  );
+  )
 }

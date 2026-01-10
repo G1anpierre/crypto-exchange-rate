@@ -9,9 +9,9 @@ import {ReactQueryDevtools} from '@tanstack/react-query-devtools'
 import {State, WagmiProvider} from 'wagmi'
 import {getConfig} from '@/config'
 import {NextIntlClientProvider} from 'next-intl'
-import { Messages } from 'next-intl'
-import { FloatingChatWidget } from '@/components/chat/FloatingChatWidget'
-import { NuqsAdapter } from 'nuqs/adapters/next/app'
+import {Messages} from 'next-intl'
+import {FloatingChatWidget} from '@/components/chat/FloatingChatWidget'
+import {NuqsAdapter} from 'nuqs/adapters/next/app'
 export function Providers({
   children,
   initialState,
@@ -52,7 +52,7 @@ export function Providers({
             </NuqsAdapter>
           </NextIntlClientProvider>
         </SessionProvider>
-        <ReactQueryDevtools initialIsOpen={false} position="left"  />
+        <ReactQueryDevtools initialIsOpen={false} position="left" />
       </QueryClientProvider>
     </WagmiProvider>
   )

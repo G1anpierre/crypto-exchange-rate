@@ -12,7 +12,7 @@ export const CalculateExchangeRate = async (
   const toFiatCurrency = formData.get('toFiatCurrency')
 
   try {
-    const { body } = await request(
+    const {body} = await request(
       `https://alpha-vantage.p.rapidapi.com/query?&to_currency=${toFiatCurrency}&function=CURRENCY_EXCHANGE_RATE&from_currency=${fromCryptoCurrency}`,
       {
         method: 'GET',

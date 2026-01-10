@@ -9,10 +9,16 @@ import {
   DropdownItem,
   Button,
   cn,
-} from "@heroui/react"
-import {Chip} from "@heroui/react"
+} from '@heroui/react'
+import {Chip} from '@heroui/react'
 import {Icon} from '@iconify/react'
-import {Connector, useConnect, useConnection, useDisconnect, useConnectors} from 'wagmi'
+import {
+  Connector,
+  useConnect,
+  useConnection,
+  useDisconnect,
+  useConnectors,
+} from 'wagmi'
 import {formatWalletAddress} from '@/utils'
 import {useState} from 'react'
 

@@ -61,7 +61,7 @@ const DEFAULT_EXCHANGES = ['binance', 'coinbase', 'kraken']
 export async function getExchangeRate(
   fromCryptoCurrency: string = 'BTC',
   toFiatCurrency: string = 'USD',
-  _exchangeName: string = 'kraken'  // Kept for backward compatibility (unused - always uses Kraken)
+  _exchangeName: string = 'kraken', // Kept for backward compatibility (unused - always uses Kraken)
 ): Promise<ExchangeRateResult> {
   // Normalize inputs
   const crypto = fromCryptoCurrency.toUpperCase()
@@ -78,7 +78,9 @@ export async function getExchangeRate(
   const fallbackCurrencies = [requestedFiat]
 
   // Add fallbacks if original currency likely won't work
-  if (!['USD', 'EUR', 'GBP', 'CAD', 'JPY', 'CHF', 'AUD'].includes(requestedFiat)) {
+  if (
+    !['USD', 'EUR', 'GBP', 'CAD', 'JPY', 'CHF', 'AUD'].includes(requestedFiat)
+  ) {
     fallbackCurrencies.push('USD', 'EUR')
   }
 
@@ -102,7 +104,7 @@ export async function getExchangeRate(
         if (error instanceof Error) {
           throw new Error(
             `Failed to fetch ${fromCryptoCurrency}/${toFiatCurrency} from Kraken. ` +
-            `Tried: ${triedPairs}. Error: ${error.message}`
+              `Tried: ${triedPairs}. Error: ${error.message}`,
           )
         }
         throw new Error(`Failed to fetch exchange rate. Tried: ${triedPairs}`)
@@ -112,15 +114,17 @@ export async function getExchangeRate(
   }
 
   if (!ticker) {
-    throw new Error(`Failed to fetch ${fromCryptoCurrency}/${toFiatCurrency} from Kraken`)
+    throw new Error(
+      `Failed to fetch ${fromCryptoCurrency}/${toFiatCurrency} from Kraken`,
+    )
   }
 
   // Calculate 24h change
   const change24h = (ticker.last || 0) - (ticker.open || 0)
-  const changePercent24h = ticker.open ? ((change24h / ticker.open) * 100) : 0
+  const changePercent24h = ticker.open ? (change24h / ticker.open) * 100 : 0
 
   return {
-    exchange: 'kraken',  // Always Kraken
+    exchange: 'kraken', // Always Kraken
     pair: successfulPair,
     price: ticker.last || 0,
     volume24h: ticker.baseVolume || 0,
@@ -146,12 +150,16 @@ export async function getExchangeRate(
 export async function getMultiExchangeRate(
   fromCryptoCurrency: string = 'BTC',
   toFiatCurrency: string = 'USD',
-  _exchanges: string[] = DEFAULT_EXCHANGES
+  _exchanges: string[] = DEFAULT_EXCHANGES,
 ): Promise<MultiExchangeResult> {
   const pair = `${fromCryptoCurrency.toUpperCase()}/${toFiatCurrency.toUpperCase()}`
 
   // Simplified: Only use Kraken to avoid geo-restrictions and API complexity
-  const krakenResult = await getExchangeRate(fromCryptoCurrency, toFiatCurrency, 'kraken')
+  const krakenResult = await getExchangeRate(
+    fromCryptoCurrency,
+    toFiatCurrency,
+    'kraken',
+  )
 
   // Return single result in multi-exchange format for backward compatibility
   return {
@@ -166,7 +174,7 @@ export async function getMultiExchangeRate(
       price: krakenResult.price,
     },
     averagePrice: krakenResult.price,
-    priceSpread: 0,  // No spread with single exchange
+    priceSpread: 0, // No spread with single exchange
     priceSpreadPercent: 0,
   }
 }
@@ -182,6 +190,8 @@ export async function getSupportedExchanges(): Promise<string[]> {
 /**
  * Check if a specific exchange is supported
  */
-export async function isExchangeSupported(exchangeName: string): Promise<boolean> {
+export async function isExchangeSupported(
+  exchangeName: string,
+): Promise<boolean> {
   return ccxt.exchanges.includes(exchangeName.toLowerCase())
 }

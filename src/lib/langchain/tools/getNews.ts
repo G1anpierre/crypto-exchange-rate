@@ -8,15 +8,12 @@
  * Uses existing infrastructure: src/services/rssFeedParser.ts
  */
 
-import { tool } from '@langchain/core/tools'
-import { z } from 'zod'
-import {
-  fetchAllNewsFromRSS,
-  fetchNewsBySource,
-} from '@/services/rssFeedParser'
+import {tool} from '@langchain/core/tools'
+import {z} from 'zod'
+import {fetchAllNewsFromRSS, fetchNewsBySource} from '@/services/rssFeedParser'
 
 export const getNewsTool = tool(
-  async ({ source, limit }) => {
+  async ({source, limit}) => {
     console.log(`📰 getNews tool called:`, {
       source,
       limit,
@@ -40,7 +37,7 @@ export const getNewsTool = tool(
               'Try "all" or one of: bitcoinist, cointelegraph, decrypt, bscnews',
           },
           null,
-          2
+          2,
         )
       }
 
@@ -48,7 +45,7 @@ export const getNewsTool = tool(
       const limitedArticles = articles.slice(0, limit)
 
       console.log(
-        `✅ Fetched ${limitedArticles.length} articles from ${source}`
+        `✅ Fetched ${limitedArticles.length} articles from ${source}`,
       )
 
       // CRITICAL: LangChain tools MUST return strings!
@@ -58,7 +55,7 @@ export const getNewsTool = tool(
           source,
           count: limitedArticles.length,
           totalAvailable: articles.length,
-          articles: limitedArticles.map((article) => ({
+          articles: limitedArticles.map(article => ({
             title: article.title,
             description: article.description,
             source: article.source,
@@ -68,7 +65,7 @@ export const getNewsTool = tool(
           })),
         },
         null,
-        2
+        2,
       )
     } catch (error) {
       console.error('❌ getNews tool error:', error)
@@ -83,7 +80,7 @@ export const getNewsTool = tool(
             'Please try again or ask for news from a specific source (bitcoinist, cointelegraph, decrypt, bscnews)',
         },
         null,
-        2
+        2,
       )
     }
   },
@@ -114,14 +111,14 @@ Examples:
         .string()
         .default('all')
         .describe(
-          'News source to fetch from. Options: "all", "bitcoinist", "cointelegraph", "decrypt", "bscnews"'
+          'News source to fetch from. Options: "all", "bitcoinist", "cointelegraph", "decrypt", "bscnews"',
         ),
-      limit: z
-        .coerce.number() // Accept string or number, auto-convert to number
+      limit: z.coerce
+        .number() // Accept string or number, auto-convert to number
         .min(1, 'Limit must be at least 1')
         .max(20, 'Limit cannot exceed 20')
         .default(5)
         .describe('Number of articles to return (default: 5, max: 20)'),
     }),
-  }
+  },
 )

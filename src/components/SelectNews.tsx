@@ -1,13 +1,13 @@
-"use client"
+'use client'
 
 import React from 'react'
 import classNames from 'classnames'
 import {newsSources} from '@/static'
 import {useTranslations} from 'next-intl'
 import {Link} from '@/i18n/navigation'
-import {Tooltip} from "@heroui/tooltip";
-import { useQueryClient } from '@tanstack/react-query'
-import { getCryptoCurrencyNews } from '@/services/cryptoCurrencyNews'
+import {Tooltip} from '@heroui/tooltip'
+import {useQueryClient} from '@tanstack/react-query'
+import {getCryptoCurrencyNews} from '@/services/cryptoCurrencyNews'
 
 export const SelectNews = ({
   sourceSearchParam,
@@ -15,7 +15,7 @@ export const SelectNews = ({
   sourceSearchParam: string
 }) => {
   const t = useTranslations('Compass')
-  const queryClient = useQueryClient();
+  const queryClient = useQueryClient()
 
   const getSelectedStyles = (source: string) => {
     return classNames(
@@ -68,18 +68,17 @@ export const SelectNews = ({
                   content={newsSource.name}
                   placement="top"
                   className="bg-primary text-white"
-                  >
-
-                <img
-                  className={`${
-                    newsSource.name === 'Decrypt' ? 'max-h-14' : 'max-h-14'
-                  } h-full w-full object-contain align-middle`}
-                  src={newsSource.imageUrl}
-                  alt={newsSource.name}
-                  width={105}
-                  height={48}
+                >
+                  <img
+                    className={`${
+                      newsSource.name === 'Decrypt' ? 'max-h-14' : 'max-h-14'
+                    } h-full w-full object-contain align-middle`}
+                    src={newsSource.imageUrl}
+                    alt={newsSource.name}
+                    width={105}
+                    height={48}
                   />
-                  </Tooltip>
+                </Tooltip>
               </Link>
             ))}
           </div>

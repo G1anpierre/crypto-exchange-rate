@@ -56,7 +56,8 @@ export async function parseRSSFeed(
       }
 
       // Extract description
-      let description: string | null = item.contentSnippet || item.content || null
+      let description: string | null =
+        item.contentSnippet || item.content || null
       if (description && description.length > 500) {
         description = description.substring(0, 497) + '...'
       }
@@ -104,9 +105,7 @@ export async function fetchAllNewsFromRSS(): Promise<ParsedArticle[]> {
   })
 
   // Sort by published date (newest first)
-  allArticles.sort(
-    (a, b) => b.publishedAt.getTime() - a.publishedAt.getTime(),
-  )
+  allArticles.sort((a, b) => b.publishedAt.getTime() - a.publishedAt.getTime())
 
   return allArticles
 }

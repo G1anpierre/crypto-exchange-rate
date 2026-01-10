@@ -13,17 +13,19 @@ export async function POST() {
     }
 
     // Check if user already has a subscription
-    const existingSubscription = await prismaDB.newsletterSubscription.findUnique({
-      where: {userId: session.user.id},
-    })
+    const existingSubscription =
+      await prismaDB.newsletterSubscription.findUnique({
+        where: {userId: session.user.id},
+      })
 
     if (existingSubscription) {
       // If subscription exists but is inactive, reactivate it
       if (!existingSubscription.isActive) {
-        const updatedSubscription = await prismaDB.newsletterSubscription.update({
-          where: {userId: session.user.id},
-          data: {isActive: true},
-        })
+        const updatedSubscription =
+          await prismaDB.newsletterSubscription.update({
+            where: {userId: session.user.id},
+            data: {isActive: true},
+          })
         return NextResponse.json({
           message: 'Newsletter subscription reactivated successfully',
           subscription: updatedSubscription,

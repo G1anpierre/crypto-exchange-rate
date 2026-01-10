@@ -17,12 +17,15 @@
  * - LangChain: Function is the first parameter
  */
 
-import { tool } from '@langchain/core/tools'
-import { z } from 'zod'
-import { getMultiExchangeRate, getExchangeRate as getCCXTRate } from '@/services/ccxt/exchangeRate'
+import {tool} from '@langchain/core/tools'
+import {z} from 'zod'
+import {
+  getMultiExchangeRate,
+  getExchangeRate as getCCXTRate,
+} from '@/services/ccxt/exchangeRate'
 
 export const getExchangeRateTool = tool(
-  async ({ fromCryptoCurrency, toFiatCurrency }) => {
+  async ({fromCryptoCurrency, toFiatCurrency}) => {
     console.log(`💱 getExchangeRate tool called:`, {
       fromCryptoCurrency,
       toFiatCurrency,
@@ -51,35 +54,45 @@ export const getExchangeRateTool = tool(
 
       // IMPORTANT: LangChain tools MUST return strings!
       // We format as JSON for the agent to parse
-      return JSON.stringify({
-        success: true,
-        pair: data.pair,
-        prices: data.results.map(r => ({
-          exchange: r.exchange,
-          price: r.price,
-          volume24h: r.volume24h,
-          change24h: r.changePercent24h,
-        })),
-        bestPrice: {
-          exchange: data.bestPrice.exchange,
-          price: data.bestPrice.price,
-          message: `Cheapest on ${data.bestPrice.exchange}`,
+      return JSON.stringify(
+        {
+          success: true,
+          pair: data.pair,
+          prices: data.results.map(r => ({
+            exchange: r.exchange,
+            price: r.price,
+            volume24h: r.volume24h,
+            change24h: r.changePercent24h,
+          })),
+          bestPrice: {
+            exchange: data.bestPrice.exchange,
+            price: data.bestPrice.price,
+            message: `Cheapest on ${data.bestPrice.exchange}`,
+          },
+          worstPrice: {
+            exchange: data.worstPrice.exchange,
+            price: data.worstPrice.price,
+            message: `Most expensive on ${data.worstPrice.exchange}`,
+          },
+          averagePrice: data.averagePrice,
+          arbitrageOpportunity:
+            data.priceSpreadPercent > 0.1
+              ? {
+                  spreadPercent: data.priceSpreadPercent,
+                  spreadAmount: data.priceSpread,
+                  buyOn: data.bestPrice.exchange,
+                  sellOn: data.worstPrice.exchange,
+                  message: `Arbitrage opportunity: Buy on ${data.bestPrice.exchange}, sell on ${data.worstPrice.exchange} for ${data.priceSpreadPercent.toFixed(2)}% profit`,
+                }
+              : null,
+          note:
+            targetCurrency === 'USDT'
+              ? 'Note: Prices shown in USDT (Tether stablecoin), which is pegged 1:1 to USD'
+              : null,
         },
-        worstPrice: {
-          exchange: data.worstPrice.exchange,
-          price: data.worstPrice.price,
-          message: `Most expensive on ${data.worstPrice.exchange}`,
-        },
-        averagePrice: data.averagePrice,
-        arbitrageOpportunity: data.priceSpreadPercent > 0.1 ? {
-          spreadPercent: data.priceSpreadPercent,
-          spreadAmount: data.priceSpread,
-          buyOn: data.bestPrice.exchange,
-          sellOn: data.worstPrice.exchange,
-          message: `Arbitrage opportunity: Buy on ${data.bestPrice.exchange}, sell on ${data.worstPrice.exchange} for ${data.priceSpreadPercent.toFixed(2)}% profit`,
-        } : null,
-        note: targetCurrency === 'USDT' ? 'Note: Prices shown in USDT (Tether stablecoin), which is pegged 1:1 to USD' : null,
-      }, null, 2) // Pretty print for agent readability
+        null,
+        2,
+      ) // Pretty print for agent readability
     } catch (error) {
       // Fallback: Try single exchange if multi-exchange fails
       try {
@@ -96,40 +109,56 @@ export const getExchangeRateTool = tool(
 
         const singleData = await getCCXTRate(crypto, fiat, exchange)
 
-        return JSON.stringify({
-          success: true,
-          pair: singleData.pair,
-          exchange: singleData.exchange,
-          price: singleData.price,
-          volume24h: singleData.volume24h,
-          change24h: singleData.changePercent24h,
-          high24h: singleData.high24h,
-          low24h: singleData.low24h,
-          message: 'Single exchange data (multi-exchange comparison unavailable)',
-        }, null, 2)
+        return JSON.stringify(
+          {
+            success: true,
+            pair: singleData.pair,
+            exchange: singleData.exchange,
+            price: singleData.price,
+            volume24h: singleData.volume24h,
+            change24h: singleData.changePercent24h,
+            high24h: singleData.high24h,
+            low24h: singleData.low24h,
+            message:
+              'Single exchange data (multi-exchange comparison unavailable)',
+          },
+          null,
+          2,
+        )
       } catch (fallbackError) {
-        return JSON.stringify({
-          success: false,
-          error: error instanceof Error ? error.message : 'Failed to fetch exchange rate',
-          suggestion: 'Try a different currency pair or check the cryptocurrency symbol',
-        }, null, 2)
+        return JSON.stringify(
+          {
+            success: false,
+            error:
+              error instanceof Error
+                ? error.message
+                : 'Failed to fetch exchange rate',
+            suggestion:
+              'Try a different currency pair or check the cryptocurrency symbol',
+          },
+          null,
+          2,
+        )
       }
     }
   },
   {
     name: 'get_exchange_rate',
-    description: 'Get cryptocurrency exchange rates from multiple exchanges (Binance, Coinbase, Kraken) with arbitrage detection. Shows real-time prices, 24h volumes, and price changes. Use this when users ask about crypto prices, exchange rates, or want to compare prices across exchanges.',
+    description:
+      'Get cryptocurrency exchange rates from multiple exchanges (Binance, Coinbase, Kraken) with arbitrage detection. Shows real-time prices, 24h volumes, and price changes. Use this when users ask about crypto prices, exchange rates, or want to compare prices across exchanges.',
     schema: z.object({
       fromCryptoCurrency: z
         .string()
         .min(1, 'Cryptocurrency symbol is required')
-        .describe('Cryptocurrency symbol (e.g., BTC, ETH, SOL, XRP, DOGE, ADA, DOT)'),
+        .describe(
+          'Cryptocurrency symbol (e.g., BTC, ETH, SOL, XRP, DOGE, ADA, DOT)',
+        ),
       toFiatCurrency: z
         .string()
         .min(1, 'Fiat currency is required')
         .describe('Fiat currency code (e.g., USD, EUR, CHF, GBP)'),
     }),
-  }
+  },
 )
 
 /**

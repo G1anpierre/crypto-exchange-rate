@@ -8,7 +8,10 @@ export function NewsletterSubscriptionForm() {
   const {data: session, status} = useSession()
   const [isSubscribed, setIsSubscribed] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
-  const [message, setMessage] = useState<{type: 'success' | 'error'; text: string} | null>(null)
+  const [message, setMessage] = useState<{
+    type: 'success' | 'error'
+    text: string
+  } | null>(null)
 
   // Check subscription status on mount
   useEffect(() => {
@@ -116,7 +119,8 @@ export function NewsletterSubscriptionForm() {
             Subscribe to Our Weekly Newsletter
           </h3>
           <p className="mt-2 text-gray-600 dark:text-gray-300">
-            Get the top 5 crypto news stories delivered to your inbox every Tuesday
+            Get the top 5 crypto news stories delivered to your inbox every
+            Tuesday
           </p>
           <p className="mt-4 text-sm text-gray-500 dark:text-gray-400">
             Please sign in to subscribe to our newsletter
@@ -136,8 +140,8 @@ export function NewsletterSubscriptionForm() {
           Weekly Crypto Newsletter
         </h3>
         <p className="mt-2 text-gray-600 dark:text-gray-300">
-          Get the top 5 crypto news stories delivered to your inbox every Tuesday
-          at 9 AM EST
+          Get the top 5 crypto news stories delivered to your inbox every
+          Tuesday at 9 AM EST
         </p>
 
         {message && (
